@@ -8,28 +8,78 @@
     tools:context=".OnboardingActivity"
     android:layout_margin="40dp">
 
-    <FrameLayout
-        android:id="@+id/progressContainer"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/baselineContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        tools:context=".OnboardingActivity"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="57dp">
 
-        <ProgressBar
-            android:id="@+id/progress"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="4dp" />
-
-        <TextView
-            android:id="@+id/progressLabel"
+        <FrameLayout
+            android:id="@+id/progressContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="16dp"
-            android:text="0/10"
-            android:textAlignment="center" />
-    </FrameLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:max="10" />
+
+            <TextView
+                android:id="@+id/progressLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="16dp"
+                android:text="0/10"
+                android:textAlignment="center" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/baselineTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:lineSpacingExtra="8sp"
+            android:text=""
+            android:textColor="#000000"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressContainer" />
+
+        <EditText
+            android:id="@+id/hiddenInput"
+            android:layout_marginTop="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:focusable="true"
+            android:focusedByDefault="true"
+            android:inputType="textVisiblePassword"
+            android:cursorVisible="false"
+            android:alpha="0"
+            android:focusableInTouchMode="true"
+            app:layout_constraintTop_toBottomOf="@id/baselineTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+/>
+
+        <Button
+            android:id="@+id/continueToDrunkometer"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:onClick="continueToDrunkometer"
+            android:text="Go to Drunk-o-meter"
+            app:layout_constraintBottom_toBottomOf="@id/baselineContainer"
+            tools:layout_editor_absoluteX="0
+" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

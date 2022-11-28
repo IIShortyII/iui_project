@@ -7,11 +7,17 @@ import java.util.Set;
 
 public class UserData {
 
-    public static Set<TypingSample> BASELINE_TYPING = new HashSet<TypingSample>();
+
+    /**
+     * List of all baseline typing samples
+     */
+    public static Set<TypingSample> BASELINE_TYPING_SAMPLES = new HashSet<TypingSample>();
+
     /**
      * Username
      */
     public static String USERNAME ="";
+
 
 
 }

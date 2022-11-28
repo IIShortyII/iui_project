@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.drunk_o_meter.userdata.DataHandler;
 import com.example.drunk_o_meter.userdata.UserData;
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, OnboardingActivity.class);
             intent.putExtra("stage", "username");
             MainActivity.this.startActivity(intent);
-        } else if (UserData.BASELINE_TYPING.size() != BASELINE_TEXT_COUNT){
+        } else if (UserData.BASELINE_TYPING_SAMPLES.size() != getResources().getInteger(R.integer.baselineCount)){
             // go to onboarding to provide baseline typing samples
             Intent intent = new Intent(MainActivity.this, OnboardingActivity.class);
             intent.putExtra("stage", "baseline");
