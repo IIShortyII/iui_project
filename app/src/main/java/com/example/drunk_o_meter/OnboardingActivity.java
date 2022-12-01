@@ -5,36 +5,40 @@ import static com.example.drunk_o_meter.userdata.UserData.BASELINE_TYPING_SAMPLE
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.BackgroundColorSpan;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.drunk_o_meter.nlp.TypingSample;
+import com.example.drunk_o_meter.userdata.UserData;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.function.IntBinaryOperator;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 
 public class OnboardingActivity extends AppCompatActivity {
     private String stage;
     private int baselineTextCount;
+
     private int textPosition = 0;
-    private ArrayList<Boolean> validations = new ArrayList<Boolean>();
+    private ArrayList<Boolean> currentSampleValidations = new ArrayList<Boolean>();
+    private long currentSampleTimerStart;
 
     private TextView baselineTextView;
     private ProgressBar progressBar;
@@ -92,29 +96,63 @@ public class OnboardingActivity extends AppCompatActivity {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    String lastChar = String.valueOf(s.toString().charAt(s.length()-1));
-                    // Change color of next letter depending on if it matches the user input
-                    if (lastChar.equals(String.valueOf(baselineTextView.getText().toString().charAt(textPosition)))) {
-                        validations.add(true);
-                    } else {
-                        validations.add(false);
+                    // Start time when user types the first char of the sequence
+                    if (s.length() == 1){
+                        startTimer();
+                    }
+                    if (s.length() != 0){
+                        String lastChar = String.valueOf(s.toString().charAt(s.length()-1));
+                        if (lastChar.equals(String.valueOf(baselineTextView.getText().toString().charAt(textPosition)))) {
+                            currentSampleValidations.add(true);
+                        } else {
+                            currentSampleValidations.add(false);
+                        }
+
+                        textPosition = textPosition +1;
+
+                        // Continue to next text if current text is complete
+                        if (textPosition == baselineTextView.getText().toString().length()){
+                            saveTypingSample();
+                            incrementBaselineTextCount();
+                            updateBaselineContent();
+                            hiddenInput.setText("");
+                            currentSampleValidations = new ArrayList<Boolean>();
+                        } else {
+                            updateCursor();
+                        }
                     }
 
-                    textPosition = textPosition +1;
-
-                    // Continue to next text if current text is complete
-                    if (textPosition == baselineTextView.getText().toString().length()){
-                        incrementBaselineTextCount();
-                        updateBaselineContent();
-                    } else {
-                        updateCursor();
-                    }
                 }
             });
 
         }
+    }
+
+    /**
+     * Save data as typing sample.
+     */
+    private void saveTypingSample() {
+        long time = System.currentTimeMillis() - currentSampleTimerStart;
+        String text = baselineTextView.getText().toString();
+        String userInput = hiddenInput.getText().toString();
+        int errorCount = Collections.frequency(currentSampleValidations, false);
+        double error = ((double) errorCount / (double)text.length()) * 100.00;
+        Log.d("DRUNK-O-METER", text + "");
+
+        TypingSample sample = new TypingSample(text, userInput, time, error);
+        BASELINE_TYPING_SAMPLES.add(sample);
+        // TODO: save on device
+    }
+
+    /**
+     * Start timer to measure completion time for a typing sample
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void startTimer() {
+        currentSampleTimerStart = System.currentTimeMillis();
     }
 
     /**

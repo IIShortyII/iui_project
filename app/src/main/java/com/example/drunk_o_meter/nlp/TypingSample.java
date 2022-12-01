@@ -4,7 +4,15 @@ package com.example.drunk_o_meter.nlp;
  * sample the user has typed, and the time it took the user to type the text.
  */
 public class TypingSample {
+    /**
+     * The time it took the user to type the text in milliseconds
+     */
+    private long time;
 
+    /**
+     * The relative error the user produced in his typing the text;
+     */
+    private final double error;
     /**
      * The original text
      */
@@ -23,19 +31,19 @@ public class TypingSample {
         return sample;
     }
 
-    public int getTime() {
+    public long getTime() {
         return time;
     }
 
-    /**
-     * The time it took the user to type the text in milliseconds
-     */
-    private int time;
+    public double getError() {return error; }
 
-    public TypingSample(String text, String sample, int time) {
+
+
+    public TypingSample(String text, String sample, long time, double error) {
         this.text = text;
         this.sample = sample;
         this.time = time;
+        this.error = error;
     }
 
 }
