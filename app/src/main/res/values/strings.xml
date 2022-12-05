@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Drunk-o-meter</string>
-    <string name="text_0">At three precisely I was at Baker Street, but Holmes had not yet returned. The landlady informed me that he had left the house shortly after eight in the morning.</string>
+    <string name="text_1">At three precisely I was at Baker Street, but Holmes had not yet returned. The landlady informed me that he had left the house shortly after eight in the morning.</string>
     <string name="text_2">Text 2</string>
-    <string name="text_1">Text 1</string>
+    <string name="text_0">Text 1</string>
     <string name="text_3">Text 3</string>
     <string name="text_4">Text 4</string>
     <string name="text_5">Text 5</string>
@@ -12,4 +12,8 @@
     <string name="text_9">Text 9</string>
     <string name="text_10">Text 10</string>
     <string name="baselineComplete">Aaaand you\'re done! 🔥</string>
+
+    <string name="ONBOARDING">OnboardingActivity</string>
+    <string name="TYPINGCHALLENGE">DrunkometerActivity</string>
+    <string name="typingChallengeComplete">Typing challenge completed! Let\'s take a winner selfie 🔥</string>
 </resources>

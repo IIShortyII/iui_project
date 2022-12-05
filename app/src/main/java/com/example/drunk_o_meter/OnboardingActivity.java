@@ -4,7 +4,10 @@ import static com.example.drunk_o_meter.userdata.UserData.BASELINE_TYPING_SAMPLE
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -23,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.drunk_o_meter.nlp.FragmentTypingChallenge;
 import com.example.drunk_o_meter.nlp.TypingSample;
 import com.example.drunk_o_meter.userdata.UserData;
 
@@ -34,21 +38,9 @@ import java.util.Date;
 
 public class OnboardingActivity extends AppCompatActivity {
     private String stage;
-    private int baselineTextCount;
 
-    private int textPosition = 0;
-    private ArrayList<Boolean> currentSampleValidations = new ArrayList<Boolean>();
-    private long currentSampleTimerStart;
 
-    private TextView baselineTextView;
-    private ProgressBar progressBar;
-    private TextView progressLabel;
-    private Button continueToDrunkometer;
-    private EditText hiddenInput;
-    private SpannableStringBuilder currentSpannableString;
 
-    // Colors for text cursor
-    BackgroundColorSpan cursorColor = new BackgroundColorSpan(Color.YELLOW);
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -67,153 +59,49 @@ public class OnboardingActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setStage(String stage) {
-        if(stage.equals("username")){
-           findViewById(R.id.baselineContainer).setVisibility(View.INVISIBLE);
+        if(stage.equals("username")) {
 
-       // } else if (stage.equals("onboarding")) {
+            // } else if (stage.equals("onboarding")) {
 
             // Set up UI components
-            findViewById(R.id.baselineContainer).setVisibility(View.VISIBLE);
-            this.baselineTextView = findViewById(R.id.baselineTextView);
-            this.hiddenInput = findViewById(R.id.hiddenInput);
-            this.progressBar = findViewById(R.id.progress);
-            this.progressLabel = findViewById(R.id.progressLabel);
-            this.continueToDrunkometer = findViewById(R.id.continueToDrunkometer);
-            continueToDrunkometer.setVisibility(View.INVISIBLE);
-
-            // Show keyboard
-            hiddenInput.requestFocus();
-            this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-            // Update content based on baselineTextCount
-            this.baselineTextCount = BASELINE_TYPING_SAMPLES.size() + 1;
-            updateBaselineContent();
-
-            // Set up change listener for the hidden input field
-            hiddenInput.addTextChangedListener(new TextWatcher() {
-
-                @Override
-                public void afterTextChanged(Editable s) {}
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                @RequiresApi(api = Build.VERSION_CODES.O)
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    // Start time when user types the first char of the sequence
-                    if (s.length() == 1){
-                        startTimer();
-                    }
-                    if (s.length() != 0){
-                        String lastChar = String.valueOf(s.toString().charAt(s.length()-1));
-                        if (lastChar.equals(String.valueOf(baselineTextView.getText().toString().charAt(textPosition)))) {
-                            currentSampleValidations.add(true);
-                        } else {
-                            currentSampleValidations.add(false);
-                        }
-
-                        textPosition = textPosition +1;
-
-                        // Continue to next text if current text is complete
-                        if (textPosition == baselineTextView.getText().toString().length()){
-                            saveTypingSample();
-                            incrementBaselineTextCount();
-                            updateBaselineContent();
-                            hiddenInput.setText("");
-                            currentSampleValidations = new ArrayList<Boolean>();
-                        } else {
-                            updateCursor();
-                        }
-                    }
-
-                }
-            });
+            FragmentTypingChallenge fragmentTypingChallenge = new FragmentTypingChallenge();
+            loadFragment(fragmentTypingChallenge, "fragmentTypingChallenge");
 
         }
     }
 
     /**
-     * Save data as typing sample.
+     * Load fragment into fragment container
+     * @param frag The fragment to be loaded
+     * @param tag The tag of the fragment to be loaded
      */
-    private void saveTypingSample() {
-        long time = System.currentTimeMillis() - currentSampleTimerStart;
-        String text = baselineTextView.getText().toString();
-        String userInput = hiddenInput.getText().toString();
-        int errorCount = Collections.frequency(currentSampleValidations, false);
-        double error = ((double) errorCount / (double)text.length()) * 100.00;
-        Log.d("DRUNK-O-METER", text + "");
+    public void loadFragment(android.app.Fragment frag, String tag)
+    {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
 
-        TypingSample sample = new TypingSample(text, userInput, time, error);
-        BASELINE_TYPING_SAMPLES.add(sample);
-        // TODO: save on device
-    }
+        android.app.Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_container);
 
-    /**
-     * Start timer to measure completion time for a typing sample
-     */
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void startTimer() {
-        currentSampleTimerStart = System.currentTimeMillis();
-    }
-
-    /**
-     * Update the coloring of the displayed text depending on the current position within the text
-     */
-    private void updateCursor() {
-        currentSpannableString.setSpan(cursorColor,textPosition, textPosition+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        baselineTextView.setText(currentSpannableString);
-    }
-
-    private void incrementBaselineTextCount() {
-        this.baselineTextCount++;
-    }
-
-
-    /**
-     * Update content in baseline calculation phase depending on baselineCount
-     */
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void updateBaselineContent() {
-        // Determine baselineTextCount according to userData
-        if(baselineTextCount <= getResources().getInteger(R.integer.baselineCount)){
-        setBaselineText(baselineTextCount);
-        this.progressBar.setProgress(this.baselineTextCount, true);
-        this.progressLabel.setText(baselineTextCount + "/10");
-        textPosition = 0;
-        updateCursor();
-
-        } else {
-
-            // Hide keyboard
-            this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-            // Display success message screen and proceed to drunkometerActivity
-            baselineTextView.setText(getResources().getString(R.string.baselineComplete));
-            baselineTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            baselineTextView.setTypeface(null, Typeface.BOLD);
-            continueToDrunkometer.setVisibility(View.VISIBLE);
+        if(fragment == null)
+        {
+            ft.add(R.id.fragment_container, frag, tag);
+        } else
+        {
+            ft.replace(R.id.fragment_container, frag, tag);
         }
-    }
+        ft.addToBackStack(null);
 
-    /**
-     * Set displayed baseline text depending to baselineTextCount
-     * @param baselineTextCount number of baseline texts that have already been recorded
-     */
-    private void setBaselineText(int baselineTextCount) {
-        // Get text resource according to baselineTextCount
-        int textId = this.getResources().
-                getIdentifier("text_"+baselineTextCount, "string", this.getPackageName());
-        String text = getResources().getString(textId);
-        currentSpannableString = new SpannableStringBuilder(text);
-        baselineTextView.setText(currentSpannableString);
-
+        ft.commit();
     }
 
     /**
      * Proceed to DrunkometerActivity
      */
-    public void continueToDrunkometer(View view) {
+    public void finishTyping(View view) {
         Intent intent = new Intent(OnboardingActivity.this, DrunkometerActivity.class);
         OnboardingActivity.this.startActivity(intent);
     }
+
+
 
 }

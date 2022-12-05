@@ -18,6 +18,10 @@ public class UserData {
      */
     public static String USERNAME ="";
 
+    /**
+     * List of all current typing challenge samples
+     */
+    public static Set<TypingSample> TYPING_CHALLENGE_SAMPLES = new HashSet<TypingSample>();
 
 
 }
