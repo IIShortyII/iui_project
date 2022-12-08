@@ -1,4 +1,4 @@
-package com.example.drunk_o_meter.nlp;
+package com.example.drunk_o_meter.typingChallenge;
 /**
  * The TypingSample class holds a typing sample of the user, consisting of the original text, the
  * sample the user has typed, and the time it took the user to type the text.

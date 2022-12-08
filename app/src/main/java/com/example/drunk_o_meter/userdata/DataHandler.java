@@ -1,5 +1,6 @@
 package com.example.drunk_o_meter.userdata;
 
+import com.example.drunk_o_meter.typingChallenge.TypingSample;
 import com.example.drunk_o_meter.userdata.UserData;
 import android.content.Context;
 import android.os.Build;
@@ -30,6 +31,9 @@ public class DataHandler {
             // store username
             settings.put("username", UserData.USERNAME);
 
+            // store typing challenge baseline
+            settings.put("username", UserData.USERNAME);
+            settings.put("leisure", new JSONArray(UserData.BASELINE_TYPING_SAMPLES));
             Log.d("DRUNK-O-METER UserData", "Store data");
 
         } catch (JSONException e) {
@@ -59,6 +63,9 @@ public class DataHandler {
                 if (obj.has("username")) {
                     UserData.USERNAME = obj.getString("username");
                 }
+
+                // fetch stored baseline typing samples
+                if (obj.has(""))
 
                 Log.d("DRUNK-O-METER UserData", "Loaded User Data");
             }

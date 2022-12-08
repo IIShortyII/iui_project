@@ -11,6 +11,7 @@ import com.example.drunk_o_meter.userdata.DataHandler;
 import com.example.drunk_o_meter.userdata.UserData;
 
 import java.io.IOException;
+import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity {
     private static final int BASELINE_TEXT_COUNT = 10;
@@ -34,9 +35,11 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("stage", "username");
             MainActivity.this.startActivity(intent);
         } else if (UserData.BASELINE_TYPING_SAMPLES.size() != getResources().getInteger(R.integer.baselineCount)){
+            // Clear potential unfinished typing samples
+            UserData.BASELINE_TYPING_SAMPLES = new HashSet<>();
             // go to onboarding to provide baseline typing samples
             Intent intent = new Intent(MainActivity.this, OnboardingActivity.class);
-            intent.putExtra("stage", "baseline");
+            intent.putExtra("stage", "typingChallenge");
             MainActivity.this.startActivity(intent);
 
         } else {

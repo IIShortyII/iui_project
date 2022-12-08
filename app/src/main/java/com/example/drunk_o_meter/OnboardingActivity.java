@@ -1,40 +1,22 @@
 package com.example.drunk_o_meter;
 
-import static com.example.drunk_o_meter.userdata.UserData.BASELINE_TYPING_SAMPLES;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.TextWatcher;
-import android.text.style.BackgroundColorSpan;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.example.drunk_o_meter.nlp.FragmentTypingChallenge;
-import com.example.drunk_o_meter.nlp.TypingSample;
-import com.example.drunk_o_meter.userdata.UserData;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
+import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallenge;
+import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallengeIntro;
+import static com.example.drunk_o_meter.userdata.UserData.BASELINE_TYPING_SAMPLES;
+import static com.example.drunk_o_meter.userdata.UserData.TYPING_CHALLENGE_SAMPLES;
+import static com.example.drunk_o_meter.userdata.UserData.USERNAME;
 
 public class OnboardingActivity extends AppCompatActivity {
     private String stage;
@@ -50,22 +32,25 @@ public class OnboardingActivity extends AppCompatActivity {
 
         stage = getIntent().getStringExtra("stage");
         setStage(stage);
-
     }
 
     /**
      * Depending on the stage the user is in, provide the corresponding content of the onboarding flow.
-     * @param stage the stage the user is in ("username" or "baseline")
+     * @param stage the stage the user is in ("username" or "typingChallenge")
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setStage(String stage) {
-        if(stage.equals("username")) {
 
-            // } else if (stage.equals("onboarding")) {
+        switch (stage) {
+            case "username":
+                FragmentUsername fragmentUsername = new FragmentUsername();
+                loadFragment(fragmentUsername, "fragmentUsername");
+                break;
 
-            // Set up UI components
-            FragmentTypingChallenge fragmentTypingChallenge = new FragmentTypingChallenge();
-            loadFragment(fragmentTypingChallenge, "fragmentTypingChallenge");
+            case "typingChallenge":
+                FragmentTypingChallengeIntro fragmentTypingChallengeIntro = new FragmentTypingChallengeIntro();
+                loadFragment(fragmentTypingChallengeIntro, "fragmentTypingChallengeIntro");
+                break;
 
         }
     }
@@ -95,11 +80,41 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     /**
-     * Proceed to DrunkometerActivity
+     * Proceed to next fragment / activity depending on the current stage
      */
-    public void finishTyping(View view) {
-        Intent intent = new Intent(OnboardingActivity.this, DrunkometerActivity.class);
-        OnboardingActivity.this.startActivity(intent);
+    public void next(View view) {
+
+        switch(stage) {
+            case "username":
+                EditText usernameInput = findViewById(R.id.usernameInput);
+                String username = String.valueOf(usernameInput.getText());
+                if (username.length() != 0) {
+                    USERNAME = username;
+                    FragmentTypingChallengeIntro fragmentTypingChallengeIntro = new FragmentTypingChallengeIntro();
+                    loadFragment(fragmentTypingChallengeIntro, "fragmentTypingChallengeIntro");
+                    this.stage = "typingChallenge";
+
+                    Log.d("D-O-M USERNAME", USERNAME);
+
+                    // Save username to local device storage
+
+                }
+
+                break;
+
+            case "typingChallenge":
+                if (BASELINE_TYPING_SAMPLES.size() == 0){
+                    FragmentTypingChallenge fragmentTypingChallenge = new FragmentTypingChallenge();
+                    loadFragment(fragmentTypingChallenge, "fragmentTypingChallenge");
+                } else {
+                    Intent intent = new Intent(OnboardingActivity.this, DrunkometerActivity.class);
+                    OnboardingActivity.this.startActivity(intent);
+
+                    Log.d("D-O-M BASELINE", String.valueOf(BASELINE_TYPING_SAMPLES));
+                }
+                break;
+
+        }
     }
 
 

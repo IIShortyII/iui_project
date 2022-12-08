@@ -1,6 +1,6 @@
 package com.example.drunk_o_meter.userdata;
 
-import com.example.drunk_o_meter.nlp.TypingSample;
+import com.example.drunk_o_meter.typingChallenge.TypingSample;
 
 import java.util.HashSet;
 import java.util.Set;

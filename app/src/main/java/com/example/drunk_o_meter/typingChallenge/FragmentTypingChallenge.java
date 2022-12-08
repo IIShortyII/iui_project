@@ -1,4 +1,4 @@
-package com.example.drunk_o_meter.nlp;
+package com.example.drunk_o_meter.typingChallenge;
 
 import static com.example.drunk_o_meter.userdata.UserData.BASELINE_TYPING_SAMPLES;
 import static com.example.drunk_o_meter.userdata.UserData.TYPING_CHALLENGE_SAMPLES;
@@ -86,7 +86,6 @@ public class FragmentTypingChallenge extends Fragment {
         this.next = getActivity().findViewById(R.id.nextBtn);
         next.setVisibility(View.INVISIBLE);
 
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         // set context depending on invoking activity
         this.CONTEXT = getActivity().getClass().getSimpleName();
@@ -102,7 +101,9 @@ public class FragmentTypingChallenge extends Fragment {
 
 
         updateBaselineContent();
+
         hiddenInput.requestFocus();
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         // Set up change listener for the hidden input field
         hiddenInput.addTextChangedListener(new TextWatcher() {
@@ -212,13 +213,13 @@ public class FragmentTypingChallenge extends Fragment {
             count = baselineTextCount;
             maxCount = getResources().getInteger(R.integer.baselineCount);
             successText = getResources().getString(R.string.baselineComplete);
-            buttonLabel = "Continue to Drunk-O-Meter";
+            buttonLabel = getResources().getString(R.string.next_completeOnboarding);
 
         } else {
             count = typingChallengeTextCount;
             maxCount = getResources().getInteger(R.integer.typingChallengeCount);
             successText = getResources().getString(R.string.typingChallengeComplete);
-            buttonLabel = "Take a Selfie";
+            buttonLabel = getResources().getString(R.string.next_takeSelfie);
         }
             // Determine count according to userData
             if (count <= maxCount) {
