@@ -1,7 +1,7 @@
 package com.example.drunk_o_meter.typingChallenge;
 
-import static com.example.drunk_o_meter.userdata.UserData.BASELINE_TYPING_SAMPLES;
-import static com.example.drunk_o_meter.userdata.UserData.TYPING_CHALLENGE_SAMPLES;
+import static com.example.drunk_o_meter.userdata.UserData.BASELINE_TYPING_CHALLENGE;
+import static com.example.drunk_o_meter.userdata.UserData.TYPING_CHALLENGE;
 
 import android.app.Fragment;
 import android.graphics.Color;
@@ -92,11 +92,11 @@ public class FragmentTypingChallenge extends Fragment {
 
         if(this.CONTEXT.equals(getResources().getString(R.string.ONBOARDING))){
             // Update content based on baselineTextCount
-            this.baselineTextCount = BASELINE_TYPING_SAMPLES.size() + 1;
+            this.baselineTextCount = BASELINE_TYPING_CHALLENGE.size() + 1;
         } else {
             this.typingChallengeTextCount = 1;
             // Reset typing challenge samples
-            TYPING_CHALLENGE_SAMPLES = new HashSet<>();
+            TYPING_CHALLENGE = new HashSet<>();
         }
 
 
@@ -158,15 +158,12 @@ public class FragmentTypingChallenge extends Fragment {
         String userInput = hiddenInput.getText().toString();
         int errorCount = Collections.frequency(currentSampleValidations, false);
         double error = ((double) errorCount / (double)text.length()) * 100.00;
-        Log.d("DRUNK-O-METER", userInput + "");
-
         TypingSample sample = new TypingSample(text, userInput, time, error);
+
         if(this.CONTEXT.equals(getResources().getString(R.string.ONBOARDING))) {
-            BASELINE_TYPING_SAMPLES.add(sample);
-            // TODO: save on device
+            BASELINE_TYPING_CHALLENGE.add(sample);
         } else {
-            TYPING_CHALLENGE_SAMPLES.add(sample);
-            // TODO: save on device
+            TYPING_CHALLENGE.add(sample);
         }
 
 

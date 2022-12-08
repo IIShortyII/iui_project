@@ -14,8 +14,10 @@ import android.widget.EditText;
 
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallenge;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallengeIntro;
-import static com.example.drunk_o_meter.userdata.UserData.BASELINE_TYPING_SAMPLES;
-import static com.example.drunk_o_meter.userdata.UserData.TYPING_CHALLENGE_SAMPLES;
+import com.example.drunk_o_meter.userdata.DataHandler;
+import com.example.drunk_o_meter.userdata.UserData;
+
+import static com.example.drunk_o_meter.userdata.UserData.BASELINE_TYPING_CHALLENGE;
 import static com.example.drunk_o_meter.userdata.UserData.USERNAME;
 
 public class OnboardingActivity extends AppCompatActivity {
@@ -82,6 +84,7 @@ public class OnboardingActivity extends AppCompatActivity {
     /**
      * Proceed to next fragment / activity depending on the current stage
      */
+    @RequiresApi(api = Build.VERSION_CODES.R)
     public void next(View view) {
 
         switch(stage) {
@@ -95,22 +98,20 @@ public class OnboardingActivity extends AppCompatActivity {
                     this.stage = "typingChallenge";
 
                     Log.d("D-O-M USERNAME", USERNAME);
-
-                    // Save username to local device storage
+                    DataHandler.storeSettings(this);
 
                 }
 
                 break;
 
             case "typingChallenge":
-                if (BASELINE_TYPING_SAMPLES.size() == 0){
+                if (BASELINE_TYPING_CHALLENGE.size() == 0){
                     FragmentTypingChallenge fragmentTypingChallenge = new FragmentTypingChallenge();
                     loadFragment(fragmentTypingChallenge, "fragmentTypingChallenge");
                 } else {
+                    DataHandler.storeSettings(this);
                     Intent intent = new Intent(OnboardingActivity.this, DrunkometerActivity.class);
                     OnboardingActivity.this.startActivity(intent);
-
-                    Log.d("D-O-M BASELINE", String.valueOf(BASELINE_TYPING_SAMPLES));
                 }
                 break;
 

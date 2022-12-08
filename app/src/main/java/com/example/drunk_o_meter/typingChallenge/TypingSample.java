@@ -21,14 +21,14 @@ public class TypingSample {
     /**
      * The sample text provided by the user
      */
-    private String sample;
+    private String input;
 
     public String getText() {
         return text;
     }
 
-    public String getSample() {
-        return sample;
+    public String getInput() {
+        return input;
     }
 
     public long getTime() {
@@ -41,7 +41,7 @@ public class TypingSample {
 
     public TypingSample(String text, String sample, long time, double error) {
         this.text = text;
-        this.sample = sample;
+        this.input = sample;
         this.time = time;
         this.error = error;
     }

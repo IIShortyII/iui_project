@@ -1,27 +1,14 @@
 package com.example.drunk_o_meter.typingChallenge;
 
-import static com.example.drunk_o_meter.userdata.UserData.BASELINE_TYPING_SAMPLES;
-import static com.example.drunk_o_meter.userdata.UserData.TYPING_CHALLENGE_SAMPLES;
 import static com.example.drunk_o_meter.userdata.UserData.USERNAME;
 
 import android.app.Fragment;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.TextWatcher;
-import android.text.style.BackgroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;

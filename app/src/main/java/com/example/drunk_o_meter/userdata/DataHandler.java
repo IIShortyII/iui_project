@@ -1,12 +1,12 @@
 package com.example.drunk_o_meter.userdata;
 
-import com.example.drunk_o_meter.typingChallenge.TypingSample;
-import com.example.drunk_o_meter.userdata.UserData;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
+
+import com.example.drunk_o_meter.typingChallenge.TypingSample;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class DataHandler {
 
@@ -25,22 +26,35 @@ public class DataHandler {
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
     public static void storeSettings(Context context) {
-        JSONObject settings = new JSONObject();
+        JSONObject userData = new JSONObject();
         try {
 
             // store username
-            settings.put("username", UserData.USERNAME);
+            userData.put("username", UserData.USERNAME);
 
             // store typing challenge baseline
-            settings.put("username", UserData.USERNAME);
-            settings.put("leisure", new JSONArray(UserData.BASELINE_TYPING_SAMPLES));
+            JSONArray sampleArray = new JSONArray();
+            for(int i=0; i< UserData.BASELINE_TYPING_CHALLENGE.size(); i++) {
+                TypingSample sample = UserData.BASELINE_TYPING_CHALLENGE.get(i);
+                String text = sample.getText();
+                String input = sample.getInput();
+                double error = sample.getError();
+                long time = sample.getTime();
+
+                JSONObject JSONsample = new JSONObject();
+                JSONsample.put("text", text).put("input", input).put("error", error).put("time", time);
+                sampleArray.put(i, JSONsample);
+            }
+
+            userData.put("baseline_typing_challenge", sampleArray);
+
             Log.d("DRUNK-O-METER UserData", "Store data");
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
         try {
-            LocalStorageUtils.saveFile(context, DATA_PATH, settings.toString());
+            LocalStorageUtils.saveFile(context, DATA_PATH, userData.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -65,7 +79,20 @@ public class DataHandler {
                 }
 
                 // fetch stored baseline typing samples
-                if (obj.has(""))
+                if (obj.has("baseline_typing_challenge")) {
+                    JSONArray baseline = obj.getJSONArray("baseline_typing_challenge");
+                    UserData.BASELINE_TYPING_CHALLENGE = new ArrayList<>();
+                    for(int i=0; i<baseline.length(); i++) {
+                        JSONObject JSONsample = baseline.getJSONObject(i);
+                        String text = JSONsample.getString("text");
+                        String input = JSONsample.getString("input");
+                        double error = JSONsample.getDouble("error");
+                        long time = JSONsample.getLong("time");
+                        TypingSample sample =  new TypingSample(text, input, time, error);
+                        UserData.BASELINE_TYPING_CHALLENGE.add(sample);
+                    }
+                    Log.d("D-O-M baseline last", UserData.BASELINE_TYPING_CHALLENGE.get(9).getInput());
+                }
 
                 Log.d("DRUNK-O-METER UserData", "Loaded User Data");
             }
