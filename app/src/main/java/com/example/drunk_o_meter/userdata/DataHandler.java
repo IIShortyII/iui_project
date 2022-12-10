@@ -92,8 +92,8 @@ public class DataHandler {
                         UserData.BASELINE_TYPING_CHALLENGE.add(sample);
                     }
                     // Calculate mean completiontime and error for baseline typing samples
-                    UserData.MEAN_COMPLETIONTIME_BASELINE = UserData.calculateMean("completiontime");
-                    UserData.MEAN_ERROR_BASELINE = UserData.calculateMean("error");
+                    UserData.MEAN_COMPLETIONTIME_BASELINE = UserData.calculateMean("baseline", "completiontime");
+                    UserData.MEAN_ERROR_BASELINE = UserData.calculateMean("baseline", "error");
 
                     Log.d("D-O-M mean error", String.valueOf(UserData.MEAN_ERROR_BASELINE));
                     Log.d("D-O-M mean time", String.valueOf(UserData.MEAN_COMPLETIONTIME_BASELINE));

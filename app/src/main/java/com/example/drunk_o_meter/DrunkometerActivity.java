@@ -72,4 +72,18 @@ public class DrunkometerActivity extends AppCompatActivity {
         loadFragment(fragmentTypingChallenge, "fragmentTypingChallenge");
 
     }
+
+    /**
+     * Continue to drunk selfie fragment
+     */
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    public void finishTypingChallenge(View view) {
+        UserData.MEAN_ERROR_CHALLENGE = UserData.calculateMean("challenge", "error");
+        UserData.MEAN_COMPLETIONTIME_CHALLENGE = UserData.calculateMean("challenge", "completiontime");
+        Log.d("D-O-M challenge error", String.valueOf(UserData.MEAN_ERROR_CHALLENGE));
+        Log.d("D-O-M challenge time", String.valueOf(UserData.MEAN_COMPLETIONTIME_CHALLENGE));
+
+        // TODO: load drunk selfie fragment
+
+    }
 }
