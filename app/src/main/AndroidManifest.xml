@@ -16,6 +16,8 @@
             android:name=".DrunkometerActivity"
             android:exported="false" />
         <activity
+            android:name=".RecommendationActivity" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
