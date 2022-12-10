@@ -39,7 +39,7 @@ public class FragmentUsername extends Fragment {
         this.layout = inflater.inflate(R.layout.fragment_username, container, false);
 
         // Set next button
-        this.next = getActivity().findViewById(R.id.nextBtnOnboarding);
+        this.next = layout.findViewById(R.id.saveUsername);
         next.setText(getResources().getString(R.string.next_name));
         next.setVisibility(View.VISIBLE);
 

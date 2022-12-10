@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/typingChallengeContainer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".OnboardingActivity">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/baselineContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".OnboardingActivity"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="57dp">
 
@@ -67,6 +65,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/baselineTextView" />
+
+        <Button
+            android:id="@+id/finishTypingChallenge"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:onClick="finishTypingChallenge"
+            android:text="Continue to drunk-o-meter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="0
+" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -82,7 +82,7 @@ public class FragmentTypingChallenge extends Fragment {
         this.hiddenInput = layout.findViewById(R.id.hiddenInput);
         this.progressBar = layout.findViewById(R.id.progress);
         this.progressLabel = layout.findViewById(R.id.progressLabel);
-        this.next = getActivity().findViewById(R.id.nextBtnOnboarding);
+        this.next = layout.findViewById(R.id.finishTypingChallenge);
         next.setVisibility(View.INVISIBLE);
 
 

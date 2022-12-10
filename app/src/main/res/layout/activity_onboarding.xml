@@ -14,14 +14,4 @@
         android:layout_height="match_parent">
     </FrameLayout>
 
-    <Button
-        android:id="@+id/nextBtnOnboarding"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:onClick="nextOnboarding"
-        android:text="text"
-        app:layout_constraintBottom_toBottomOf="@id/onboardingContainer"
-        tools:layout_editor_absoluteX="0
-" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

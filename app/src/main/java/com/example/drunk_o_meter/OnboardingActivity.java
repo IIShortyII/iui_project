@@ -80,43 +80,33 @@ public class OnboardingActivity extends AppCompatActivity {
         ft.commit();
     }
 
-    /**
-     * Proceed to next fragment / activity depending on the current stage
-     */
     @RequiresApi(api = Build.VERSION_CODES.R)
-    public void nextOnboarding(View view) {
+    public void saveUsername(View view) {
+        EditText usernameInput = findViewById(R.id.usernameInput);
+        String username = String.valueOf(usernameInput.getText());
+        if (username.length() != 0) {
+            USERNAME = username;
+            FragmentTypingChallengeIntro fragmentTypingChallengeIntro = new FragmentTypingChallengeIntro();
+            loadFragment(fragmentTypingChallengeIntro, "fragmentTypingChallengeIntro");
+            this.stage = "typingChallenge";
 
-        switch(stage) {
-            case "username":
-                EditText usernameInput = findViewById(R.id.usernameInput);
-                String username = String.valueOf(usernameInput.getText());
-                if (username.length() != 0) {
-                    USERNAME = username;
-                    FragmentTypingChallengeIntro fragmentTypingChallengeIntro = new FragmentTypingChallengeIntro();
-                    loadFragment(fragmentTypingChallengeIntro, "fragmentTypingChallengeIntro");
-                    this.stage = "typingChallenge";
-
-                    Log.d("D-O-M USERNAME", USERNAME);
-                    DataHandler.storeSettings(this);
-
-                }
-
-                break;
-
-            case "typingChallenge":
-                if (BASELINE_TYPING_CHALLENGE.size() == 0){
-                    FragmentTypingChallenge fragmentTypingChallenge = new FragmentTypingChallenge();
-                    loadFragment(fragmentTypingChallenge, "fragmentTypingChallenge");
-                } else {
-                    DataHandler.storeSettings(this);
-                    Intent intent = new Intent(OnboardingActivity.this, DrunkometerActivity.class);
-                    OnboardingActivity.this.startActivity(intent);
-                }
-                break;
+            Log.d("D-O-M USERNAME", USERNAME);
+            DataHandler.storeSettings(this);
 
         }
     }
 
+    public void startTypingChallenge(View view) {
+        FragmentTypingChallenge fragmentTypingChallenge = new FragmentTypingChallenge();
+        loadFragment(fragmentTypingChallenge, "fragmentTypingChallenge");
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    public void finishTypingChallenge(View view) {
+        DataHandler.storeSettings(this);
+        Intent intent = new Intent(OnboardingActivity.this, DrunkometerActivity.class);
+        OnboardingActivity.this.startActivity(intent);
+    }
 
 
 }

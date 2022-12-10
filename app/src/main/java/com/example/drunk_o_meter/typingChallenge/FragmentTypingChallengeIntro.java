@@ -55,15 +55,12 @@ public class FragmentTypingChallengeIntro extends Fragment {
         if(this.CONTEXT.equals(getResources().getString(R.string.ONBOARDING))) {
             title.setText("Hi, " + USERNAME + "!");
             description.setText(getResources().getString(R.string.baselineIntroDescription));
-            this.next = getActivity().findViewById(R.id.nextBtnOnboarding);
-
         } else {
             title.setText(getResources().getString(R.string.typingChallengeIntroTitle));
             description.setText(getResources().getString(R.string.typingChallengeIntroDescription));
-            this.next = layout.findViewById(R.id.startTypingChallengeBtn);
         }
+        this.next = layout.findViewById(R.id.startTypingChallengeBtn);
         next.setText(getResources().getString(R.string.next_typingIntro));
-        next.setVisibility(View.VISIBLE);
 
         // Inflate the layout for this fragment
         return layout;
