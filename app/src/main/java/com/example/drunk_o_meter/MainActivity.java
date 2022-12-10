@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
             // go to actual app
             Intent intent = new Intent(MainActivity.this, DrunkometerActivity.class);
             MainActivity.this.startActivity(intent);
-
         }
     }
 }

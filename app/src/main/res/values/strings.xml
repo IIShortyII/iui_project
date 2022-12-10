@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Drunk-o-meter</string>
+
+    <!-- Texting challenge onboarding -->
     <string name="text_1">At three precisely I was at Baker Street, but Holmes had not yet returned.</string>
     <string name="text_2">The landlady informed me that he had left the house shortly after eight in the morning.</string>
     <string name="text_0">Text 1</string>
@@ -29,5 +31,11 @@
     <string name="typingChallengeIntroDescription">This is a description</string>
     <string name="baselineIntroDescription">This is a description</string>
 
+    <string name="recommendation_drunkennessScore">Your drunkenness score is:</string>
+    <string name="recommendation_intro">I would recommend the following:</string>
+    <string name="recommendation_drinks_image">Drink Image</string>
+    <string name="recommendation_drinks_name">Drink Name</string>
+    <string name="recommendation_drinks_amount">Drink Amount</string>
+    <string name="no_value">Drink Amount</string>
 
 </resources>
