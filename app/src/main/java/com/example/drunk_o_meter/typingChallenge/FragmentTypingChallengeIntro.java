@@ -20,7 +20,9 @@ import com.example.drunk_o_meter.R;
  */
 public class FragmentTypingChallengeIntro extends Fragment {
 
+    private static String CONTEXT;
     private TextView title;
+    private TextView description;
     private Button next;
 
     private View layout;
@@ -43,18 +45,29 @@ public class FragmentTypingChallengeIntro extends Fragment {
                              Bundle savedInstanceState) {
 
         this.layout = inflater.inflate(R.layout.fragment_typing_challenge_intro, container, false);
+        // set context depending on invoking activity
+        this.CONTEXT = getActivity().getClass().getSimpleName();
 
         // Set greeting title and typing challenge description text
         this.title = layout.findViewById(R.id.typingChallengeIntroTitle);
-        title.setText("Hi, " + USERNAME + "!");
+        this.description = layout.findViewById(R.id.typingChallengeIntroDescription);
 
-        // Set next button
-        this.next = getActivity().findViewById(R.id.nextBtn);
+        if(this.CONTEXT.equals(getResources().getString(R.string.ONBOARDING))) {
+            title.setText("Hi, " + USERNAME + "!");
+            description.setText(getResources().getString(R.string.baselineIntroDescription));
+            this.next = getActivity().findViewById(R.id.nextBtnOnboarding);
+
+        } else {
+            title.setText(getResources().getString(R.string.typingChallengeIntroTitle));
+            description.setText(getResources().getString(R.string.typingChallengeIntroDescription));
+            this.next = layout.findViewById(R.id.startTypingChallengeBtn);
+        }
         next.setText(getResources().getString(R.string.next_typingIntro));
         next.setVisibility(View.VISIBLE);
 
         // Inflate the layout for this fragment
         return layout;
     }
+
 
 }

@@ -15,7 +15,6 @@ import android.widget.EditText;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallenge;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallengeIntro;
 import com.example.drunk_o_meter.userdata.DataHandler;
-import com.example.drunk_o_meter.userdata.UserData;
 
 import static com.example.drunk_o_meter.userdata.UserData.BASELINE_TYPING_CHALLENGE;
 import static com.example.drunk_o_meter.userdata.UserData.USERNAME;
@@ -67,14 +66,14 @@ public class OnboardingActivity extends AppCompatActivity {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
-        android.app.Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_container);
+        android.app.Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_container_onboarding);
 
         if(fragment == null)
         {
-            ft.add(R.id.fragment_container, frag, tag);
+            ft.add(R.id.fragment_container_onboarding, frag, tag);
         } else
         {
-            ft.replace(R.id.fragment_container, frag, tag);
+            ft.replace(R.id.fragment_container_onboarding, frag, tag);
         }
         ft.addToBackStack(null);
 
@@ -85,7 +84,7 @@ public class OnboardingActivity extends AppCompatActivity {
      * Proceed to next fragment / activity depending on the current stage
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
-    public void next(View view) {
+    public void nextOnboarding(View view) {
 
         switch(stage) {
             case "username":

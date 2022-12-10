@@ -25,6 +25,9 @@
     <string name="usernameTitle">Some title</string>
     <string name="usernameDescription">Some description</string>
 
+    <string name="typingChallengeIntroTitle">This is a title</string>
     <string name="typingChallengeIntroDescription">This is a description</string>
+    <string name="baselineIntroDescription">This is a description</string>
+
 
 </resources>

@@ -15,7 +15,6 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.BackgroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,7 +82,7 @@ public class FragmentTypingChallenge extends Fragment {
         this.hiddenInput = layout.findViewById(R.id.hiddenInput);
         this.progressBar = layout.findViewById(R.id.progress);
         this.progressLabel = layout.findViewById(R.id.progressLabel);
-        this.next = getActivity().findViewById(R.id.nextBtn);
+        this.next = getActivity().findViewById(R.id.nextBtnOnboarding);
         next.setVisibility(View.INVISIBLE);
 
 

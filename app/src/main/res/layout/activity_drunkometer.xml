@@ -7,21 +7,10 @@
     android:layout_margin="40dp"
     tools:context=".DrunkometerActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="drunkometer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/clearLocalStorageBtn"
+    <FrameLayout
+        android:id="@+id/fragment_container_drunkometer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="clearLocalStorage"
-        android:text="Clear local storage (debugging)"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="0
-" />
+        android:layout_height="match_parent">
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

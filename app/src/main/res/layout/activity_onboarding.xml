@@ -9,16 +9,16 @@
     android:layout_margin="40dp">
 
     <FrameLayout
-        android:id="@+id/fragment_container"
+        android:id="@+id/fragment_container_onboarding"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </FrameLayout>
 
     <Button
-        android:id="@+id/nextBtn"
+        android:id="@+id/nextBtnOnboarding"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:onClick="next"
+        android:onClick="nextOnboarding"
         android:text="text"
         app:layout_constraintBottom_toBottomOf="@id/onboardingContainer"
         tools:layout_editor_absoluteX="0
