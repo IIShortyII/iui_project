@@ -13,16 +13,29 @@ import com.example.drunk_o_meter.userdata.UserData;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int BASELINE_TEXT_COUNT = 10;
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setupApplication();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setupApplication();
+    }
+
+    /**
+     * Setup the application based on the available user data.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    private void setupApplication() {
         // fetch settings
         try {
             DataHandler.loadSettings(this);

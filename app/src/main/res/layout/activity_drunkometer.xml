@@ -4,15 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="40dp"
     tools:context=".DrunkometerActivity">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="51dp"
         android:text="drunkometer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/clearLocalStorageBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clearLocalStorage"
+        android:text="Clear local storage (debugging)"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0
+" />
 </androidx.constraintlayout.widget.ConstraintLayout>
