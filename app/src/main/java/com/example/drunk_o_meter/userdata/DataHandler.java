@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.drunk_o_meter.nlp.TextMessage;
 import com.example.drunk_o_meter.typingChallenge.TypingSample;
 
 import org.json.JSONArray;
@@ -14,7 +15,10 @@ import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DataHandler {
 
@@ -47,6 +51,23 @@ public class DataHandler {
             }
 
             userData.put("baseline_typing_challenge", sampleArray);
+
+            // store text message list
+            JSONArray textMessageList = new JSONArray();
+            for(int i=0; i< UserData.TEXT_MESSAGE_LIST.size(); i++) {
+                TextMessage textMessage = UserData.TEXT_MESSAGE_LIST.get(i);
+                String recipient = textMessage.getRecipient();
+                String message = textMessage.getMessage();
+                String sentimentAnalysis = textMessage.getSentimentAnalysis();
+                String date = textMessage.getDate().toString(); // Format: Mon Dec 12 16:01:25 GMT 2022
+
+                JSONObject JSONTextMessage = new JSONObject();
+                JSONTextMessage.put("recipient", recipient).put("message", message).put("sentimentAnalysis", sentimentAnalysis).put("date", date);
+                textMessageList.put(i, JSONTextMessage);
+            }
+
+            userData.put("text_message_list", textMessageList);
+
 
             Log.d("DRUNK-O-METER UserData", "Store data");
 
@@ -97,6 +118,31 @@ public class DataHandler {
 
                     Log.d("D-O-M mean error", String.valueOf(UserData.MEAN_ERROR_BASELINE));
                     Log.d("D-O-M mean time", String.valueOf(UserData.MEAN_COMPLETIONTIME_BASELINE));
+                }
+
+                if (obj.has("text_message_list")){
+                    JSONArray textMessageList = obj.getJSONArray("text_message_list");
+                    UserData.TEXT_MESSAGE_LIST = new ArrayList<>();
+                    for(int i=0; i<textMessageList.length(); i++) {
+                        JSONObject JSONtextMessage = textMessageList.getJSONObject(i);
+                        String recipient = JSONtextMessage.getString("recipient");
+                        String message = JSONtextMessage.getString("message");
+                        String sentimentAnalysis = JSONtextMessage.getString("sentimentAnalysis");
+                        String dateString = JSONtextMessage.getString("date");
+
+                        // Date Format: Mon Dec 12 16:01:25 GMT 2022
+                        SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy");
+                        Date date = new Date();
+
+                        try {
+                            date = formatter.parse(dateString);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        TextMessage textMessage = new TextMessage(recipient, message, sentimentAnalysis, date);
+                        UserData.TEXT_MESSAGE_LIST.add(textMessage);
+                    }
+
                 }
 
                 Log.d("DRUNK-O-METER UserData", "Loaded User Data");

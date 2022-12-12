@@ -1,5 +1,7 @@
 package com.example.drunk_o_meter;
 
+import static com.example.drunk_o_meter.userdata.UserData.TEXT_MESSAGE_LIST;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,15 +12,20 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
+import com.example.drunk_o_meter.nlp.TextMessage;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallenge;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallengeIntro;
 import com.example.drunk_o_meter.userdata.DataHandler;
 import com.example.drunk_o_meter.userdata.UserData;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class DrunkometerActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,5 +92,26 @@ public class DrunkometerActivity extends AppCompatActivity {
 
         // TODO: load drunk selfie fragment
 
+    }
+
+    /**
+     * Analyse the provided text message with NLP to determine the sentiment, and based on this and
+     * the drunkenness score, continue to next fragment that suggests an action (or simply add information
+     * to Kathis recommender activity?)
+     * @param view
+     */
+    public void analyzeTextMessage(View view) {
+        EditText recipientInput = view.findViewById(R.id.textMessageRecipientInput);
+        EditText textMessageInput = view.findViewById(R.id.textMessageTextInput);
+        Date date = Calendar.getInstance().getTime();
+
+        // TODO trigger NLP
+        String sentimentAnalysis = "result of nlp";
+
+        // TODO trigger result fragment with sentiment analysis
+
+        // Save text message to list of text messages associated with the user
+        TextMessage textMessage = new TextMessage(recipientInput.getText().toString(), textMessageInput.getText().toString(), sentimentAnalysis, date);
+        TEXT_MESSAGE_LIST.add(textMessage);
     }
 }

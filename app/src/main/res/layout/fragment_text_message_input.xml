@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DrunkometerActivity">
+
+    <TextView
+        android:id="@+id/textMessageInputTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/textMessageInputTitle"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textMessageInputDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/textMessageInputDescription"
+        android:textColor="#000000"
+        app:layout_constraintTop_toBottomOf="@id/textMessageInputTitle" />
+
+    <EditText
+        android:id="@+id/textMessageRecipientInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="Recipient"
+        android:inputType="textPersonName"
+        app:layout_constraintTop_toBottomOf="@id/textMessageInputDescription" />
+
+    <EditText
+        android:id="@+id/textMessageTextInput"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:ems="10"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintTop_toBottomOf="@id/textMessageRecipientInput"/>
+
+    <Button
+        android:id="@+id/analyzeTextMessage"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:onClick="analyzeTextMessage"
+        android:text="Continue to drunk-o-meter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0
+" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.drunk_o_meter.userdata;
 
+import com.example.drunk_o_meter.nlp.TextMessage;
 import com.example.drunk_o_meter.typingChallenge.TypingSample;
 
 import java.util.ArrayList;
@@ -8,6 +9,10 @@ import java.util.Set;
 
 public class UserData {
 
+    /**
+     * List of all text messages the user has provided for sentiment analysis
+     */
+    public static ArrayList<TextMessage> TEXT_MESSAGE_LIST = new ArrayList<>();
 
     /**
      * List of all baseline typing samples

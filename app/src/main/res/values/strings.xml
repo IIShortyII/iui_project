@@ -37,5 +37,7 @@
     <string name="recommendation_drinks_name">Drink Name</string>
     <string name="recommendation_drinks_amount">Drink Amount</string>
     <string name="no_value">Drink Amount</string>
+    <string name="textMessageInputTitle">This is a title</string>
+    <string name="textMessageInputDescription">This is a description</string>
 
 </resources>
