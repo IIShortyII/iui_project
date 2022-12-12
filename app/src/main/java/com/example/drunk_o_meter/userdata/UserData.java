@@ -12,6 +12,11 @@ public class UserData {
     /**
      * List of all text messages the user has provided for sentiment analysis
      */
+
+    //TODO: @Kathi das ist die Liste mit allen TextMessages die bei App Start aus den Local
+    //      Storage geholt werden und dann im Archiv angezeigt werden müssen. Die TextMessage
+    //      Klasse liegt im "nlp" Order und ich denke alle attribute einer TextMesssage sollten
+    //      pro Nachricht im Archiv angezeigt werden :)
     public static ArrayList<TextMessage> TEXT_MESSAGE_LIST = new ArrayList<>();
 
     /**
