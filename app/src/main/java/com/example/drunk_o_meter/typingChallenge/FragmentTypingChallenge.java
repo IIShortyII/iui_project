@@ -92,10 +92,12 @@ public class FragmentTypingChallenge extends Fragment {
         if(this.CONTEXT.equals(getResources().getString(R.string.ONBOARDING))){
             // Update content based on baselineTextCount
             this.baselineTextCount = BASELINE_TYPING_CHALLENGE.size() + 1;
+            this.progressBar.setMax(getResources().getInteger(R.integer.baselineCount));
         } else {
             this.typingChallengeTextCount = 1;
+            this.progressBar.setMax(getResources().getInteger(R.integer.typingChallengeCount));
             // Reset typing challenge samples
-            TYPING_CHALLENGE = new HashSet<>();
+            TYPING_CHALLENGE = new ArrayList<>();
         }
 
 
@@ -221,7 +223,7 @@ public class FragmentTypingChallenge extends Fragment {
             if (count <= maxCount) {
                 setBaselineText(count);
                 this.progressBar.setProgress(count, true);
-                this.progressLabel.setText(baselineTextCount + "/" + maxCount);
+                this.progressLabel.setText(count + "/" + maxCount);
                 textPosition = 0;
                 updateCursor();
 
