@@ -37,5 +37,7 @@
     <string name="recommendation_drinks_name">Drink Name</string>
     <string name="recommendation_drinks_amount">Drink Amount</string>
     <string name="no_value">Drink Amount</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -20,10 +20,10 @@ import static com.example.drunk_o_meter.userdata.UserData.BASELINE_TYPING_CHALLE
 import static com.example.drunk_o_meter.userdata.UserData.USERNAME;
 
 public class OnboardingActivity extends AppCompatActivity {
+
+    //TODO: Add user preferences on drinks & age question?
+
     private String stage;
-
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override

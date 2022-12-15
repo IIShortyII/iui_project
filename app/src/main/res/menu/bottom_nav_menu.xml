@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/drunkometer"
+        android:enabled="true"
+        android:title="Drunk-O-Meter"
+        android:icon="@drawable/ic_drunkometer"/>
+    <item
+        android:id="@+id/chats"
+        android:enabled="true"
+        android:title="Chats"
+        android:icon="@drawable/ic_chats"/>
+    <!-- TODO-->
+    <item
+        android:id="@+id/recommendation"
+        android:enabled="true"
+        android:title="Recommendation"
+        android:icon="@drawable/ic_recommendation"/>
+</menu>
