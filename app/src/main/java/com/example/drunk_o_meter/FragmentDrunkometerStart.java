@@ -11,11 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
 import com.example.drunk_o_meter.R;
+import com.example.drunk_o_meter.nlp.TextMessage;
 import com.example.drunk_o_meter.userdata.DataHandler;
 import com.example.drunk_o_meter.userdata.UserData;
 
@@ -58,6 +60,9 @@ public class FragmentDrunkometerStart extends Fragment {
                 clearLocalStorage(v);
             }
         });
+
+        TextView title = layout.findViewById(R.id.DrunkometerStartTitle);
+        title.setText("Welcome back, " + USERNAME + "!");
 
         // Inflate the layout for this fragment
         return layout;
