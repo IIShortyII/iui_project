@@ -15,15 +15,6 @@
         android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textMessageInputDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="@string/textMessageInputDescription"
-        android:textColor="#000000"
-        app:layout_constraintTop_toBottomOf="@id/textMessageInputTitle" />
-
     <EditText
         android:id="@+id/textMessageRecipientInput"
         android:layout_width="match_parent"
@@ -31,19 +22,23 @@
         android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="Recipient"
+        android:imeOptions="actionDone"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@id/textMessageInputDescription" />
+        app:layout_constraintTop_toBottomOf="@id/textMessageInputTitle" />
 
     <EditText
         android:id="@+id/textMessageTextInput"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:ems="10"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="40dp"
+        android:padding="8dp"
+        android:background="#34BB86FC"
+        android:ems="10"
         android:gravity="start|top"
+        android:hint="Type your message..."
         android:inputType="textMultiLine"
-        app:layout_constraintTop_toBottomOf="@id/textMessageRecipientInput"/>
+        app:layout_constraintTop_toBottomOf="@id/textMessageRecipientInput" />
 
     <Button
         android:id="@+id/analyzeTextMessage"

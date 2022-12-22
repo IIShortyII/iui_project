@@ -37,7 +37,7 @@
     <string name="recommendation_drinks_name">Drink Name</string>
     <string name="recommendation_drinks_amount">Drink Amount</string>
     <string name="no_value">Drink Amount</string>
-    <string name="textMessageInputTitle">This is a title</string>
+    <string name="textMessageInputTitle">Type your message 💬</string>
     <string name="textMessageInputDescription">This is a description</string>
     <string name="textMessageIntroTitle">Need advice on whether you should text that person?</string>
     <string name="textMessageIntroDescription">Do you feel the urge to someone right now? If so, we would love to help. Write us first, and we help you analyze, if you should really send that text.</string>

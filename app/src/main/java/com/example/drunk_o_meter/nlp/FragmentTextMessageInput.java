@@ -3,10 +3,13 @@ package com.example.drunk_o_meter.nlp;
 import android.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.RequiresApi;
 
@@ -16,8 +19,6 @@ import com.example.drunk_o_meter.R;
  * A simple {@link Fragment} subclass.
  */
 public class FragmentTextMessageInput extends Fragment {
-
-    private Button analyzeTextMessage;
 
     private View layout;
 
@@ -40,8 +41,9 @@ public class FragmentTextMessageInput extends Fragment {
 
         this.layout = inflater.inflate(R.layout.fragment_text_message_input, container, false);
 
-        // Set next button
-        this.analyzeTextMessage = layout.findViewById(R.id.analyzeTextMessage);
+        EditText textMessageEditText = layout.findViewById(R.id.textMessageTextInput);
+        textMessageEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        textMessageEditText.setRawInputType(InputType.TYPE_CLASS_TEXT);
 
         // Inflate the layout for this fragment
         return layout;

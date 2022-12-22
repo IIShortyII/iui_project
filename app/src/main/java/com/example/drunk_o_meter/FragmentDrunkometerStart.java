@@ -71,6 +71,7 @@ public class FragmentDrunkometerStart extends Fragment {
     public void clearLocalStorage(View view) {
         UserData.USERNAME = "";
         UserData.BASELINE_TYPING_CHALLENGE = new ArrayList<>();
+        UserData.TEXT_MESSAGE_LIST = new ArrayList<>();
         DataHandler.storeSettings(getActivity());
 
         Intent intent = new Intent(getActivity(), MainActivity.class);
