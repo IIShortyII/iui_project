@@ -4,6 +4,7 @@ import static com.example.drunk_o_meter.userdata.UserData.BASELINE_TYPING_CHALLE
 import static com.example.drunk_o_meter.userdata.UserData.TYPING_CHALLENGE;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -104,7 +106,8 @@ public class FragmentTypingChallenge extends Fragment {
         updateBaselineContent();
 
         hiddenInput.requestFocus();
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
         // Set up change listener for the hidden input field
         hiddenInput.addTextChangedListener(new TextWatcher() {
@@ -230,7 +233,9 @@ public class FragmentTypingChallenge extends Fragment {
             } else {
 
                 // Hide keyboard
-                getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(hiddenInput.getWindowToken(), 0);
 
                 // Display success message screen and continue with next step
                 baselineTextView.setText(successText);

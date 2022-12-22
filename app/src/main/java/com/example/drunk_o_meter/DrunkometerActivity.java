@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.drunk_o_meter.nlp.FragmentTextMessageInput;
+import com.example.drunk_o_meter.nlp.FragmentTextMessageIntro;
 import com.example.drunk_o_meter.nlp.TextMessage;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallenge;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallengeIntro;
@@ -90,9 +92,37 @@ public class DrunkometerActivity extends AppCompatActivity {
         Log.d("D-O-M challenge error", String.valueOf(UserData.MEAN_ERROR_CHALLENGE));
         Log.d("D-O-M challenge time", String.valueOf(UserData.MEAN_COMPLETIONTIME_CHALLENGE));
 
-        // TODO: load drunk selfie fragment
-
+        // TODO: load drunk selfie fragment (for debugging, we skip the selfie and go to text message immediately)
+        // the finishSelfie(view) should be called after selfie part has been completed
+        finishSelfie(view);
     }
+
+    /**
+     * Continue to text message fragment
+     */
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    public void finishSelfie(View view) {
+        FragmentTextMessageIntro fragmentTextMessageIntro = new FragmentTextMessageIntro();
+        loadFragment(fragmentTextMessageIntro, "fragmentTextMessageIntro");
+    }
+
+    /**
+     * Continue to text message fragment
+     */
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    public void goToTextMessageInput(View view) {
+        FragmentTextMessageInput fragmentTextMessageInput = new FragmentTextMessageInput();
+        loadFragment(fragmentTextMessageInput, "fragmentTextMessageInput");
+    }
+
+    /**
+     * Continue to recommendation activity
+     */
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    public void skipTextMessage(View view) {
+        // TODO @Kathi: Go to recommender activity
+    }
+
 
     /**
      * Analyse the provided text message with NLP to determine the sentiment, and based on this and
