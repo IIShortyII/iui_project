@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:810709953de1aea191fe94697721150f21360b3efb18a6126b135ffdf550c7f4
-size 689
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/onboardingContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OnboardingActivity"
+    android:layout_margin="40dp">
+
+    <FrameLayout
+        android:id="@+id/fragment_container_onboarding"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:81e697cbbfe05618a41feb214bd74a6a84745a6a15143a0f5efe945fdaaec615
-size 330
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "Drunk-o-meter"
+include ':app'

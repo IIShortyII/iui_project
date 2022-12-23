@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b7eb18310a4c80047897b69c161be982fe1d8acc052d909e44833a34315dd097
-size 110
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="baselineCount">10</integer>
+</resources>

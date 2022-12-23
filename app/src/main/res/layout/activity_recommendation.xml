@@ -1,3 +1,138 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:da270dc4d9b13dd6080e2bfd6404f3b605c7cb1bb4bb3f7cb6bfa03898c0b1db
-size 6428
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp">
+
+            <LinearLayout
+                android:id="@+id/recommendation_drunkennessScore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/recommendation_drunkennessScore_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/recommendation_drunkennessScore"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                <TextView
+                    android:id="@+id/recommendation_drunkennessScore_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="32dp"
+                    android:gravity="center"
+                    android:text="@string/no_value"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/recommendation_intro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/recommendation_intro"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                app:layout_constraintTop_toBottomOf="@id/recommendation_drunkennessScore"/>
+
+            <LinearLayout
+                android:id="@+id/recommendation_drinks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                app:layout_constraintTop_toBottomOf="@id/recommendation_intro">
+
+                <LinearLayout
+                    android:id="@+id/recommendation_drink1"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/recommendation_drink1_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="@string/recommendation_drinks_name"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+
+                    <TextView
+                        android:id="@+id/recommendation_drink1_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="@string/recommendation_drinks_amount"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+
+                    <ImageView
+                        android:id="@+id/recommendation_drink1_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="200dp"
+                        android:contentDescription="@string/recommendation_drinks_image"
+                        android:padding="10dp"
+                        android:src="@drawable/defaultdrink" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/recommendation_drink2"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/recommendation_drink2_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="@string/recommendation_drinks_name"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+
+                    <TextView
+                        android:id="@+id/recommendation_drink2_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="@string/recommendation_drinks_amount"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+
+                    <ImageView
+                        android:id="@+id/recommendation_drink2_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="200dp"
+                        android:padding="10dp"
+                        android:src="@drawable/defaultdrink"
+                        android:contentDescription="@string/recommendation_drinks_image" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

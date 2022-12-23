@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3f61deb9edd82a2120439242295803b49d09366a2e2ee354b2f168662bc2bf6c
-size 116
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="typingChallengeCount">3</integer>
+</resources>

@@ -1,3 +1,36 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6b5e501997854f081dd4f04e1093443a41c2796935db64c106c8ed9ad57137f2
-size 1367
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/DrunkometerStartTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/startDrunkometerAnalysis"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginBottom="80dp"
+        android:onClick="startDrunkometerAnalysis"
+        android:text="How drunk am I?"
+        app:layout_constraintBottom_toTopOf="@+id/clearLocalStorageBtn"
+/>
+
+    <Button
+        android:id="@+id/clearLocalStorageBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clearLocalStorage"
+        android:text="Clear local storage (debugging)"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0
+" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
