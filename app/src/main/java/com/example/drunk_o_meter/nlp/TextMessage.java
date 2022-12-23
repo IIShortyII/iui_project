@@ -1,3 +1,38 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4c5671ccda26da99e92a237b15415535eea965a11efc3d50daef811f1c8daaa7
-size 912
+package com.example.drunk_o_meter.nlp;
+
+import java.util.Date;
+
+/**
+ * The TextMessage class represents a text message the user types in for sentiment analysis.
+ * The Drunk-o-meter also provides an archive of all analyzed text messages.
+ */
+public class TextMessage {
+
+    private String recipient;
+    private String message;
+    private String sentimentAnalysis;
+    private Date date;
+
+    public TextMessage(String recipient, String message, String sentimentAnalysis, Date date) {
+        this.recipient = recipient;
+        this.message = message;
+        this.sentimentAnalysis = sentimentAnalysis;
+        this.date = date;
+    }
+
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getSentimentAnalysis() {
+        return sentimentAnalysis;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+}

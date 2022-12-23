@@ -1,3 +1,22 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:de5eb6e2ea7fdf6443de1e6da7271d37a8ea0d32aac6fcace55f7c451ebb02f6
-size 655
+package com.example.drunk_o_meter.userdata;
+
+import com.example.drunk_o_meter.nlp.TextMessage;
+import com.example.drunk_o_meter.typingChallenge.TypingSample;
+
+import java.util.ArrayList;
+
+/**
+ * The DrunkometerAnalysis class groups all data that is gathered during one analysis flow
+ */
+public class DrunkometerAnalysis {
+
+    // Typing Challenge
+    public static ArrayList<TypingSample> TYPING_CHALLENGE = new ArrayList<>();
+    public static double MEAN_ERROR_CHALLENGE;
+    public static double MEAN_COMPLETIONTIME_CHALLENGE;
+
+    // TODO: Selfie - bitmap image and drunkeness score?
+
+    // Text Message
+    public static TextMessage TEXT_MESSAGE;
+}
