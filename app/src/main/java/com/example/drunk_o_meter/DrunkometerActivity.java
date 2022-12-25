@@ -1,6 +1,7 @@
 package com.example.drunk_o_meter;
 
-import static com.example.drunk_o_meter.userdata.UserData.TEXT_MESSAGE_LIST;
+import static com.example.drunk_o_meter.userdata.UserData.DRUNKOMETER_ANALYSIS;
+import static com.example.drunk_o_meter.userdata.UserData.DRUNKOMETER_ANALYSIS_LIST;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -126,6 +127,10 @@ public class DrunkometerActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void skipTextMessage(View view) {
+        // Add drunkometer analysis object to list
+        DRUNKOMETER_ANALYSIS_LIST.add(DRUNKOMETER_ANALYSIS);
+        DataHandler.storeSettings(this);
+
         // TODO @Kathi: Go to recommender activity
     }
 
@@ -148,14 +153,15 @@ public class DrunkometerActivity extends AppCompatActivity {
             NlpPipeline nlpPipeline = new NlpPipeline();
             nlpPipeline.init();
             Sentiment sentiment = nlpPipeline.estimatingSentiment(textMessageInput.getText().toString());
-
             // Save text message to list of text messages associated with the user
             TextMessage textMessage = new TextMessage(recipientInput.getText().toString(), textMessageInput.getText().toString(), sentiment.toString(), date);
-            TEXT_MESSAGE_LIST.add(textMessage);
-            DataHandler.storeSettings(this);
-
             // Add text message to current DRUNKOMETER_ANALYSIS object
             UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE = textMessage;
+            // Add drunkometer analysis object to list
+            DRUNKOMETER_ANALYSIS_LIST.add(DRUNKOMETER_ANALYSIS);
+            DataHandler.storeSettings(this);
+
+
         }
 
 

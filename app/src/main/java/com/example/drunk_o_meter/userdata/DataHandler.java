@@ -1,7 +1,10 @@
 package com.example.drunk_o_meter.userdata;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.util.Base64;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
@@ -13,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -52,21 +56,38 @@ public class DataHandler {
 
             userData.put("baseline_typing_challenge", sampleArray);
 
-            // store text message list
-            JSONArray textMessageList = new JSONArray();
-            for(int i=0; i< UserData.TEXT_MESSAGE_LIST.size(); i++) {
-                TextMessage textMessage = UserData.TEXT_MESSAGE_LIST.get(i);
-                String recipient = textMessage.getRecipient();
-                String message = textMessage.getMessage();
-                String sentimentAnalysis = textMessage.getSentimentAnalysis();
-                String date = textMessage.getDate().toString(); // Format: Mon Dec 12 16:01:25 GMT 2022
+            // store drunkometer analysis list
+            JSONArray drunkometerAnalysisList = new JSONArray();
+            for(int i=0; i< UserData.DRUNKOMETER_ANALYSIS_LIST.size(); i++) {
+                DrunkometerAnalysis drunkometerAnalysis = UserData.DRUNKOMETER_ANALYSIS_LIST.get(i);
 
-                JSONObject JSONTextMessage = new JSONObject();
-                JSONTextMessage.put("recipient", recipient).put("message", message).put("sentimentAnalysis", sentimentAnalysis).put("date", date);
-                textMessageList.put(i, JSONTextMessage);
+                JSONObject JSONdrunkometerAnalysis = new JSONObject();
+
+                // Typing Challenge
+                Double mean_error_challenge = drunkometerAnalysis.MEAN_ERROR_CHALLENGE;
+                Double mean_completiontime_challenge = drunkometerAnalysis.MEAN_COMPLETIONTIME_CHALLENGE;
+
+                // Selfie
+                String selfie = getStringFromBitmap(drunkometerAnalysis.SELFIE);
+                Double selfie_drunkenness_score = drunkometerAnalysis.SELFIE_DRUNKENNESS_SCORE;
+
+                // OPTIONAL Text Message
+                if (drunkometerAnalysis.TEXT_MESSAGE != null){
+                    TextMessage textMessage = drunkometerAnalysis.TEXT_MESSAGE;
+                    String recipient = textMessage.getRecipient();
+                    String message = textMessage.getMessage();
+                    String sentimentAnalysis = textMessage.getSentimentAnalysis();
+                    String date = textMessage.getDate().toString(); // Format: Mon Dec 12 16:01:25 GMT 2022
+                    JSONObject JSONTextMessage = new JSONObject();
+                    JSONTextMessage.put("recipient", recipient).put("message", message).put("sentimentAnalysis", sentimentAnalysis).put("date", date);
+                    JSONdrunkometerAnalysis.put("mean_error_challenge", mean_error_challenge).put("mean_completiontime_challenge", mean_completiontime_challenge).put("selfie", selfie).put("selfie_drunkenness_score", selfie_drunkenness_score).put("text_message", textMessage);
+                } else{
+                    JSONdrunkometerAnalysis.put("mean_error_challenge", mean_error_challenge).put("mean_completiontime_challenge", mean_completiontime_challenge).put("selfie", selfie).put("selfie_drunkenness_score", selfie_drunkenness_score);
+                }
+                drunkometerAnalysisList.put(i, JSONdrunkometerAnalysis);
             }
 
-            userData.put("text_message_list", textMessageList);
+            userData.put("drunkometer_analysis_list", drunkometerAnalysisList);
 
 
             Log.d("DRUNK-O-METER UserData", "Store data");
@@ -118,27 +139,44 @@ public class DataHandler {
 
                 }
 
-                if (obj.has("text_message_list")){
-                    JSONArray textMessageList = obj.getJSONArray("text_message_list");
-                    UserData.TEXT_MESSAGE_LIST = new ArrayList<>();
-                    for(int i=0; i<textMessageList.length(); i++) {
-                        JSONObject JSONtextMessage = textMessageList.getJSONObject(i);
-                        String recipient = JSONtextMessage.getString("recipient");
-                        String message = JSONtextMessage.getString("message");
-                        String sentimentAnalysis = JSONtextMessage.getString("sentimentAnalysis");
-                        String dateString = JSONtextMessage.getString("date");
+                // load all drunkometer analysis objects into app
+                if (obj.has("drunkometer_analysis_list")){
+                    JSONArray drunkometerAnalysisList = obj.getJSONArray("drunkometer_analysis_list");
+                    UserData.DRUNKOMETER_ANALYSIS_LIST = new ArrayList<>();
+                    for(int i=0; i<drunkometerAnalysisList.length(); i++) {
 
-                        // Date Format: Mon Dec 12 16:01:25 GMT 2022
-                        SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy");
-                        Date date = new Date();
+                        DrunkometerAnalysis drunkometerAnalysis = new DrunkometerAnalysis();
+                        JSONObject JSONdrunkometerAnalysis = drunkometerAnalysisList.getJSONObject(i);
 
-                        try {
-                            date = formatter.parse(dateString);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
+                        // Typing Sample Error and Completiontime
+                        drunkometerAnalysis.MEAN_ERROR_CHALLENGE = JSONdrunkometerAnalysis.getDouble("mean_error_challenge");
+                        drunkometerAnalysis.MEAN_COMPLETIONTIME_CHALLENGE = JSONdrunkometerAnalysis.getDouble("mean_completiontime_challenge");
+
+                        // Selfie bitmap and Drunkenness Score
+                        drunkometerAnalysis.SELFIE = getBitmapFromString(JSONdrunkometerAnalysis.getString("selfie"));
+                        drunkometerAnalysis.SELFIE_DRUNKENNESS_SCORE = JSONdrunkometerAnalysis.getDouble("selfie_drunkenness_score");
+
+                        // OPTIONAL text message object
+                        if (JSONdrunkometerAnalysis.getJSONObject("text_message")  != null){
+                            JSONObject JSONtextMessage = JSONdrunkometerAnalysis.getJSONObject("text_message");
+                            String recipient = JSONtextMessage.getString("recipient");
+                            String message = JSONtextMessage.getString("message");
+                            String sentimentAnalysis = JSONtextMessage.getString("sentimentAnalysis");
+                            String dateString = JSONtextMessage.getString("date");
+
+                            // Date Format: Mon Dec 12 16:01:25 GMT 2022
+                            SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy");
+                            Date date = new Date();
+                            try {
+                                date = formatter.parse(dateString);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            drunkometerAnalysis.TEXT_MESSAGE = new TextMessage(recipient, message, sentimentAnalysis, date);
                         }
-                        TextMessage textMessage = new TextMessage(recipient, message, sentimentAnalysis, date);
-                        UserData.TEXT_MESSAGE_LIST.add(textMessage);
+
+                       UserData.DRUNKOMETER_ANALYSIS_LIST.add(drunkometerAnalysis);
+
                     }
 
                 }
@@ -155,4 +193,29 @@ public class DataHandler {
         }
     }
 
+    // https://stackoverflow.com/questions/30818538/converting-json-object-with-bitmaps
+
+    /*
+     * This functions converts Bitmap picture to a string which can be
+     * JSONified.
+     * */
+    private static String getStringFromBitmap(Bitmap bitmapPicture) {
+        final int COMPRESSION_QUALITY = 100;
+        String encodedImage;
+        ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
+        bitmapPicture.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY,
+                byteArrayBitmapStream);
+        byte[] b = byteArrayBitmapStream.toByteArray();
+        encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+        return encodedImage;
+    }
+
+    /*
+     * This Function converts the String back to Bitmap
+     * */
+    private static Bitmap getBitmapFromString(String stringPicture) {
+        byte[] decodedString = Base64.decode(stringPicture, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        return decodedByte;
+    }
 }

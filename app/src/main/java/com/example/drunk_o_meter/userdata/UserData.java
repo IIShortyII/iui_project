@@ -19,11 +19,14 @@ public class UserData {
      * List of all text messages the user has provided for sentiment analysis
      */
 
-    //TODO: @Kathi das ist die Liste mit allen TextMessages die bei App Start aus den Local
-    //      Storage geholt werden und dann im Archiv angezeigt werden müssen. Die TextMessage
-    //      Klasse liegt im "nlp" Order und ich denke alle attribute einer TextMesssage sollten
-    //      pro Nachricht im Archiv angezeigt werden :)
-    public static ArrayList<TextMessage> TEXT_MESSAGE_LIST = new ArrayList<>();
+    //TODO: @Kathi das ist die Liste mit allen Daten, die wir aus einer abgeschlossenen Drunkometer
+    //      Analyse speichern. Jedes DrunkometerAnalysis Objekt hat die Ergebnisse der Typing Challenge,
+    //      das Selfie und den dazugehörigen Drunkenness Score, und eine optionale TextMessage,
+    //      sofern der User eine abgespeichert hat. Dieses Objekt hier können wir dann für die
+    //      "History" hernehmen und entscheiden, welche Informationen der Analyse wir hier
+    //      tatsächlich anzeigen wollen. :-)
+
+    public static ArrayList<DrunkometerAnalysis> DRUNKOMETER_ANALYSIS_LIST = new ArrayList<>();
 
     /**
      * List of all baseline typing samples
