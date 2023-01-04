@@ -2,10 +2,14 @@ package com.example.drunk_o_meter;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.drunk_o_meter.nlp.NlpPipeline;
 import com.example.drunk_o_meter.userdata.DataHandler;
@@ -20,8 +24,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //checkForPermissions();
+        //setupApplication();
+    }
 
-        setupApplication();
+    private void checkForPermissions() {
+        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            Log.d("D-O-M permission", "no camera permission");
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)

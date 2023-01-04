@@ -12,15 +12,14 @@ import java.util.ArrayList;
  */
 public class DrunkometerAnalysis {
 
-    public static ArrayList<TypingSample> TYPING_CHALLENGE;
+    public ArrayList<TypingSample> TYPING_CHALLENGE;
     // Typing Challenge
-    public static double MEAN_ERROR_CHALLENGE;
-    public static double MEAN_COMPLETIONTIME_CHALLENGE;
+    public double MEAN_ERROR_CHALLENGE;
+    public double MEAN_COMPLETIONTIME_CHALLENGE;
 
-    // TODO: Selfie - bitmap image and drunkeness score?
-    public static Bitmap SELFIE;
-    public static double SELFIE_DRUNKENNESS_SCORE;
+    public Bitmap SELFIE;
+    public double SELFIE_DRUNKENNESS_SCORE; // TODO safe drunkenness score
 
     // Text Message
-    public static TextMessage TEXT_MESSAGE;
+    public TextMessage TEXT_MESSAGE = null;
 }

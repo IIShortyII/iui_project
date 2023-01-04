@@ -65,8 +65,8 @@ public class DataHandler {
 
                 // Typing Challenge
                 Double mean_error_challenge = drunkometerAnalysis.MEAN_ERROR_CHALLENGE;
-                Double mean_completiontime_challenge = drunkometerAnalysis.MEAN_COMPLETIONTIME_CHALLENGE;
 
+                Double mean_completiontime_challenge = drunkometerAnalysis.MEAN_COMPLETIONTIME_CHALLENGE;
                 // Selfie
                 String selfie = getStringFromBitmap(drunkometerAnalysis.SELFIE);
                 Double selfie_drunkenness_score = drunkometerAnalysis.SELFIE_DRUNKENNESS_SCORE;
@@ -80,8 +80,8 @@ public class DataHandler {
                     String date = textMessage.getDate().toString(); // Format: Mon Dec 12 16:01:25 GMT 2022
                     JSONObject JSONTextMessage = new JSONObject();
                     JSONTextMessage.put("recipient", recipient).put("message", message).put("sentimentAnalysis", sentimentAnalysis).put("date", date);
-                    JSONdrunkometerAnalysis.put("mean_error_challenge", mean_error_challenge).put("mean_completiontime_challenge", mean_completiontime_challenge).put("selfie", selfie).put("selfie_drunkenness_score", selfie_drunkenness_score).put("text_message", textMessage);
-                } else{
+                    JSONdrunkometerAnalysis.put("mean_error_challenge", mean_error_challenge).put("mean_completiontime_challenge", mean_completiontime_challenge).put("selfie", selfie).put("selfie_drunkenness_score", selfie_drunkenness_score).put("text_message", JSONTextMessage);
+                } else {
                     JSONdrunkometerAnalysis.put("mean_error_challenge", mean_error_challenge).put("mean_completiontime_challenge", mean_completiontime_challenge).put("selfie", selfie).put("selfie_drunkenness_score", selfie_drunkenness_score);
                 }
                 drunkometerAnalysisList.put(i, JSONdrunkometerAnalysis);
@@ -90,7 +90,7 @@ public class DataHandler {
             userData.put("drunkometer_analysis_list", drunkometerAnalysisList);
 
 
-            Log.d("DRUNK-O-METER UserData", "Store data");
+            Log.d("D-O-M UserData", "Store data");
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -134,8 +134,8 @@ public class DataHandler {
                         UserData.BASELINE_TYPING_CHALLENGE.add(sample);
                     }
                     // Calculate mean completiontime and error for baseline typing samples
-                    UserData.MEAN_COMPLETIONTIME_BASELINE = UserData.calculateMean("baseline", "completiontime");
-                    UserData.MEAN_ERROR_BASELINE = UserData.calculateMean("baseline", "error");
+                    UserData.MEAN_COMPLETIONTIME_BASELINE = UserData.calculateMean( "completiontime", UserData.BASELINE_TYPING_CHALLENGE);
+                    UserData.MEAN_ERROR_BASELINE = UserData.calculateMean("error", UserData.BASELINE_TYPING_CHALLENGE);
 
                 }
 
@@ -143,21 +143,22 @@ public class DataHandler {
                 if (obj.has("drunkometer_analysis_list")){
                     JSONArray drunkometerAnalysisList = obj.getJSONArray("drunkometer_analysis_list");
                     UserData.DRUNKOMETER_ANALYSIS_LIST = new ArrayList<>();
+                    Log.d("D-O-M loader list length", String.valueOf(drunkometerAnalysisList.length()));
                     for(int i=0; i<drunkometerAnalysisList.length(); i++) {
 
                         DrunkometerAnalysis drunkometerAnalysis = new DrunkometerAnalysis();
                         JSONObject JSONdrunkometerAnalysis = drunkometerAnalysisList.getJSONObject(i);
-
                         // Typing Sample Error and Completiontime
                         drunkometerAnalysis.MEAN_ERROR_CHALLENGE = JSONdrunkometerAnalysis.getDouble("mean_error_challenge");
                         drunkometerAnalysis.MEAN_COMPLETIONTIME_CHALLENGE = JSONdrunkometerAnalysis.getDouble("mean_completiontime_challenge");
-
+                        Log.d("D-O-M loader ct", String.valueOf(drunkometerAnalysis.MEAN_COMPLETIONTIME_CHALLENGE));
                         // Selfie bitmap and Drunkenness Score
                         drunkometerAnalysis.SELFIE = getBitmapFromString(JSONdrunkometerAnalysis.getString("selfie"));
                         drunkometerAnalysis.SELFIE_DRUNKENNESS_SCORE = JSONdrunkometerAnalysis.getDouble("selfie_drunkenness_score");
-
+                        Log.d("D-O-M loader has text message", String.valueOf(JSONdrunkometerAnalysis.has("text_message")));
                         // OPTIONAL text message object
-                        if (JSONdrunkometerAnalysis.getJSONObject("text_message")  != null){
+                        if (JSONdrunkometerAnalysis.has("text_message")){
+
                             JSONObject JSONtextMessage = JSONdrunkometerAnalysis.getJSONObject("text_message");
                             String recipient = JSONtextMessage.getString("recipient");
                             String message = JSONtextMessage.getString("message");
@@ -175,7 +176,9 @@ public class DataHandler {
                             drunkometerAnalysis.TEXT_MESSAGE = new TextMessage(recipient, message, sentimentAnalysis, date);
                         }
 
-                       UserData.DRUNKOMETER_ANALYSIS_LIST.add(drunkometerAnalysis);
+                        UserData.DRUNKOMETER_ANALYSIS_LIST.add(drunkometerAnalysis);
+                        Log.d("D-O-M loader success", String.valueOf(UserData.DRUNKOMETER_ANALYSIS_LIST.size()));
+
 
                     }
 

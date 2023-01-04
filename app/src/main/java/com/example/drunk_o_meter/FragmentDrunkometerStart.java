@@ -11,13 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.drunk_o_meter.R;
-import com.example.drunk_o_meter.nlp.TextMessage;
 import com.example.drunk_o_meter.userdata.DataHandler;
 import com.example.drunk_o_meter.userdata.UserData;
 
@@ -29,6 +27,7 @@ import java.util.ArrayList;
 public class FragmentDrunkometerStart extends Fragment {
 
     private View layout;
+    private ImageView selfieView;
 
 
     public FragmentDrunkometerStart() {
@@ -64,6 +63,14 @@ public class FragmentDrunkometerStart extends Fragment {
         TextView title = layout.findViewById(R.id.DrunkometerStartTitle);
         title.setText("Welcome back, " + USERNAME + "!");
 
+        // TODO: remove - this is only for testing
+        selfieView = layout.findViewById(R.id.selfieView);
+        if(UserData.DRUNKOMETER_ANALYSIS_LIST.size() > 0){
+            selfieView.setImageBitmap(UserData.DRUNKOMETER_ANALYSIS_LIST.get(UserData.DRUNKOMETER_ANALYSIS_LIST.size()-1).SELFIE);
+        } else {
+            Log.d("D-O-M last selfie", "no selfie");
+        }
+
         // Inflate the layout for this fragment
         return layout;
     }
@@ -76,7 +83,7 @@ public class FragmentDrunkometerStart extends Fragment {
     public void clearLocalStorage(View view) {
         UserData.USERNAME = "";
         UserData.BASELINE_TYPING_CHALLENGE = new ArrayList<>();
-        UserData.TEXT_MESSAGE_LIST = new ArrayList<>();
+        UserData.DRUNKOMETER_ANALYSIS_LIST = new ArrayList<>();
         DataHandler.storeSettings(getActivity());
 
         Intent intent = new Intent(getActivity(), MainActivity.class);

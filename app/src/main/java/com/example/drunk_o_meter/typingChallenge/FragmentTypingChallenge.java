@@ -1,6 +1,7 @@
 package com.example.drunk_o_meter.typingChallenge;
 
 import static com.example.drunk_o_meter.userdata.UserData.BASELINE_TYPING_CHALLENGE;
+import static com.example.drunk_o_meter.userdata.UserData.DRUNKOMETER_ANALYSIS_LIST;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 
 import com.example.drunk_o_meter.R;
+import com.example.drunk_o_meter.userdata.DrunkometerAnalysis;
 import com.example.drunk_o_meter.userdata.UserData;
 
 import java.util.ArrayList;
@@ -60,7 +62,6 @@ public class FragmentTypingChallenge extends Fragment {
     BackgroundColorSpan cursorColor = new BackgroundColorSpan(Color.YELLOW);
 
     private View layout;
-
 
     public FragmentTypingChallenge() {
         // Required empty public constructor

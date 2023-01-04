@@ -6,18 +6,12 @@ import com.example.drunk_o_meter.typingChallenge.TypingSample;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class UserData {
 
-    /**
-     * DrunkometerAnalysis object that holds the most recent analysis data from the typing challenge,
-     * the selfie and its drunkeness score, and an optional text message with sentiment analysis.
-     */
-    public static DrunkometerAnalysis DRUNKOMETER_ANALYSIS = new DrunkometerAnalysis();
 
-    /**
-     * List of all text messages the user has provided for sentiment analysis
-     */
+    public static DrunkometerAnalysis DRUNKOMETER_ANALYSIS = new DrunkometerAnalysis();
 
     //TODO: @Kathi das ist die Liste mit allen Daten, die wir aus einer abgeschlossenen Drunkometer
     //      Analyse speichern. Jedes DrunkometerAnalysis Objekt hat die Ergebnisse der Typing Challenge,
@@ -44,36 +38,21 @@ public class UserData {
 
     /**
      * Calculate the mean value of the provided variable
-     * @param type the type of calculation needed - baseline or challenge
      * @param variable the variable used to calculate the mean - error or completiontime
      * @return the mean of the provided variable
      */
-    public static double calculateMean(String type, String variable){
+    public static double calculateMean(String variable, ArrayList<TypingSample> typingSamples){
         double mean = 0.0;
-        int sampleSize = 0;
+        int sampleSize = typingSamples.size();
 
-            // calculate mean of baseline typing samples
-            if (type.equals("baseline")){
-                sampleSize = BASELINE_TYPING_CHALLENGE.size();
                 for(int i =0; i< sampleSize; i++) {
                     if (variable.equals("error")) {
-                        mean = mean + BASELINE_TYPING_CHALLENGE.get(i).getError();
+                        mean = mean + typingSamples.get(i).getError();
                     } else if (variable.equals("completiontime")) {
-                        mean = mean + BASELINE_TYPING_CHALLENGE.get(i).getTime();
+                        mean = mean + typingSamples.get(i).getTime();
                     }
                 }
 
-                // caluclate eman of typing challenge samples
-            } else if (type.equals("challenge")){
-                sampleSize = DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE.size();
-                for(int i =0; i< sampleSize; i++) {
-                    if (variable.equals("error")) {
-                        mean = mean + DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE.get(i).getError();
-                    } else if (variable.equals("completiontime")) {
-                        mean = mean + DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE.get(i).getTime();
-                    }
-                }
-            }
 
         return mean / sampleSize;
     }

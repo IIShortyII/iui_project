@@ -16,7 +16,6 @@ import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallenge;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallengeIntro;
 import com.example.drunk_o_meter.userdata.DataHandler;
 
-import static com.example.drunk_o_meter.userdata.UserData.BASELINE_TYPING_CHALLENGE;
 import static com.example.drunk_o_meter.userdata.UserData.USERNAME;
 
 public class OnboardingActivity extends AppCompatActivity {
