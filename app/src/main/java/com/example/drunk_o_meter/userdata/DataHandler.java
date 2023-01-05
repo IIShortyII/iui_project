@@ -68,6 +68,7 @@ public class DataHandler {
 
                 Double mean_completiontime_challenge = drunkometerAnalysis.MEAN_COMPLETIONTIME_CHALLENGE;
                 // Selfie
+                // TODO @Dennis hier wird das Selfie in den local storage gespeichert. Wenn wir es wo anders speichern müssen wir das hier ersetzen
                 String selfie = getStringFromBitmap(drunkometerAnalysis.SELFIE);
                 Double selfie_drunkenness_score = drunkometerAnalysis.SELFIE_DRUNKENNESS_SCORE;
 
@@ -80,8 +81,10 @@ public class DataHandler {
                     String date = textMessage.getDate().toString(); // Format: Mon Dec 12 16:01:25 GMT 2022
                     JSONObject JSONTextMessage = new JSONObject();
                     JSONTextMessage.put("recipient", recipient).put("message", message).put("sentimentAnalysis", sentimentAnalysis).put("date", date);
+                    // TODO @Dennis hier müssten wir auch "put("selfie, selfie)" rausnehmen
                     JSONdrunkometerAnalysis.put("mean_error_challenge", mean_error_challenge).put("mean_completiontime_challenge", mean_completiontime_challenge).put("selfie", selfie).put("selfie_drunkenness_score", selfie_drunkenness_score).put("text_message", JSONTextMessage);
                 } else {
+                    // TODO @Dennis hier müssten wir auch "put("selfie, selfie)" rausnehmen
                     JSONdrunkometerAnalysis.put("mean_error_challenge", mean_error_challenge).put("mean_completiontime_challenge", mean_completiontime_challenge).put("selfie", selfie).put("selfie_drunkenness_score", selfie_drunkenness_score);
                 }
                 drunkometerAnalysisList.put(i, JSONdrunkometerAnalysis);
@@ -153,6 +156,7 @@ public class DataHandler {
                         drunkometerAnalysis.MEAN_COMPLETIONTIME_CHALLENGE = JSONdrunkometerAnalysis.getDouble("mean_completiontime_challenge");
                         Log.d("D-O-M loader ct", String.valueOf(drunkometerAnalysis.MEAN_COMPLETIONTIME_CHALLENGE));
                         // Selfie bitmap and Drunkenness Score
+                        // TODO @Dennis hier wird das Selfie aus dem local storage geladen. Wenn wir es stattdessen wo anders speichern, müssten wir es in diese Variable speichern
                         drunkometerAnalysis.SELFIE = getBitmapFromString(JSONdrunkometerAnalysis.getString("selfie"));
                         drunkometerAnalysis.SELFIE_DRUNKENNESS_SCORE = JSONdrunkometerAnalysis.getDouble("selfie_drunkenness_score");
                         Log.d("D-O-M loader has text message", String.valueOf(JSONdrunkometerAnalysis.has("text_message")));

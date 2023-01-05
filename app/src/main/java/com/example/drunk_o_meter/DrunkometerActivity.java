@@ -131,7 +131,6 @@ public class DrunkometerActivity extends AppCompatActivity {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 25, out);
         Bitmap compressed = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
-
         UserData.DRUNKOMETER_ANALYSIS.SELFIE = compressed;
         finishSelfie();
     }
@@ -192,6 +191,7 @@ public class DrunkometerActivity extends AppCompatActivity {
             UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE = textMessage;
             addDrunkoMeterAnalysis();
             DataHandler.storeSettings(this);
+            // TODO @Kathi: Go to recommender activity
         }
 
 
