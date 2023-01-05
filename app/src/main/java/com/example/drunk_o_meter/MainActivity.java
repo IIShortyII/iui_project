@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     /**
      * The tab, which shows the main functionality to find the (drinks) recommendation
      */
-    DrunkometerFragment drunkometerFragment;
+    FragmentDrunkometerStart drunkometerFragment;
 
     /**
      * The tab, which shows the chats that were not send in combination with the selfie taken in the same challenge --> also move safe-to-text challenge here?
