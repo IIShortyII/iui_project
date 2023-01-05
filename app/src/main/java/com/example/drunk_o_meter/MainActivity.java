@@ -3,13 +3,17 @@ package com.example.drunk_o_meter;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.drunk_o_meter.nlp.NlpPipeline;
 import com.example.drunk_o_meter.userdata.DataHandler;
 import com.example.drunk_o_meter.userdata.UserData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -45,13 +49,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //checkForPermissions();
+        //setupApplication();
+    }
 
-        setupApplication();
+
+        /*setupApplication();
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         bottomNavigationView.setOnItemSelectedListener(this);
-        bottomNavigationView.setSelectedItemId(R.id.drunkometer);
+        bottomNavigationView.setSelectedItemId(R.id.drunkometer);*/
+
+    private void checkForPermissions() {
+        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            Log.d("D-O-M permission", "no camera permission");
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
+        }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -101,14 +116,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         //create fragments
-        drunkometerFragment = new DrunkometerFragment();
+        //drunkometerFragment = new DrunkometerFragment();
         chatsFragment = new ChatsFragment();
         //TODO: remove after test
         recommendationFragment = new RecommendationFragment();
 
         switch (item.getItemId()) {
             case R.id.drunkometer:
-                getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, drunkometerFragment).commit();
+                //getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, drunkometerFragment).commit();
                 return true;
 
             case R.id.chats:

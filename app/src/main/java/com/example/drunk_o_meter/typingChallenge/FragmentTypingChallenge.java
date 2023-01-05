@@ -1,9 +1,10 @@
 package com.example.drunk_o_meter.typingChallenge;
 
 import static com.example.drunk_o_meter.userdata.UserData.BASELINE_TYPING_CHALLENGE;
-import static com.example.drunk_o_meter.userdata.UserData.TYPING_CHALLENGE;
+import static com.example.drunk_o_meter.userdata.UserData.DRUNKOMETER_ANALYSIS_LIST;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -27,6 +29,8 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 
 import com.example.drunk_o_meter.R;
+import com.example.drunk_o_meter.userdata.DrunkometerAnalysis;
+import com.example.drunk_o_meter.userdata.UserData;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,7 +62,6 @@ public class FragmentTypingChallenge extends Fragment {
     BackgroundColorSpan cursorColor = new BackgroundColorSpan(Color.YELLOW);
 
     private View layout;
-
 
     public FragmentTypingChallenge() {
         // Required empty public constructor
@@ -97,14 +100,15 @@ public class FragmentTypingChallenge extends Fragment {
             this.typingChallengeTextCount = 1;
             this.progressBar.setMax(getResources().getInteger(R.integer.typingChallengeCount));
             // Reset typing challenge samples
-            TYPING_CHALLENGE = new ArrayList<>();
+            UserData.DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE = new ArrayList<>();
         }
 
 
         updateBaselineContent();
 
         hiddenInput.requestFocus();
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
         // Set up change listener for the hidden input field
         hiddenInput.addTextChangedListener(new TextWatcher() {
@@ -164,7 +168,7 @@ public class FragmentTypingChallenge extends Fragment {
         if(this.CONTEXT.equals(getResources().getString(R.string.ONBOARDING))) {
             BASELINE_TYPING_CHALLENGE.add(sample);
         } else {
-            TYPING_CHALLENGE.add(sample);
+            UserData.DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE.add(sample);
         }
 
 
@@ -230,7 +234,9 @@ public class FragmentTypingChallenge extends Fragment {
             } else {
 
                 // Hide keyboard
-                getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(hiddenInput.getWindowToken(), 0);
 
                 // Display success message screen and continue with next step
                 baselineTextView.setText(successText);
@@ -255,6 +261,4 @@ public class FragmentTypingChallenge extends Fragment {
         baselineTextView.setText(currentSpannableString);
 
     }
-
-
 }
