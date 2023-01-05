@@ -3,7 +3,6 @@ package com.example.drunk_o_meter;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Intent;
@@ -11,39 +10,15 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 
-import com.example.drunk_o_meter.nlp.NlpPipeline;
 import com.example.drunk_o_meter.userdata.DataHandler;
 import com.example.drunk_o_meter.userdata.UserData;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
-    //TODO: add tab for past recommendations?
-
-    /**
-     * Main UI component for the navigation bar
-     */
-    BottomNavigationView bottomNavigationView;
-
-    /**
-     * The tab, which shows the main functionality to find the (drinks) recommendation
-     */
-    FragmentDrunkometerStart drunkometerFragment;
-
-    /**
-     * The tab, which shows the chats that were not send in combination with the selfie taken in the same challenge --> also move safe-to-text challenge here?
-     */
-    ChatsFragment chatsFragment;
-
-    /**
-     * TODO: remove @Kathi
-     */
-    RecommendationFragment recommendationFragment;
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
@@ -54,12 +29,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
 
-        /*setupApplication();
-
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-
-        bottomNavigationView.setOnItemSelectedListener(this);
-        bottomNavigationView.setSelectedItemId(R.id.drunkometer);*/
 
     private void checkForPermissions() {
         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -104,37 +73,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         } else {
             // go to actual app
-            Intent intent = new Intent(MainActivity.this, DrunkometerActivity.class);
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             MainActivity.this.startActivity(intent);
         }
     }
 
-    /**
-     *
-     * Setup navigation view (=tabs)
-     */
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        //create fragments
-        //drunkometerFragment = new DrunkometerFragment();
-        chatsFragment = new ChatsFragment();
-        //TODO: remove after test
-        recommendationFragment = new RecommendationFragment();
 
-        switch (item.getItemId()) {
-            case R.id.drunkometer:
-                //getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, drunkometerFragment).commit();
-                return true;
-
-            case R.id.chats:
-                getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, chatsFragment).commit();
-                return true;
-
-            //TODO: remove after test
-            case R.id.recommendation:
-                getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, recommendationFragment).commit();
-                return true;
-        }
-        return false;
-    }
 }

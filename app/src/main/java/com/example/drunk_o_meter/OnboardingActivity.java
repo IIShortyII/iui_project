@@ -43,8 +43,8 @@ public class OnboardingActivity extends AppCompatActivity {
 
         switch (stage) {
             case "username":
-                FragmentUsername fragmentUsername = new FragmentUsername();
-                loadFragment(fragmentUsername, "fragmentUsername");
+                UsernameFragment usernameFragment = new UsernameFragment();
+                loadFragment(usernameFragment, "fragmentUsername");
                 break;
 
             case "typingChallenge":
@@ -103,7 +103,7 @@ public class OnboardingActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void finishTypingChallenge(View view) {
         DataHandler.storeSettings(this);
-        Intent intent = new Intent(OnboardingActivity.this, DrunkometerActivity.class);
+        Intent intent = new Intent(OnboardingActivity.this, HomeActivity.class);
         OnboardingActivity.this.startActivity(intent);
     }
 

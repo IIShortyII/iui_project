@@ -10,10 +10,4 @@
         android:enabled="true"
         android:title="Chats"
         android:icon="@drawable/ic_chats"/>
-    <!-- TODO-->
-    <item
-        android:id="@+id/recommendation"
-        android:enabled="true"
-        android:title="Recommendation"
-        android:icon="@drawable/ic_recommendation"/>
 </menu>

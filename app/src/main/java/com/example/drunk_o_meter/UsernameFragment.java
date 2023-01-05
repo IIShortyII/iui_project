@@ -13,14 +13,14 @@ import androidx.annotation.RequiresApi;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentUsername extends Fragment {
+public class UsernameFragment extends Fragment {
 
     private Button next;
 
     private View layout;
 
 
-    public FragmentUsername() {
+    public UsernameFragment() {
         // Required empty public constructor
     }
 

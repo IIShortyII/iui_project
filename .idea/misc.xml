@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Kathi/Documents/LMU/3 Semester/IUI/Projekt/Drunkometer/app/src/main/res/drawable/rounded_shape.xml" value="0.1" />
+        <entry key="..\:/Users/Kathi/Documents/LMU/3 Semester/IUI/Projekt/Drunkometer/app/src/main/res/layout/activity_drunkometer.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Kathi/Documents/LMU/3 Semester/IUI/Projekt/Drunkometer/app/src/main/res/layout/fragment_chat_detail_view.xml" value="0.24010416666666667" />
+        <entry key="..\:/Users/Kathi/Documents/LMU/3 Semester/IUI/Projekt/Drunkometer/app/src/main/res/layout/fragment_chats.xml" value="0.2" />
+        <entry key="..\:/Users/Kathi/Documents/LMU/3 Semester/IUI/Projekt/Drunkometer/app/src/main/res/layout/fragment_drunkometer_start.xml" value="0.24230072463768115" />
+        <entry key="..\:/Users/Kathi/Documents/LMU/3 Semester/IUI/Projekt/Drunkometer/app/src/main/res/layout/fragment_item.xml" value="0.1" />
+        <entry key="..\:/Users/Kathi/Documents/LMU/3 Semester/IUI/Projekt/Drunkometer/app/src/main/res/layout/fragment_text_message_intro.xml" value="0.254981884057971" />
         <entry key="..\:/Users/kathr_/OneDrive/Desktop/HCI Master/3.Semester/IUI/drunk-o-meter/app/src/main/res/layout/fragment_drunkometer_start.xml" value="0.14130434782608695" />
         <entry key="..\:/Users/kathr_/OneDrive/Desktop/HCI Master/3.Semester/IUI/drunk-o-meter/app/src/main/res/layout/fragment_typing_challenge.xml" value="0.24954710144927536" />
         <entry key="..\:/Users/kathr_/OneDrive/Desktop/HCI Master/3.Semester/IUI/drunk-o-meter/app/src/main/res/xml/provider_paths.xml" value="0.1" />
