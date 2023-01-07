@@ -58,7 +58,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:orientation="horizontal"
-                android:weightSum="2"
+                android:weightSum="3"
                 app:layout_constraintTop_toBottomOf="@id/recommendation_intro">
 
                 <LinearLayout
@@ -82,8 +82,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
+                        android:gravity="center"
                         android:text="@string/recommendation_drinks_amount"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+                        android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
 
                     <ImageView
                         android:id="@+id/recommendation_drink1_image"
@@ -94,6 +95,15 @@
                         android:src="@drawable/defaultdrink" />
 
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="or"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
 
                 <LinearLayout
                     android:id="@+id/recommendation_drink2"
@@ -117,7 +127,7 @@
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:text="@string/recommendation_drinks_amount"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+                        android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
 
                     <ImageView
                         android:id="@+id/recommendation_drink2_image"
