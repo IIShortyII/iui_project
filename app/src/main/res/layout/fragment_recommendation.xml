@@ -145,4 +145,14 @@
 
     </ScrollView>
 
+    <Button
+        android:id="@+id/goToHomeScreen"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:onClick="goToHomeScreen"
+        android:text="OK"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

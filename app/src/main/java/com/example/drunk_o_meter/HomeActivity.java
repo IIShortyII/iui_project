@@ -206,12 +206,10 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void skipTextMessage(View view) {
-
         addDrunkoMeterAnalysis();
         DataHandler.storeSettings(this);
-        /*RecommendationFragment recommendationFragment = new RecommendationFragment();
-        loadFragment(recommendationFragment, "recommendationFragment");*/
-        // TODO @Kathi: Go to recommender activity + bottomNavigationView.setVisibility(View.VISIBLE);
+        RecommendationFragment recommendationFragment = new RecommendationFragment();
+        loadFragment(recommendationFragment, "recommendationFragment");
     }
 
 
@@ -239,7 +237,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE = textMessage;
             addDrunkoMeterAnalysis();
             DataHandler.storeSettings(this);
-            // TODO @Kathi: Go to recommender activity
+
+            RecommendationFragment recommendationFragment = new RecommendationFragment();
+            loadFragment(recommendationFragment, "recommendationFragment");
         }
     }
 
@@ -253,5 +253,15 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             newAnalysis.TEXT_MESSAGE = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE;
         }
         DRUNKOMETER_ANALYSIS_LIST.add(newAnalysis);
+    }
+
+    /**
+     * Continue to home screen
+     */
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    public void goToHomeScreen(View view) {
+        DrunkometerFragment drunkometerFragment = new DrunkometerFragment();
+        loadFragment(drunkometerFragment, "drunkometerFragment");
+        bottomNavigationView.setVisibility(View.VISIBLE);
     }
 }
