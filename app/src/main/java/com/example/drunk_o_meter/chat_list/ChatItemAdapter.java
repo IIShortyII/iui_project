@@ -10,9 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.drunk_o_meter.ChatsFragment;
-import com.example.drunk_o_meter.MainActivity;
 import com.example.drunk_o_meter.R;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -30,19 +30,21 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView selfieImage;
         public TextView dateText;
         public TextView timeText;
         public TextView contentText;
-        public ImageView chatImage;
+        public ImageView safeToTextImage;
         public View layout;
 
         public ViewHolder(View v) {
             super(v);
             layout = v;
+            selfieImage = (ImageView) v.findViewById(R.id.chat_item_selfie);
             dateText = (TextView) v.findViewById(R.id.chat_item_date);
             timeText = (TextView) v.findViewById(R.id.chat_item_time);
             contentText = (TextView) v.findViewById(R.id.chat_item_content);
-            chatImage = (ImageView) v.findViewById(R.id.chat_item_image);
+            safeToTextImage = (ImageView) v.findViewById(R.id.chat_item_check);
         }
     }
 
@@ -52,13 +54,14 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHo
         // create a new view
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
-        View v = inflater.inflate(R.layout.fragment_item, parent, false);
+        View v = inflater.inflate(R.layout.fragment_chat_item, parent, false);
         // set the view's size, margins, paddings and layout parameters
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        //TODO: get selfie
         String date = items.get(position).date;
         String time = items.get(position).time;
         String content = items.get(position).content_short;
@@ -67,10 +70,14 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHo
         holder.dateText.setText(date);
         holder.timeText.setText(time);
         holder.contentText.setText(content);
+
+        //TODO: add selfie of text message
+        //holder.selfieImage.setImageResource(...);
+
         if (safeToText) {
-            holder.chatImage.setImageResource(R.drawable.check);
+            holder.safeToTextImage.setImageResource(R.drawable.check);
         } else {
-            holder.chatImage.setImageResource(R.drawable.cross);
+            holder.safeToTextImage.setImageResource(R.drawable.cross);
         }
 
         //TODO: Add on click listener for items which leads to full view of chat --> implementation started in ChatsFragment
