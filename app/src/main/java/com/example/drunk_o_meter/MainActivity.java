@@ -1,8 +1,8 @@
 package com.example.drunk_o_meter;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Intent;
@@ -11,7 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.drunk_o_meter.nlp.NlpPipeline;
 import com.example.drunk_o_meter.userdata.DataHandler;
 import com.example.drunk_o_meter.userdata.UserData;
 
@@ -19,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
@@ -28,11 +28,14 @@ public class MainActivity extends AppCompatActivity {
         //setupApplication();
     }
 
+
+
     private void checkForPermissions() {
         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             Log.d("D-O-M permission", "no camera permission");
             requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
         }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -70,8 +73,10 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
             // go to actual app
-            Intent intent = new Intent(MainActivity.this, DrunkometerActivity.class);
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             MainActivity.this.startActivity(intent);
         }
     }
+
+
 }

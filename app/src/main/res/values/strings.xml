@@ -2,17 +2,17 @@
     <string name="app_name">Drunk-o-meter</string>
 
     <!-- Texting challenge onboarding -->
-    <string name="text_4">At three precisely I was at Baker Street, but Holmes had not yet returned.</string>
-    <string name="text_5">The landlady informed me that he had left the house shortly after eight in the morning.</string>
-    <string name="text_0">Text 1</string>
-    <string name="text_3">Text 3</string>
-    <string name="text_1">Text 4</string>
-    <string name="text_2">Text 5</string>
-    <string name="text_6">Text 6</string>
-    <string name="text_7">Text 7</string>
-    <string name="text_8">Text 8</string>
-    <string name="text_9">Text 9</string>
-    <string name="text_10">Text 10</string>
+    <string name="text_4">My relationship to whiskey is on the rocks</string>
+    <string name="text_5">If life gives you lemons, add vodka</string>
+    <string name="text_0">I swear to Drunk, I am not God</string>
+    <string name="text_3">Act single, see double, drink triple</string>
+    <string name="text_1">A party without alcohol is just a meeting</string>
+    <string name="text_2">I drink because I work, I work so I can drink</string>
+    <string name="text_6">Sometimes I drink water to surprise my liver</string>
+    <string name="text_7">Good people drink good beer</string>
+    <string name="text_8">Beauty is in the eye of the beer holder</string>
+    <string name="text_9">I drink to make people more interesting</string>
+    <string name="text_10">Great minds drink alike</string>
     <string name="baselineComplete">Aaaand you\'re done! 🔥</string>
     <string name="typingChallengeComplete">Typing challenge completed! Let\'s take a winner selfie 🔥</string>
 
@@ -24,19 +24,22 @@
     <string name="next_completeOnboarding">Continue to Drunk-O-Meter</string>
     <string name="next_takeSelfie">Take a Selfie</string>
 
-    <string name="usernameTitle">Some title</string>
-    <string name="usernameDescription">Some description</string>
+    <string name="usernameTitle">Welcome to Drunk-O-Meter!</string>
+    <string name="usernameDescription">What\'s your name, mate?</string>
 
-    <string name="typingChallengeIntroTitle">This is a title</string>
-    <string name="typingChallengeIntroDescription">This is a description</string>
-    <string name="baselineIntroDescription">This is a description</string>
+    <string name="typingChallengeIntroTitle">Typing Challenge</string>
+    <string name="typingChallengeIntroDescription">Let\'s start with a quick typing challenge. Go!</string>
+    <string name="baselineIntroDescription">In order to evaluate your Drunkenness Score, we need to learn about your typing performance when being sober. We created a quick typing challenge for you. Let\'s go!</string>
 
     <string name="recommendation_drunkennessScore">Your drunkenness score is:</string>
     <string name="recommendation_intro">I would recommend the following:</string>
     <string name="recommendation_drinks_image">Drink Image</string>
     <string name="recommendation_drinks_name">Drink Name</string>
     <string name="recommendation_drinks_amount">Drink Amount</string>
-    <string name="no_value">No value</string>
+
+    <string name="no_value">Drink Amount</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
     <string name="textMessageInputTitle">Type your message 💬</string>
     <string name="textMessageInputDescription">This is a description</string>

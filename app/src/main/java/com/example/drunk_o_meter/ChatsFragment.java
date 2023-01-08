@@ -1,14 +1,14 @@
 package com.example.drunk_o_meter;
 
-import android.content.Intent;
 import android.os.Bundle;
+
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.drunk_o_meter.chat_list.ChatDetailViewFragment;
@@ -28,10 +28,6 @@ public class ChatsFragment extends Fragment implements OnItemClickListener {
     private String mParam2;
 
     private ArrayList<ChatInfo> allChats = new ArrayList<>();
-
-    public ChatsFragment() {
-        // Required empty public constructor
-    }
 
     /**
      * Use this factory method to create a new instance of
@@ -96,7 +92,7 @@ public class ChatsFragment extends Fragment implements OnItemClickListener {
         //TODO: does this work? --> test
         ChatDetailViewFragment chatDetailViewFragment= ChatDetailViewFragment.newInstance(date, time, content, safeToText);
 
-        getActivity().getSupportFragmentManager().beginTransaction()
+        getActivity().getFragmentManager().beginTransaction()
                 .replace(R.id.fragment_chats, chatDetailViewFragment)
                 .addToBackStack(null)
                 .commit();

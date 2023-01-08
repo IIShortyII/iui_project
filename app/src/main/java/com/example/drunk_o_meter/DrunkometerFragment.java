@@ -24,13 +24,13 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentDrunkometerStart extends Fragment {
+public class DrunkometerFragment extends Fragment {
 
     private View layout;
     private ImageView selfieView;
 
 
-    public FragmentDrunkometerStart() {
+    public DrunkometerFragment() {
         // Required empty public constructor
     }
 

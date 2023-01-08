@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="40dp">
 
     <TextView
         android:id="@+id/textMessageIntroTitle"
@@ -46,7 +47,7 @@
                 android:gravity="center"
                 android:onClick="skipTextMessage"
                 android:text="@string/next_skipTextMessage"
-                android:textColor="@color/purple_500" />
+                android:textColor="@color/primary" />
         </FrameLayout>
 
             <Button

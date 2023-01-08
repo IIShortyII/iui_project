@@ -19,10 +19,10 @@ import com.example.drunk_o_meter.userdata.DataHandler;
 import static com.example.drunk_o_meter.userdata.UserData.USERNAME;
 
 public class OnboardingActivity extends AppCompatActivity {
+
+    //TODO: Add user preferences on drinks & age question?
+
     private String stage;
-
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -43,8 +43,8 @@ public class OnboardingActivity extends AppCompatActivity {
 
         switch (stage) {
             case "username":
-                FragmentUsername fragmentUsername = new FragmentUsername();
-                loadFragment(fragmentUsername, "fragmentUsername");
+                UsernameFragment usernameFragment = new UsernameFragment();
+                loadFragment(usernameFragment, "fragmentUsername");
                 break;
 
             case "typingChallenge":
@@ -103,7 +103,7 @@ public class OnboardingActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void finishTypingChallenge(View view) {
         DataHandler.storeSettings(this);
-        Intent intent = new Intent(OnboardingActivity.this, DrunkometerActivity.class);
+        Intent intent = new Intent(OnboardingActivity.this, HomeActivity.class);
         OnboardingActivity.this.startActivity(intent);
     }
 

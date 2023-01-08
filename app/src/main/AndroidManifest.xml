@@ -19,10 +19,8 @@
             android:name=".OnboardingActivity"
             android:exported="false" />
         <activity
-            android:name=".DrunkometerActivity"
+            android:name=".HomeActivity"
             android:exported="false" />
-        <activity
-            android:name=".RecommendationActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

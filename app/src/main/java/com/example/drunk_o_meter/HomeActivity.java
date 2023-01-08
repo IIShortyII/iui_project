@@ -2,6 +2,7 @@ package com.example.drunk_o_meter;
 
 import static com.example.drunk_o_meter.userdata.UserData.DRUNKOMETER_ANALYSIS_LIST;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -31,26 +33,46 @@ import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallengeIntro;
 import com.example.drunk_o_meter.userdata.DataHandler;
 import com.example.drunk_o_meter.userdata.DrunkometerAnalysis;
 import com.example.drunk_o_meter.userdata.UserData;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DrunkometerActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener {
+    //TODO: add tab for past recommendations?
+
+    /**
+     * Main UI component for the navigation bar
+     */
+    BottomNavigationView bottomNavigationView;
+
+    /**
+     * The tab, which shows the main functionality to find the (drinks) recommendation
+     */
+    DrunkometerFragment drunkometerFragment;
+
+    /**
+     * The tab, which shows the chats that were not send in combination with the selfie taken in the same challenge --> also move safe-to-text challenge here?
+     */
+    ChatsFragment chatsFragment;
+
+
     private File imageFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("Bottom Nav", "on create");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_drunkometer);
+        setContentView(R.layout.activity_home);
 
-        // Setup start view of drunkomenter
-        FragmentDrunkometerStart fragmentDrunkometerStart = new FragmentDrunkometerStart();
-        loadFragment(fragmentDrunkometerStart, "fragmentDrunkometerStart");
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
+        Log.d("Bottom Nav", "found");
+        bottomNavigationView.setOnItemSelectedListener(this);
+        bottomNavigationView.setSelectedItemId(R.id.drunkometer);
     }
 
     /**
@@ -63,18 +85,41 @@ public class DrunkometerActivity extends AppCompatActivity {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
-        android.app.Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_container_drunkometer);
+        android.app.Fragment fragment = getFragmentManager().findFragmentById(R.id.flFragment);
 
         if(fragment == null)
         {
-            ft.add(R.id.fragment_container_drunkometer, frag, tag);
+            ft.add(R.id.flFragment, frag, tag);
         } else
         {
-            ft.replace(R.id.fragment_container_drunkometer, frag, tag);
+            ft.replace(R.id.flFragment, frag, tag);
         }
         ft.addToBackStack(null);
 
         ft.commit();
+    }
+
+    /**
+     *
+     * Setup navigation view (=tabs)
+     */
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Log.d("Bottom Nav", "nav item selected");
+        //create fragments
+        drunkometerFragment = new DrunkometerFragment();
+        chatsFragment = new ChatsFragment();
+
+        switch (item.getItemId()) {
+            case R.id.drunkometer:
+                getFragmentManager().beginTransaction().replace(R.id.flFragment, drunkometerFragment).commit();
+                return true;
+
+            case R.id.chats:
+                getFragmentManager().beginTransaction().replace(R.id.flFragment, chatsFragment).commit();
+                return true;
+        }
+        return false;
     }
 
     /**
@@ -87,6 +132,7 @@ public class DrunkometerActivity extends AppCompatActivity {
 
         FragmentTypingChallengeIntro fragmentTypingChallengeIntro = new FragmentTypingChallengeIntro();
         loadFragment(fragmentTypingChallengeIntro, "fragmentTypingChallengeIntro");
+        bottomNavigationView.setVisibility(View.GONE);
     }
 
     /**
@@ -131,7 +177,6 @@ public class DrunkometerActivity extends AppCompatActivity {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 25, out);
         Bitmap compressed = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
-
         UserData.DRUNKOMETER_ANALYSIS.SELFIE = compressed;
         finishSelfie();
     }
@@ -164,7 +209,9 @@ public class DrunkometerActivity extends AppCompatActivity {
 
         addDrunkoMeterAnalysis();
         DataHandler.storeSettings(this);
-        // TODO @Kathi: Go to recommender activity
+        /*RecommendationFragment recommendationFragment = new RecommendationFragment();
+        loadFragment(recommendationFragment, "recommendationFragment");*/
+        // TODO @Kathi: Go to recommender activity + bottomNavigationView.setVisibility(View.VISIBLE);
     }
 
 
@@ -192,9 +239,8 @@ public class DrunkometerActivity extends AppCompatActivity {
             UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE = textMessage;
             addDrunkoMeterAnalysis();
             DataHandler.storeSettings(this);
+            // TODO @Kathi: Go to recommender activity
         }
-
-
     }
 
     private void addDrunkoMeterAnalysis() {
