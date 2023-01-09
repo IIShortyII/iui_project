@@ -1,6 +1,7 @@
 package com.example.drunk_o_meter.chat_list;
 
 import android.app.FragmentManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,9 +77,11 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHo
         //holder.selfieImage.setImageResource(...);
 
         if (safeToText) {
-            holder.safeToTextImage.setImageResource(R.drawable.check);
+            holder.safeToTextImage.setBackgroundColor(Color.GREEN);
+            holder.safeToTextImage.setImageResource(R.drawable.ic_safe_to_text);
         } else {
-            holder.safeToTextImage.setImageResource(R.drawable.cross);
+            holder.safeToTextImage.setBackgroundColor(Color.RED);
+            holder.safeToTextImage.setImageResource(R.drawable.ic_not_safe_to_text);
         }
 
         ChatsFragment chatsFragment = (ChatsFragment)fragmentManager.findFragmentByTag("chatsFragment");

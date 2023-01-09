@@ -4,71 +4,82 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/chat_item"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="10dp">
-
-        <ImageView
-            android:id="@+id/chat_item_selfie"
-            android:layout_width="200px"
-            android:layout_height="200px"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/defaultselfie" />
+        android:layout_height="match_parent"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="2dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardMaxElevation="12dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:id="@+id/chat_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/chat_item_selfie"
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/defaultselfie" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toTopOf="@id/chat_item">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="@id/chat_item">
+
+                    <TextView
+                        android:id="@+id/chat_item_date"
+                        style="@style/TextAppearance.Material3.BodySmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Date" />
+
+                    <TextView
+                        android:id="@+id/chat_item_time"
+                        style="@style/TextAppearance.Material3.BodySmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:text="Time" />
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/chat_item_date"
-                    style="@style/TextAppearance.Material3.BodySmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Date" />
-
-                <TextView
-                    android:id="@+id/chat_item_time"
-                    style="@style/TextAppearance.Material3.BodySmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:text="Time" />
+                    android:id="@+id/chat_item_content"
+                    style="@style/TextAppearance.Material3.BodyMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Content" />
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/chat_item_content"
-                style="@style/TextAppearance.Material3.BodyMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Content" />
+            <ImageButton
+                android:id="@+id/chat_item_check"
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                app:layout_constraintEnd_toEndOf="@id/chat_item"
+                android:background="@drawable/rounded_shape"
+                android:src="@drawable/ic_safe_to_text" />
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/chat_item_check"
-            android:layout_width="100px"
-            android:layout_height="100px"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/check" />
-
-
-    </LinearLayout>
-
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
