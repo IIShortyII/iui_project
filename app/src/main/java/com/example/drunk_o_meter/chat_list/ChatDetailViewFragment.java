@@ -17,14 +17,13 @@ import com.example.drunk_o_meter.R;
  */
 public class ChatDetailViewFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
+    // TODO: Add selfie
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_DATE = "date";
     private static final String ARG_TIME = "time";
     private static final String ARG_CONTENT = "content";
     private static final String ARG_SAFETOTEXT = "false";
 
-    // TODO: Rename and change types of parameters
     private String date;
     private String time;
     private String content;
@@ -73,4 +72,6 @@ public class ChatDetailViewFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_chat_detail_view, container, false);
     }
+
+    //TODO: insert back button to layout
 }

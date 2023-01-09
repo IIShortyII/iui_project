@@ -1,6 +1,7 @@
 package com.example.drunk_o_meter.chat_list;
 
-import android.content.Context;
+import android.app.FragmentManager;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.drunk_o_meter.ChatsFragment;
 import com.example.drunk_o_meter.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -21,12 +22,11 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHo
      * List of chats that are getting represented
      */
     private final ArrayList<ChatInfo> items;
+    private final FragmentManager fragmentManager;
 
-    private final Context context;
-
-    public ChatItemAdapter(ArrayList<ChatInfo> items, Context context) {
+    public ChatItemAdapter(ArrayList<ChatInfo> items, FragmentManager fragmentManager) {
         this.items = items;
-        this.context = context;
+        this.fragmentManager = fragmentManager;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -59,6 +59,7 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHo
         return new ViewHolder(v);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //TODO: get selfie
@@ -80,13 +81,10 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHo
             holder.safeToTextImage.setImageResource(R.drawable.cross);
         }
 
-        //TODO: Add on click listener for items which leads to full view of chat --> implementation started in ChatsFragment
-        /*holder.itemView.setOnClickListener(view -> {
-            if (context instanceof MainActivity) {
-                ((MainActivity)context).onClick(holder.getAbsoluteAdapterPosition());
-            }
-        });*/
-
+        ChatsFragment chatsFragment = (ChatsFragment)fragmentManager.findFragmentByTag("chatsFragment");
+        holder.itemView.setOnClickListener(view -> {
+                chatsFragment.onClick(holder.getAdapterPosition());
+        });
     }
 
     @Override
