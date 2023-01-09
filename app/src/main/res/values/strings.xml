@@ -36,8 +36,11 @@
     <string name="recommendation_drinks_image">Drink Image</string>
     <string name="recommendation_drinks_name">Drink Name</string>
     <string name="recommendation_drinks_amount">Drink Amount</string>
+    <string name="recommendation_safeToText_partOne">Your message for </string>
+    <string name="recommendation_safeToText_partTwo"> was found to be </string>
 
-    <string name="no_value">Drink Amount</string>
+
+    <string name="no_value">No value</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 

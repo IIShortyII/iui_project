@@ -9,8 +9,12 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,28 +23,42 @@ public class RecommendationFragment extends Fragment {
 
     private View layout;
 
-    //TODO: if drunkennessScore == drunkAF --> no drink2 amount (=go home)
-    public TextView drunkennessScore;
-
-    public TextView drink1Name;
-    public TextView drink1Amount;
-    public ImageView drink1Image;
-
-    public TextView drink2Title;
-    public TextView drink2Amount;
-    public ImageView drink2Image;
 
     //TODO: get from analysis
     private int drunkennessScoreInt = 4;
+    private boolean safeToText = true;
+
+    /**
+     * Indicator that text analysis was conducted
+     */
+    private static final String TEXT_ANALYSIS_CONDUCTED = "textAnalysisConducted";
+    private boolean textAnalysisConducted;
 
     public RecommendationFragment() {
         // Required empty public constructor
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param textAnalysisConducted Whether text analysis was done (=true) or skipped (=false).
+     * @return A new instance of fragment SettingsFragment.
+     */
+    public static RecommendationFragment newInstance(boolean textAnalysisConducted) {
+        RecommendationFragment fragment = new RecommendationFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(TEXT_ANALYSIS_CONDUCTED, textAnalysisConducted);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            textAnalysisConducted = getArguments().getBoolean(TEXT_ANALYSIS_CONDUCTED);
+        }
     }
 
     @Override
@@ -49,16 +67,36 @@ public class RecommendationFragment extends Fragment {
 
         this.layout = inflater.inflate(R.layout.fragment_recommendation, container, false);
 
-        //TODO: evtl mit ViewHolder ersetzen
-        drunkennessScore = layout.findViewById(R.id.recommendation_drunkennessScore_value);
-        drink1Name = layout.findViewById(R.id.recommendation_drink1_name);
-        drink1Amount = layout.findViewById(R.id.recommendation_drink1_amount);
-        drink1Image = layout.findViewById(R.id.recommendation_drink1_image);
-        drink2Title = layout.findViewById(R.id.recommendation_drink2_name);
-        drink2Amount = layout.findViewById(R.id.recommendation_drink2_amount);
-        drink2Image = layout.findViewById(R.id.recommendation_drink2_image);
+        TextView drunkennessScore = layout.findViewById(R.id.recommendation_drunkennessScore_value);
+
+        TextView drink1Name = layout.findViewById(R.id.recommendation_drink1_name);
+        TextView drink1Amount = layout.findViewById(R.id.recommendation_drink1_amount);
+        ImageView drink1Image = layout.findViewById(R.id.recommendation_drink1_image);
+        TextView drink2Title = layout.findViewById(R.id.recommendation_drink2_name);
+        TextView drink2Amount = layout.findViewById(R.id.recommendation_drink2_amount);
+        ImageView drink2Image = layout.findViewById(R.id.recommendation_drink2_image);
+
+        LinearLayout textAnalysisResult = layout.findViewById(R.id.recommendation_safeToText);
+        TextView messageReceiver = layout.findViewById(R.id.recommendation_safeToText_receiver);
+        TextView safeToTextValue = layout.findViewById(R.id.recommendation_safeToText_value);
+        ImageButton copyMessageContent = layout.findViewById(R.id.recommendation_copyMessageContent);
 
         drunkennessScore.setText(calculateDrunkennessScore());
+
+        //Only show result of text analysis if a message was entered
+        if (textAnalysisConducted) {
+            //TODO: get from message
+            messageReceiver.setText("Example Receiver");
+            if (safeToText) {
+                safeToTextValue.setText("Safe To Text");
+                copyMessageContent.setVisibility(View.VISIBLE);
+            } else {
+                safeToTextValue.setText("Not Safe To Text");
+                copyMessageContent.setVisibility(View.GONE);
+            }
+        } else {
+            textAnalysisResult.setVisibility(View.GONE);
+        }
 
         //TODO: exchange with correct value for "drunk AF"
         if (drunkennessScoreInt == 4) {

@@ -55,13 +55,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("Bottom Nav", "on create");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        Log.d("Bottom Nav", "found");
         bottomNavigationView.setOnItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.drunkometer);
     }
@@ -96,7 +94,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Log.d("Bottom Nav", "nav item selected");
         //create fragments
         DrunkometerFragment drunkometerFragment = new DrunkometerFragment();
         ChatsFragment chatsFragment = new ChatsFragment();
@@ -197,7 +194,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     public void skipTextMessage(View view) {
         addDrunkoMeterAnalysis();
         DataHandler.storeSettings(this);
-        RecommendationFragment recommendationFragment = new RecommendationFragment();
+
+        RecommendationFragment recommendationFragment = RecommendationFragment.newInstance(false);
         loadFragment(recommendationFragment, "recommendationFragment");
     }
 
@@ -227,7 +225,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             addDrunkoMeterAnalysis();
             DataHandler.storeSettings(this);
 
-            RecommendationFragment recommendationFragment = new RecommendationFragment();
+            RecommendationFragment recommendationFragment = RecommendationFragment.newInstance(true);
             loadFragment(recommendationFragment, "recommendationFragment");
         }
     }
@@ -273,6 +271,14 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         ChatsFragment chatsFragment = new ChatsFragment();
         loadFragment(chatsFragment, "chatsFragment");
         bottomNavigationView.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Copy message content
+     */
+    public void copyMessageContent(View view) {
+        Log.d("Message Copy", "message content copied to clipboard");
+        //TODO
     }
 
 }

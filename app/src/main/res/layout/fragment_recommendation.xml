@@ -6,11 +6,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fillViewport="true">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_margin="16dp">
 
             <LinearLayout
@@ -38,7 +41,7 @@
                     android:layout_marginBottom="32dp"
                     android:gravity="center"
                     android:text="@string/no_value"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
             </LinearLayout>
 
             <TextView
@@ -58,101 +61,201 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:orientation="horizontal"
-                android:weightSum="3"
                 app:layout_constraintTop_toBottomOf="@id/recommendation_intro">
 
-                <LinearLayout
-                    android:id="@+id/recommendation_drink1"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="2dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardMaxElevation="12dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true">
 
-                    <TextView
-                        android:id="@+id/recommendation_drink1_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:text="@string/recommendation_drinks_name"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
-
-                    <TextView
-                        android:id="@+id/recommendation_drink1_amount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
+                    <LinearLayout
+                        android:id="@+id/recommendation_drink1"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
                         android:gravity="center"
-                        android:text="@string/recommendation_drinks_amount"
-                        android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
+                        android:orientation="vertical"
+                        style="@style/CardView">
 
-                    <ImageView
-                        android:id="@+id/recommendation_drink1_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="200dp"
-                        android:contentDescription="@string/recommendation_drinks_image"
-                        android:padding="10dp"
-                        android:src="@drawable/defaultdrink" />
+                        <TextView
+                            android:id="@+id/recommendation_drink1_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="@string/recommendation_drinks_name"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/recommendation_drink1_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:gravity="center"
+                            android:text="@string/recommendation_drinks_amount"
+                            android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
+
+                        <ImageView
+                            android:id="@+id/recommendation_drink1_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="200dp"
+                            android:contentDescription="@string/recommendation_drinks_image"
+                            android:padding="10dp"
+                            android:src="@drawable/defaultdrink" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="or"
-                    android:layout_weight="1"
+                    android:layout_weight=".40"
                     android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
 
-                <LinearLayout
-                    android:id="@+id/recommendation_drink2"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="2dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardMaxElevation="12dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true">
 
-                    <TextView
-                        android:id="@+id/recommendation_drink2_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:text="@string/recommendation_drinks_name"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+                    <LinearLayout
+                        android:id="@+id/recommendation_drink2"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/recommendation_drink2_amount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:text="@string/recommendation_drinks_amount"
-                        android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
+                        <TextView
+                            android:id="@+id/recommendation_drink2_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="@string/recommendation_drinks_name"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
 
-                    <ImageView
-                        android:id="@+id/recommendation_drink2_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="200dp"
-                        android:padding="10dp"
-                        android:src="@drawable/defaultdrink"
-                        android:contentDescription="@string/recommendation_drinks_image" />
+                        <TextView
+                            android:id="@+id/recommendation_drink2_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="@string/recommendation_drinks_amount"
+                            android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
 
-                </LinearLayout>
+                        <ImageView
+                            android:id="@+id/recommendation_drink2_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="200dp"
+                            android:padding="10dp"
+                            android:src="@drawable/defaultdrink"
+                            android:contentDescription="@string/recommendation_drinks_image" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:id="@+id/recommendation_safeToText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/recommendation_drinks">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
+
+                    <LinearLayout
+                        android:id="@+id/recommendation_safeToTextPartOne"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:text="@string/recommendation_safeToText_partOne"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                        <TextView
+                            android:id="@+id/recommendation_safeToText_receiver"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no_value"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/recommendation_safeToTextPartTwo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:text="@string/recommendation_safeToText_partTwo"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                        <TextView
+                            android:id="@+id/recommendation_safeToText_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no_value"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/recommendation_copyMessageContent"
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="@color/primaryVariant"
+                    android:onClick="copyMessageContent"
+                    android:src="@drawable/ic_content_copy"
+                    />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/goToHomeScreen"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="80dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:onClick="goToHomeScreen"
+                android:text="OK"
+                />
+
+        </LinearLayout>
 
     </ScrollView>
-
-    <Button
-        android:id="@+id/goToHomeScreen"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_margin="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:onClick="goToHomeScreen"
-        android:text="OK"
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
