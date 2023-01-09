@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.drunk_o_meter.chat_list.ChatDetailViewFragment;
 import com.example.drunk_o_meter.nlp.FragmentTextMessageInput;
 import com.example.drunk_o_meter.nlp.FragmentTextMessageIntro;
 import com.example.drunk_o_meter.nlp.NlpPipeline;
@@ -48,16 +49,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      * Main UI component for the navigation bar
      */
     BottomNavigationView bottomNavigationView;
-
-    /**
-     * The tab, which shows the main functionality to find the (drinks) recommendation
-     */
-    DrunkometerFragment drunkometerFragment;
-
-    /**
-     * The tab, which shows the chats that were not send in combination with the selfie taken in the same challenge --> also move safe-to-text challenge here?
-     */
-    ChatsFragment chatsFragment;
 
 
     private File imageFile;
@@ -107,16 +98,16 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Log.d("Bottom Nav", "nav item selected");
         //create fragments
-        drunkometerFragment = new DrunkometerFragment();
-        chatsFragment = new ChatsFragment();
+        DrunkometerFragment drunkometerFragment = new DrunkometerFragment();
+        ChatsFragment chatsFragment = new ChatsFragment();
 
         switch (item.getItemId()) {
             case R.id.drunkometer:
-                getFragmentManager().beginTransaction().replace(R.id.flFragment, drunkometerFragment).commit();
+                loadFragment(drunkometerFragment, "drunkometerFragment");
                 return true;
 
             case R.id.chats:
-                getFragmentManager().beginTransaction().replace(R.id.flFragment, chatsFragment).commit();
+                loadFragment(chatsFragment, "chatsFragment");
                 return true;
         }
         return false;
@@ -180,8 +171,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         UserData.DRUNKOMETER_ANALYSIS.SELFIE = compressed;
         finishSelfie();
     }
-
-
 
     /**
      * Continue to text message fragment
@@ -264,4 +253,26 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         loadFragment(drunkometerFragment, "drunkometerFragment");
         bottomNavigationView.setVisibility(View.VISIBLE);
     }
+
+    /**
+     * View chat detail
+     */
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    public void viewChatDetails(String date, String time, String content, boolean safeToText) {
+        bottomNavigationView.setVisibility(View.GONE);
+        //TODO: add selfie
+        ChatDetailViewFragment chatDetailViewFragment = ChatDetailViewFragment.newInstance(date, time, content, safeToText);
+        loadFragment(chatDetailViewFragment, "chatDetailViewFragment");
+    }
+
+    /**
+     * View chat list
+     */
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    public void goToChatView(View view) {
+        ChatsFragment chatsFragment = new ChatsFragment();
+        loadFragment(chatsFragment, "chatsFragment");
+        bottomNavigationView.setVisibility(View.VISIBLE);
+    }
+
 }
