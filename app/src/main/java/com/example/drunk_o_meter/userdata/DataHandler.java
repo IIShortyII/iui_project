@@ -70,7 +70,10 @@ public class DataHandler {
                 // Selfie
                 // TODO @Dennis hier wird das Selfie in den local storage gespeichert. Wenn wir es wo anders speichern müssen wir das hier ersetzen
                 String selfie = getStringFromBitmap(drunkometerAnalysis.SELFIE);
-                Double selfie_drunkenness_score = drunkometerAnalysis.SELFIE_DRUNKENNESS_SCORE;
+                double selfie_drunkenness_score = drunkometerAnalysis.SELFIE_DRUNK_PREDICTION;
+
+                // FINAL SCORE
+                int drunkenness_score = drunkometerAnalysis.DRUNKENNESS_SCORE;
 
                 // OPTIONAL Text Message
                 if (drunkometerAnalysis.TEXT_MESSAGE != null){
@@ -82,10 +85,10 @@ public class DataHandler {
                     JSONObject JSONTextMessage = new JSONObject();
                     JSONTextMessage.put("recipient", recipient).put("message", message).put("sentimentAnalysis", sentimentAnalysis).put("date", date);
                     // TODO @Dennis hier müssten wir auch "put("selfie, selfie)" rausnehmen
-                    JSONdrunkometerAnalysis.put("mean_error_challenge", mean_error_challenge).put("mean_completiontime_challenge", mean_completiontime_challenge).put("selfie", selfie).put("selfie_drunkenness_score", selfie_drunkenness_score).put("text_message", JSONTextMessage);
+                    JSONdrunkometerAnalysis.put("drunkenness_score", drunkenness_score).put("mean_error_challenge", mean_error_challenge).put("mean_completiontime_challenge", mean_completiontime_challenge).put("selfie", selfie).put("selfie_drunkenness_score", selfie_drunkenness_score).put("text_message", JSONTextMessage);
                 } else {
                     // TODO @Dennis hier müssten wir auch "put("selfie, selfie)" rausnehmen
-                    JSONdrunkometerAnalysis.put("mean_error_challenge", mean_error_challenge).put("mean_completiontime_challenge", mean_completiontime_challenge).put("selfie", selfie).put("selfie_drunkenness_score", selfie_drunkenness_score);
+                    JSONdrunkometerAnalysis.put("drunkenness_score", drunkenness_score).put("mean_error_challenge", mean_error_challenge).put("mean_completiontime_challenge", mean_completiontime_challenge).put("selfie", selfie).put("selfie_drunkenness_score", selfie_drunkenness_score);
                 }
                 drunkometerAnalysisList.put(i, JSONdrunkometerAnalysis);
             }
@@ -151,6 +154,10 @@ public class DataHandler {
 
                         DrunkometerAnalysis drunkometerAnalysis = new DrunkometerAnalysis();
                         JSONObject JSONdrunkometerAnalysis = drunkometerAnalysisList.getJSONObject(i);
+
+                        // DRUNKENNESS SCORE
+                        drunkometerAnalysis.DRUNKENNESS_SCORE = JSONdrunkometerAnalysis.getInt("drunkenness_score");
+
                         // Typing Sample Error and Completiontime
                         drunkometerAnalysis.MEAN_ERROR_CHALLENGE = JSONdrunkometerAnalysis.getDouble("mean_error_challenge");
                         drunkometerAnalysis.MEAN_COMPLETIONTIME_CHALLENGE = JSONdrunkometerAnalysis.getDouble("mean_completiontime_challenge");
@@ -158,7 +165,7 @@ public class DataHandler {
                         // Selfie bitmap and Drunkenness Score
                         // TODO @Dennis hier wird das Selfie aus dem local storage geladen. Wenn wir es stattdessen wo anders speichern, müssten wir es in diese Variable speichern
                         drunkometerAnalysis.SELFIE = getBitmapFromString(JSONdrunkometerAnalysis.getString("selfie"));
-                        drunkometerAnalysis.SELFIE_DRUNKENNESS_SCORE = JSONdrunkometerAnalysis.getDouble("selfie_drunkenness_score");
+                        drunkometerAnalysis.SELFIE_DRUNK_PREDICTION = JSONdrunkometerAnalysis.getDouble("selfie_drunkenness_score");
                         Log.d("D-O-M loader has text message", String.valueOf(JSONdrunkometerAnalysis.has("text_message")));
                         // OPTIONAL text message object
                         if (JSONdrunkometerAnalysis.has("text_message")){

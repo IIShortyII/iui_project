@@ -128,6 +128,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void startTypingChallenge(View view) {
+        //TODO @Dennis: hier BEGINNT die typing challenge, also sollte die weaving analysis hier starten
+
+
         FragmentTypingChallenge fragmentTypingChallenge = new FragmentTypingChallenge();
         loadFragment(fragmentTypingChallenge, "fragmentTypingChallenge");
 
@@ -138,6 +141,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void finishTypingChallenge(View view) {
+        //TODO @Dennis: hier ENDET die typing challenge, also sollte die weaving analysis hier enden
+
+
         UserData.DRUNKOMETER_ANALYSIS.MEAN_ERROR_CHALLENGE = UserData.calculateMean("error",UserData.DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE);
         UserData.DRUNKOMETER_ANALYSIS.MEAN_COMPLETIONTIME_CHALLENGE = UserData.calculateMean("completiontime", UserData.DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE);
         Log.d("D-O-M challenge error", String.valueOf(UserData.DRUNKOMETER_ANALYSIS.MEAN_ERROR_CHALLENGE));
@@ -192,9 +198,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void skipTextMessage(View view) {
-        addDrunkoMeterAnalysis();
-        DataHandler.storeSettings(this);
-
         RecommendationFragment recommendationFragment = RecommendationFragment.newInstance(false);
         loadFragment(recommendationFragment, "recommendationFragment");
     }
@@ -222,24 +225,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             TextMessage textMessage = new TextMessage(recipientInput.getText().toString(), textMessageInput.getText().toString(), sentiment.toString(), date);
             // Add text message to current DRUNKOMETER_ANALYSIS object
             UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE = textMessage;
-            addDrunkoMeterAnalysis();
-            DataHandler.storeSettings(this);
+
 
             RecommendationFragment recommendationFragment = RecommendationFragment.newInstance(true);
             loadFragment(recommendationFragment, "recommendationFragment");
         }
-    }
-
-    private void addDrunkoMeterAnalysis() {
-        DrunkometerAnalysis newAnalysis = new DrunkometerAnalysis();
-        newAnalysis.MEAN_COMPLETIONTIME_CHALLENGE = UserData.DRUNKOMETER_ANALYSIS.MEAN_COMPLETIONTIME_CHALLENGE;
-        newAnalysis.MEAN_ERROR_CHALLENGE = UserData.DRUNKOMETER_ANALYSIS.MEAN_ERROR_CHALLENGE;
-        newAnalysis.SELFIE = UserData.DRUNKOMETER_ANALYSIS.SELFIE;
-        newAnalysis.SELFIE_DRUNKENNESS_SCORE = UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNKENNESS_SCORE;
-        if (UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE != null){
-            newAnalysis.TEXT_MESSAGE = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE;
-        }
-        DRUNKOMETER_ANALYSIS_LIST.add(newAnalysis);
     }
 
     /**

@@ -12,13 +12,16 @@ import java.util.ArrayList;
  */
 public class DrunkometerAnalysis {
 
+    // FINAL SCORE
+    public int DRUNKENNESS_SCORE;
+
     public ArrayList<TypingSample> TYPING_CHALLENGE;
     // Typing Challenge
     public double MEAN_ERROR_CHALLENGE;
     public double MEAN_COMPLETIONTIME_CHALLENGE;
 
     public Bitmap SELFIE;
-    public double SELFIE_DRUNKENNESS_SCORE; // TODO safe drunkenness score
+    public double SELFIE_DRUNK_PREDICTION;
 
     // Text Message
     public TextMessage TEXT_MESSAGE = null;
