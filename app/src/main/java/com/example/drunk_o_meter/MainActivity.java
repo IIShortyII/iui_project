@@ -13,12 +13,12 @@ import android.util.Log;
 
 import com.example.drunk_o_meter.userdata.DataHandler;
 import com.example.drunk_o_meter.userdata.UserData;
+import com.google.mlkit.common.model.LocalModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //checkForPermissions();
         //setupApplication();
+
     }
 
 
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        checkForPermissions();
         setupApplication();
     }
 

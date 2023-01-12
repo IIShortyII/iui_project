@@ -99,6 +99,12 @@ public class RecommendationFragment extends Fragment {
             // @Kathi TODO hier noch das Seniment aus der Text Message Analyse. Die möglichen Sentiments findest du in nlp/Sentiment
             String sentiment = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE.getSentimentAnalysis();
 
+            // @Kathi TODO hier ist der Wert aus der Weaving Analysis
+            // Wert <= 35 == normal (not drunk)
+            // Wert >= 35 && <=  70 == drunk
+            // Wert > 70 = WASTED
+            int weavingPenaltyPoints = UserData.DRUNKOMETER_ANALYSIS.PenaltyPoint;
+
             if (safeToText) {
                 safeToTextValue.setText("Safe To Text");
                 copyMessageContent.setVisibility(View.VISIBLE);

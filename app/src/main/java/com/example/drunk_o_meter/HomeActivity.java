@@ -79,7 +79,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         sensorname.setText(""+ gyroscope.getName());
-        sensorManager.registerListener(MainActivity.this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
         Log.d("Gyroscope", "onCreate: Registered accelerometer listener");
 
     }
