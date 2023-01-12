@@ -51,7 +51,8 @@
     <string name="next_textMessageInput">Yes, I wanna text!</string>
     <string name="next_skipTextMessage">No thanks I am good</string>
 
-    <string name="previous_chats">Your chat messages:</string>
+    <string name="previous_chats">Chat Messages</string>
+    <string name="no_chats">You have not created any messages yet!</string>
     <string name="chat_detail_title">Chat Message Details</string>
 
 </resources>

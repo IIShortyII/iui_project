@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!--TODO: add margin horizontally, get correct values from text analysis, use different text style, make button float-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -3,13 +3,16 @@ package com.example.drunk_o_meter;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.drunk_o_meter.chat_list.ChatInfo;
 import com.example.drunk_o_meter.chat_list.ChatItemAdapter;
 import com.example.drunk_o_meter.chat_list.OnItemClickListener;
+import com.example.drunk_o_meter.nlp.TextMessage;
+import com.example.drunk_o_meter.userdata.DrunkometerAnalysis;
+import com.example.drunk_o_meter.userdata.UserData;
 
 import java.util.ArrayList;
 
@@ -33,6 +39,8 @@ public class ChatsFragment extends Fragment implements OnItemClickListener {
 
     private ArrayList<ChatInfo> allChats;
     protected Activity contextActivity;
+
+    private View layout;
 
     /**
      * Use this factory method to create a new instance of
@@ -69,24 +77,41 @@ public class ChatsFragment extends Fragment implements OnItemClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chats, container, false);
+        layout = inflater.inflate(R.layout.fragment_chats, container, false);
+        return layout;
     }
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        //TODO: where are chats saved? --> enter here
-        allChats = new ArrayList<>();
-        ChatInfo exampleChat1 = new ChatInfo("Example text goes like this and like this", false);
-        ChatInfo exampleChat2 = new ChatInfo("Example text goes like that and like that", true);
-        allChats.add(exampleChat1);
-        allChats.add(exampleChat2);
+        TextView chatsEmpty = layout.findViewById(R.id.chats_empty);
+        TextView chatsExist = layout.findViewById(R.id.chats_title);
 
-        RecyclerView recyclerView = getView().findViewById(R.id.chats_item_list);
-        recyclerView.setHasFixedSize(true);
-        FragmentManager fragmentManager = getFragmentManager();
-        ChatItemAdapter adapter = new ChatItemAdapter(allChats, fragmentManager);
-        recyclerView.setAdapter(adapter);
+        ArrayList<DrunkometerAnalysis> drunkometerAnalysisList = UserData.DRUNKOMETER_ANALYSIS_LIST;
+        allChats = new ArrayList<>();
+
+        for (DrunkometerAnalysis analysisRun: drunkometerAnalysisList) {
+            TextMessage textMessage = analysisRun.TEXT_MESSAGE;
+            //default value
+            boolean safeToText = false;
+            if (contextActivity instanceof HomeActivity) {
+                safeToText = ((HomeActivity)getActivity()).calculateSafeToText(textMessage.getSentimentAnalysis(), analysisRun.DRUNKENNESS_SCORE);
+            } else {
+                Log.d("Context Activity not HomeActivity", contextActivity.toString());
+            }
+            ChatInfo chatInfo = new ChatInfo(textMessage.getMessage(), textMessage.getDate(), textMessage.getRecipient(), analysisRun.SELFIE, safeToText);
+            allChats.add(chatInfo);
+        }
+
+        if (allChats.size() > 0) {
+            chatsEmpty.setVisibility(View.GONE);
+
+            RecyclerView recyclerView = getView().findViewById(R.id.chats_item_list);
+            recyclerView.setHasFixedSize(true);
+            FragmentManager fragmentManager = getFragmentManager();
+            ChatItemAdapter adapter = new ChatItemAdapter(allChats, fragmentManager);
+            recyclerView.setAdapter(adapter);
+        }
     }
 
     @Override
@@ -101,15 +126,15 @@ public class ChatsFragment extends Fragment implements OnItemClickListener {
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     public void onClick(int position) {
-        //TODO: add selfie
         String date = allChats.get(position).date;
         String time = allChats.get(position).time;
         String content = allChats.get(position).content;
+        String recipient = allChats.get(position).recipient;
+        Bitmap selfie = allChats.get(position).selfie;
         boolean safeToText = allChats.get(position).safeToText;
 
-        Activity activity = contextActivity;
-        if (activity instanceof HomeActivity) {
-        ((HomeActivity)getActivity()).viewChatDetails(date, time, content, safeToText); }
-        //TODO: call home activity -> viewChatDetails(view?, selfie, date, time, content, safeToText)
+        if (contextActivity instanceof HomeActivity) {
+        ((HomeActivity)getActivity()).viewChatDetails(date, time, content, recipient, selfie, safeToText);
+        }
     }
 }

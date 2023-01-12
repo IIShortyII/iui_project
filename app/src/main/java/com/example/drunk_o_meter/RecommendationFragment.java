@@ -26,6 +26,7 @@ import com.example.drunk_o_meter.userdata.UserData;
  */
 public class RecommendationFragment extends Fragment {
 
+    //TODO: Adapt text style to fit to Kathrin's
     private View layout;
 
     private int drunkennessScoreInt = 4; // TODO get from analysis (integrate python) @Kathi this is the score from the drunk face detection analysis, right?

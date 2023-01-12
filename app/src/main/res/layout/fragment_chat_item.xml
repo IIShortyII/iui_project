@@ -17,7 +17,7 @@
         <LinearLayout
             android:id="@+id/chat_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -27,6 +27,7 @@
                 android:layout_width="200px"
                 android:layout_height="200px"
                 android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:src="@drawable/defaultselfie" />
 
             <LinearLayout
@@ -59,11 +60,21 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/chat_item_recipient"
+                    style="@style/TextAppearance.Material3.BodySmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Recipient" />
+
+                <TextView
                     android:id="@+id/chat_item_content"
                     style="@style/TextAppearance.Material3.BodyMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="2dp"
                     android:text="Content" />
 
             </LinearLayout>
@@ -73,8 +84,7 @@
                 android:layout_width="100px"
                 android:layout_height="100px"
                 android:layout_gravity="center"
-                android:layout_marginStart="10dp"
-                app:layout_constraintEnd_toEndOf="@id/chat_item"
+                android:layout_marginStart="30dp"
                 android:background="@drawable/rounded_shape"
                 android:src="@drawable/ic_safe_to_text" />
 

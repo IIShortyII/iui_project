@@ -1,5 +1,7 @@
 package com.example.drunk_o_meter.chat_list;
 
+import android.graphics.Bitmap;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
@@ -27,17 +29,28 @@ public class ChatInfo {
     public String content_short;
 
     /**
+     * The name of the message recipient
+     */
+    public String recipient;
+
+    /**
+     * The selfie taken in the same analysis run
+     */
+    public Bitmap selfie;
+
+    /**
      * Whether the chat message was declared as "safe to text"
      */
     public boolean safeToText;
 
 
-    public ChatInfo(String content, boolean safeToText) {
-        this.date = new SimpleDateFormat("dd.MM.yyyy").format(new Date());
-        this.time = new SimpleDateFormat("HH:mm").format(new Date());
-        this.content = content;
-        //TODO: Adapt number when real chats exist
+    public ChatInfo(String message, Date date, String recipient, Bitmap selfie, boolean safeToText) {
+        this.content = message;
         this.content_short = StringUtils.abbreviate(content, 15);
+        this.date = new SimpleDateFormat("dd.MM.yyyy").format(date);
+        this.time = new SimpleDateFormat("HH:mm").format(date);
+        this.recipient = recipient;
+        this.selfie = selfie;
         this.safeToText = safeToText;
     }
 

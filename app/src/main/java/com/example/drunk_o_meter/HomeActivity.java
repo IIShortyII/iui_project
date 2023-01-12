@@ -284,6 +284,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void analyzeTextMessage(View view) {
+        //TODO: add spinning icon to indicate loading
         EditText recipientInput = this.findViewById(R.id.textMessageRecipientInput);
         EditText textMessageInput = this.findViewById(R.id.textMessageTextInput);
 
@@ -319,10 +320,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      * View chat detail
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
-    public void viewChatDetails(String date, String time, String content, boolean safeToText) {
+    public void viewChatDetails(String date, String time, String content, String recipient, Bitmap selfie, boolean safeToText) {
         bottomNavigationView.setVisibility(View.GONE);
-        //TODO: add selfie
-        ChatDetailViewFragment chatDetailViewFragment = ChatDetailViewFragment.newInstance(date, time, content, safeToText);
+        ChatDetailViewFragment chatDetailViewFragment = ChatDetailViewFragment.newInstance(date, time, content, recipient, selfie, safeToText);
         loadFragment(chatDetailViewFragment, "chatDetailViewFragment");
     }
 
@@ -337,11 +337,21 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     /**
+     * "Safe to text" is calculated based on the drunkenness score and the sentiments analysis
+     */
+    public boolean calculateSafeToText(String sentimentAnalysis, int drunkennessScore) {
+        //TODO add functionality --> sentiments not safeToText (in combo with high drunkenness score): VERY_NEGATIVE,NEGATIVE,POSITIVE,VERY_POSITIVE
+        boolean safeToText = true;
+        Log.d("Safe to text", "Sentiment: " + sentimentAnalysis + " and drunkennessScore: " + drunkennessScore + " lead to safe to text: " + safeToText);
+        return safeToText;
+    }
+
+    /**
      * Copy message content
      */
     public void copyMessageContent(View view) {
         Log.d("Message Copy", "message content copied to clipboard");
-        //TODO
+        //TODO add functionality
     }
 
 
