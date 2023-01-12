@@ -25,4 +25,7 @@ public class DrunkometerAnalysis {
 
     // Text Message
     public TextMessage TEXT_MESSAGE = null;
+
+    //PenaltyPoints
+    public int PenaltyPoint;
 }

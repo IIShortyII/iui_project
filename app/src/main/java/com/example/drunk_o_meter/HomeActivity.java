@@ -9,10 +9,15 @@ import androidx.core.content.FileProvider;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +27,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.drunk_o_meter.chat_list.ChatDetailViewFragment;
 import com.example.drunk_o_meter.nlp.FragmentTextMessageInput;
@@ -42,7 +48,7 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 
-public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener, SensorEventListener {
     //TODO: add tab for past recommendations?
 
     /**
@@ -50,6 +56,10 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      */
     BottomNavigationView bottomNavigationView;
 
+    private SensorManager sensorManager;
+    Sensor gyroscope;
+    int penaltypoint = 0;
+    TextView sensorname, xValue, yValue, zValue, penalty;
 
     private File imageFile;
 
@@ -62,6 +72,16 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         bottomNavigationView.setOnItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.drunkometer);
+
+
+        Log.d("Gyroscope", "onCreate: Initializing Sensor Services");
+        SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        sensorname.setText(""+ gyroscope.getName());
+        sensorManager.registerListener(MainActivity.this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
+        Log.d("Gyroscope", "onCreate: Registered accelerometer listener");
+
     }
 
     /**
@@ -129,7 +149,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void startTypingChallenge(View view) {
         //TODO @Dennis: hier BEGINNT die typing challenge, also sollte die weaving analysis hier starten
-
+        penaltypoint = 0;
 
         FragmentTypingChallenge fragmentTypingChallenge = new FragmentTypingChallenge();
         loadFragment(fragmentTypingChallenge, "fragmentTypingChallenge");
@@ -140,9 +160,42 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      * Continue to drunk selfie fragment
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        penaltypoint = penaltypoint + getPenaltyPoints(sensorEvent.values[0],sensorEvent.values[1],sensorEvent.values[2]);
+        Log.d("Gyroscope", "onSensorChanged: X: "+ sensorEvent.values[0] + " Y: "+ sensorEvent.values[1] + " Z: "+ sensorEvent.values[2]);
+    }
+
+    public int getPenaltyPoints(float xValue, float yValue, float zValue) {
+        // get Absolute Values
+        xValue = Math.abs(xValue);
+        yValue = Math.abs(yValue);
+        zValue = Math.abs(zValue);
+
+        // get the current maximum
+        float tempMax = Math.max(xValue, yValue);
+        float realMax = Math.max(tempMax, zValue);
+
+        // give out the penalty points
+        if (realMax>10){
+            return 5;}
+        else if(realMax>5) {
+            return 2;}
+        else if(realMax>2){
+            return 1;}
+        else return 0;
+    }
+
+
+
     public void finishTypingChallenge(View view) {
         //TODO @Dennis: hier ENDET die typing challenge, also sollte die weaving analysis hier enden
-
+        UserData.DRUNKOMETER_ANALYSIS.PenaltyPoint = penaltypoint;
 
         UserData.DRUNKOMETER_ANALYSIS.MEAN_ERROR_CHALLENGE = UserData.calculateMean("error",UserData.DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE);
         UserData.DRUNKOMETER_ANALYSIS.MEAN_COMPLETIONTIME_CHALLENGE = UserData.calculateMean("completiontime", UserData.DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE);
