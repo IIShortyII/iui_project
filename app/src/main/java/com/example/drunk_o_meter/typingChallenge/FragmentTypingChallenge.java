@@ -1,7 +1,6 @@
 package com.example.drunk_o_meter.typingChallenge;
 
 import static com.example.drunk_o_meter.userdata.UserData.BASELINE_TYPING_CHALLENGE;
-import static com.example.drunk_o_meter.userdata.UserData.DRUNKOMETER_ANALYSIS_LIST;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -19,7 +18,6 @@ import android.text.style.BackgroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,23 +27,23 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 
 import com.example.drunk_o_meter.R;
-import com.example.drunk_o_meter.userdata.DrunkometerAnalysis;
 import com.example.drunk_o_meter.userdata.UserData;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FragmentTypingChallenge extends Fragment {
-
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static String CONTEXT = "";
 
     private int baselineTextCount;
     private int typingChallengeTextCount;
+
+    private ArrayList<String> allTexts = new ArrayList<>();
+    private ArrayList<String> textList = new ArrayList<>();
 
     private int textPosition = 0;
     private ArrayList<Boolean> currentSampleValidations = new ArrayList<Boolean>();
@@ -103,6 +101,9 @@ public class FragmentTypingChallenge extends Fragment {
             UserData.DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE = new ArrayList<>();
         }
 
+        for (int i = 1; i<=10; i++) {
+            allTexts.add("text_"+i);
+        }
 
         updateBaselineContent();
 
@@ -214,12 +215,14 @@ public class FragmentTypingChallenge extends Fragment {
         if(this.CONTEXT.equals(getResources().getString(R.string.ONBOARDING))) {
             count = baselineTextCount;
             maxCount = getResources().getInteger(R.integer.baselineCount);
+            textList = allTexts;
             successText = getResources().getString(R.string.baselineComplete);
             buttonLabel = getResources().getString(R.string.next_completeOnboarding);
 
         } else {
             count = typingChallengeTextCount;
             maxCount = getResources().getInteger(R.integer.typingChallengeCount);
+            textList = getRandomTexts(maxCount);
             successText = getResources().getString(R.string.typingChallengeComplete);
             buttonLabel = getResources().getString(R.string.next_takeSelfie);
         }
@@ -245,7 +248,6 @@ public class FragmentTypingChallenge extends Fragment {
                 next.setText(buttonLabel);
                 next.setVisibility(View.VISIBLE);
             }
-
     }
 
     /**
@@ -255,10 +257,28 @@ public class FragmentTypingChallenge extends Fragment {
     private void setBaselineText(int baselineTextCount) {
         // Get text resource according to baselineTextCount
         int textId = getActivity().getResources().
-                getIdentifier("text_"+baselineTextCount, "string", getActivity().getPackageName());
+                getIdentifier(textList.get(baselineTextCount-1), "string", getActivity().getPackageName());
         String text = getResources().getString(textId);
         currentSpannableString = new SpannableStringBuilder(text);
         baselineTextView.setText(currentSpannableString);
 
+    }
+
+    /**
+     * Get a random choice of texts from all texts
+     * @param amount number of baseline texts that should be in list
+     */
+    private ArrayList<String> getRandomTexts(int amount) {
+        ArrayList<String> copyAll = new ArrayList<>();
+        copyAll.addAll(allTexts);
+
+        ArrayList<String> finalList = new ArrayList<>();
+
+        for (int i = 0; i < amount; i++) {
+            int random = (int) Math.floor(Math.random() * copyAll.size());
+            String text = copyAll.remove(random);
+            finalList.add(text);
+        }
+        return finalList;
     }
 }
