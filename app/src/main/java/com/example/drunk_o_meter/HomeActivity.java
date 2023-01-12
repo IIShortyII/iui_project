@@ -289,14 +289,20 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         // Only proceed if user has provided both recipient name and text message
         if(recipientInput.getText().toString().length() != 0 && textMessageInput.getText().toString().length() !=0) {
-            //TODO: show spinner immediately
             ConstraintLayout layout_textInput = this.findViewById(R.id.text_input_layout);
             ConstraintLayout layout_waiting = this.findViewById(R.id.waiting_layout);
 
-            layout_textInput.setVisibility(View.GONE);
+            layout_textInput.setVisibility(View.INVISIBLE);
             layout_waiting.setVisibility(View.VISIBLE);
 
-            analyzeTextMessage(recipientInput, textMessageInput);
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Wait a short time so that progress bar can load
+                    analyzeTextMessage(recipientInput, textMessageInput);
+                }
+            }, 100);
         }
     }
 
