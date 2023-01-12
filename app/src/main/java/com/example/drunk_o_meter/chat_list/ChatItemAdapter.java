@@ -1,6 +1,7 @@
 package com.example.drunk_o_meter.chat_list;
 
 import android.app.FragmentManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHo
         public TextView dateText;
         public TextView timeText;
         public TextView contentText;
+        public TextView recipientText;
         public ImageView safeToTextImage;
         public View layout;
 
@@ -45,6 +47,7 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHo
             dateText = (TextView) v.findViewById(R.id.chat_item_date);
             timeText = (TextView) v.findViewById(R.id.chat_item_time);
             contentText = (TextView) v.findViewById(R.id.chat_item_content);
+            recipientText = (TextView) v.findViewById(R.id.chat_item_recipient);
             safeToTextImage = (ImageView) v.findViewById(R.id.chat_item_check);
         }
     }
@@ -63,18 +66,18 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ViewHo
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //TODO: get selfie
         String date = items.get(position).date;
         String time = items.get(position).time;
         String content = items.get(position).content_short;
+        String recipient = items.get(position).recipient;
+        Bitmap selfie = items.get(position).selfie;
         boolean safeToText = items.get(position).safeToText;
 
         holder.dateText.setText(date);
         holder.timeText.setText(time);
+        holder.recipientText.setText("To " + recipient);
+        holder.selfieImage.setImageBitmap(selfie);
         holder.contentText.setText(content);
-
-        //TODO: add selfie of text message
-        //holder.selfieImage.setImageResource(...);
 
         if (safeToText) {
             holder.safeToTextImage.setBackgroundColor(Color.GREEN);
