@@ -86,6 +86,9 @@ public class FragmentTypingChallenge extends Fragment {
         this.next = layout.findViewById(R.id.finishTypingChallenge);
         next.setVisibility(View.INVISIBLE);
 
+        for (int i = 0; i < 10; i++) {
+            allTexts.add("text_"+i);
+        }
 
         // set context depending on invoking activity
         this.CONTEXT = getActivity().getClass().getSimpleName();
@@ -94,15 +97,14 @@ public class FragmentTypingChallenge extends Fragment {
             // Update content based on baselineTextCount
             this.baselineTextCount = BASELINE_TYPING_CHALLENGE.size() + 1;
             this.progressBar.setMax(getResources().getInteger(R.integer.baselineCount));
+            textList = allTexts;
         } else {
+            int count = getResources().getInteger(R.integer.typingChallengeCount);
             this.typingChallengeTextCount = 1;
-            this.progressBar.setMax(getResources().getInteger(R.integer.typingChallengeCount));
+            this.progressBar.setMax(count);
             // Reset typing challenge samples
             UserData.DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE = new ArrayList<>();
-        }
-
-        for (int i = 1; i<=10; i++) {
-            allTexts.add("text_"+i);
+            textList = getRandomTexts(count);
         }
 
         updateBaselineContent();
@@ -215,14 +217,12 @@ public class FragmentTypingChallenge extends Fragment {
         if(this.CONTEXT.equals(getResources().getString(R.string.ONBOARDING))) {
             count = baselineTextCount;
             maxCount = getResources().getInteger(R.integer.baselineCount);
-            textList = allTexts;
             successText = getResources().getString(R.string.baselineComplete);
             buttonLabel = getResources().getString(R.string.next_completeOnboarding);
 
         } else {
             count = typingChallengeTextCount;
             maxCount = getResources().getInteger(R.integer.typingChallengeCount);
-            textList = getRandomTexts(maxCount);
             successText = getResources().getString(R.string.typingChallengeComplete);
             buttonLabel = getResources().getString(R.string.next_takeSelfie);
         }
@@ -269,16 +269,14 @@ public class FragmentTypingChallenge extends Fragment {
      * @param amount number of baseline texts that should be in list
      */
     private ArrayList<String> getRandomTexts(int amount) {
-        ArrayList<String> copyAll = new ArrayList<>();
-        copyAll.addAll(allTexts);
-
-        ArrayList<String> finalList = new ArrayList<>();
+        ArrayList<String> randomList = new ArrayList<>();
 
         for (int i = 0; i < amount; i++) {
-            int random = (int) Math.floor(Math.random() * copyAll.size());
-            String text = copyAll.remove(random);
-            finalList.add(text);
+            int random = (int) Math.floor(Math.random() * allTexts.size());
+            String text = allTexts.remove(random);
+            randomList.add(text);
         }
-        return finalList;
+
+        return randomList;
     }
 }
