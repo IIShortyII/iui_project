@@ -13,7 +13,6 @@ import android.util.Log;
 
 import com.example.drunk_o_meter.userdata.DataHandler;
 import com.example.drunk_o_meter.userdata.UserData;
-import com.google.mlkit.common.model.LocalModel;
 
 import java.io.IOException;
 import java.util.ArrayList;

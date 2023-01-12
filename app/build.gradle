@@ -40,4 +40,5 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'edu.stanford.nlp:stanford-corenlp:4.5.1'
     implementation files('libs\\stanford-corenlp-4.5.1\\stanford-corenlp-4.5.1-models.jar')
+    implementation 'com.squareup.okhttp3:okhttp:4.5.0'
 }

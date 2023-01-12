@@ -45,8 +45,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener, SensorEventListener {
     //TODO: add tab for past recommendations?
@@ -63,6 +73,10 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     private File imageFile;
 
+    // Server variables
+    private String IPV4ADDRESS = "192.168.178.156"; // TODO might have to change depending on what network the server is running
+    private String PORTNUMBER = "5000";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,9 +92,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        sensorname.setText(""+ gyroscope.getName());
+        //sensorname.setText(""+ gyroscope.getName());
         sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
         Log.d("Gyroscope", "onCreate: Registered accelerometer listener");
+
+
 
     }
 
@@ -148,9 +164,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void startTypingChallenge(View view) {
-        //TODO @Dennis: hier BEGINNT die typing challenge, also sollte die weaving analysis hier starten
-        penaltypoint = 0;
 
+        penaltypoint = 0;
         FragmentTypingChallenge fragmentTypingChallenge = new FragmentTypingChallenge();
         loadFragment(fragmentTypingChallenge, "fragmentTypingChallenge");
 
@@ -194,7 +209,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
 
     public void finishTypingChallenge(View view) {
-        //TODO @Dennis: hier ENDET die typing challenge, also sollte die weaving analysis hier enden
+
         UserData.DRUNKOMETER_ANALYSIS.PenaltyPoint = penaltypoint;
 
         UserData.DRUNKOMETER_ANALYSIS.MEAN_ERROR_CHALLENGE = UserData.calculateMean("error",UserData.DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE);
@@ -223,8 +238,13 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 25, out);
+        byte[] byteArray = out.toByteArray();
         Bitmap compressed = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
         UserData.DRUNKOMETER_ANALYSIS.SELFIE = compressed;
+
+        //  send image to server
+        connectServer(byteArray);
+
         finishSelfie();
     }
 
@@ -324,4 +344,49 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         //TODO
     }
 
+
+    // Server communication - SEND
+    void connectServer(byte[] byteArray){
+        String postUrl= "http://"+IPV4ADDRESS+":"+PORTNUMBER+"/";
+
+        RequestBody postBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("image", "drunkometer_selfie.jpeg", RequestBody.create(MediaType.parse("image/*jpeg"), byteArray))
+                .build();
+
+        postRequest(postUrl, postBody);
+    }
+
+    void postRequest(String postUrl, RequestBody postBody) {
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(postUrl)
+                .post(postBody)
+                .build();
+
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                // Cancel the post on failure.
+                call.cancel();
+                Log.d("D-O-M", "Failed to Connect to Server");
+                Log.d("D-O-M", call.request().toString());
+
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                try {
+                    // TODO: once the server response is the drunkenness score, save it here
+                    Log.d("D-O-M Server Response", response.body().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+    }
 }
