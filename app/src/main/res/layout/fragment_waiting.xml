@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoadFragment"
-    android:layout_margin="40dp">
+    tools:context=".HomeActivity"
+    android:layout_margin="40dp"
+    android:id="@+id/fragment_waiting">
 
     <TextView
-        android:id="@+id/load_calculatingDrunkennessScore"
+        android:id="@+id/waiting_calculatingDrunkennessScore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -17,7 +18,7 @@
         android:textSize="24sp"/>
 
     <ProgressBar
-        android:id="@+id/load_progressBar"
+        android:id="@+id/waiting_progressBar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,10 +29,10 @@
         />
 
     <TextView
-        android:id="@+id/load_pleaseWait"
+        android:id="@+id/waiting_pleaseWait"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/load_progressBar"
+        app:layout_constraintTop_toBottomOf="@id/waiting_progressBar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="5dp"
