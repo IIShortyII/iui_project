@@ -91,7 +91,12 @@ public class ChatsFragment extends Fragment implements OnItemClickListener {
         allChats = new ArrayList<>();
 
         for (DrunkometerAnalysis analysisRun: drunkometerAnalysisList) {
+            Bitmap selfie = analysisRun.SELFIE;
             TextMessage textMessage = analysisRun.TEXT_MESSAGE;
+
+            //TODO: handle if something is wrong with storage
+            if (textMessage == null || selfie == null) {break;}
+
             //default value
             boolean safeToText = false;
             if (contextActivity instanceof HomeActivity) {
@@ -99,7 +104,7 @@ public class ChatsFragment extends Fragment implements OnItemClickListener {
             } else {
                 Log.d("Context Activity not HomeActivity", contextActivity.toString());
             }
-            ChatInfo chatInfo = new ChatInfo(textMessage.getMessage(), textMessage.getDate(), textMessage.getRecipient(), analysisRun.SELFIE, safeToText);
+            ChatInfo chatInfo = new ChatInfo(textMessage.getMessage(), textMessage.getDate(), textMessage.getRecipient(), selfie, safeToText);
             allChats.add(chatInfo);
         }
 
