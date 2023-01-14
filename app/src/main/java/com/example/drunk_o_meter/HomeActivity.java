@@ -247,7 +247,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         //  send image to server
         connectServer(byteArray);
 
+        // TODO: remove this function once we have server response working
         finishSelfie();
+
+        // TODO: show waiting screen
+
     }
 
     /**
@@ -403,10 +407,17 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.R)
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
                 try {
                     // TODO: once the server response is the drunkenness score, save it here
+
+                    // TODO: hide waiting screen
+
+                    // TODO: ADD this function once we have server response working
+                    // finishSelfie();
+                    
                     Log.d("D-O-M Server Response", response.body().string());
                 } catch (IOException e) {
                     e.printStackTrace();
