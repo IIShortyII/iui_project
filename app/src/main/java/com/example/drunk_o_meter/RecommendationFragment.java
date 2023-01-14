@@ -167,15 +167,20 @@ public class RecommendationFragment extends Fragment {
      * Add all information of the drunkometer Analysis object to the list ob drunkometer analysis
      */
     private void addDrunkoMeterAnalysisToList() {
-            DrunkometerAnalysis newAnalysis = new DrunkometerAnalysis();
-            newAnalysis.DRUNKENNESS_SCORE = drunkennessScoreInt;
-            newAnalysis.MEAN_COMPLETIONTIME_CHALLENGE = UserData.DRUNKOMETER_ANALYSIS.MEAN_COMPLETIONTIME_CHALLENGE;
-            newAnalysis.MEAN_ERROR_CHALLENGE = UserData.DRUNKOMETER_ANALYSIS.MEAN_ERROR_CHALLENGE;
-            newAnalysis.SELFIE = UserData.DRUNKOMETER_ANALYSIS.SELFIE;
-            newAnalysis.SELFIE_DRUNK_PREDICTION = UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION;
-            if (UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE != null){
-                newAnalysis.TEXT_MESSAGE = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE;
-            }
-            UserData.DRUNKOMETER_ANALYSIS_LIST.add(newAnalysis);
+        DrunkometerAnalysis newAnalysis = new DrunkometerAnalysis();
+        newAnalysis.DRUNKENNESS_SCORE = drunkennessScoreInt;
+        newAnalysis.MEAN_COMPLETIONTIME_CHALLENGE = UserData.DRUNKOMETER_ANALYSIS.MEAN_COMPLETIONTIME_CHALLENGE;
+        newAnalysis.MEAN_ERROR_CHALLENGE = UserData.DRUNKOMETER_ANALYSIS.MEAN_ERROR_CHALLENGE;
+        newAnalysis.SELFIE = UserData.DRUNKOMETER_ANALYSIS.SELFIE;
+        newAnalysis.SELFIE_DRUNK_PREDICTION = UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION;
+        if (UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE != null){
+            newAnalysis.TEXT_MESSAGE = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE;
         }
+
+        // remove oldest analysis if there are only 4 analysis saved
+        if (DRUNKOMETER_ANALYSIS_LIST.size() == 4) {
+            DRUNKOMETER_ANALYSIS_LIST.remove(0);
+        }
+            UserData.DRUNKOMETER_ANALYSIS_LIST.add(newAnalysis);
+    }
 }
