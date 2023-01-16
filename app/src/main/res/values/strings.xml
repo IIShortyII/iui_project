@@ -54,4 +54,13 @@
     <string name="no_chats">You have not created any messages yet!</string>
     <string name="chat_detail_title">Chat Message Details</string>
 
+    <string name="preferences_title">Drink Preferences</string>
+    <string name="preferences_onboarding">Here\'s a list of drinks that I will recommend to you. Uncheck the ones you do not like!</string>
+
+    <string name="wine">Wine</string>
+    <string name="beer">Beer</string>
+    <string name="cocktails">Cocktails</string>
+    <string name="shots">Shots</string>
+    <string name="hotDrinks">Hot Drinks</string>
+
 </resources>

@@ -37,7 +37,7 @@
                     android:layout_marginTop="32dp"
                     android:gravity="left"
                     android:text="@string/no_chats"
-                    android:textSize="18sp"
+                    android:textColor="#000000"
                     app:layout_constraintTop_toBottomOf="@id/chats_title" />
 
 

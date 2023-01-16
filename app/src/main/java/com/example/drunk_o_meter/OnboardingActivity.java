@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.drunk_o_meter.preferences.PreferencesFragment;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallenge;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallengeIntro;
 import com.example.drunk_o_meter.userdata.DataHandler;
@@ -36,7 +37,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
     /**
      * Depending on the stage the user is in, provide the corresponding content of the onboarding flow.
-     * @param stage the stage the user is in ("username" or "typingChallenge")
+     * @param stage the stage the user is in ("username" or "typingChallenge" or "preferences")
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setStage(String stage) {
@@ -51,6 +52,10 @@ public class OnboardingActivity extends AppCompatActivity {
                 FragmentTypingChallengeIntro fragmentTypingChallengeIntro = new FragmentTypingChallengeIntro();
                 loadFragment(fragmentTypingChallengeIntro, "fragmentTypingChallengeIntro");
                 break;
+
+            case "preferences":
+                PreferencesFragment preferencesFragment = new PreferencesFragment();
+                loadFragment(preferencesFragment, "preferencesFragment");
 
         }
     }
@@ -100,12 +105,16 @@ public class OnboardingActivity extends AppCompatActivity {
         loadFragment(fragmentTypingChallenge, "fragmentTypingChallenge");
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
     public void finishTypingChallenge(View view) {
+        PreferencesFragment preferencesFragment = new PreferencesFragment();
+        loadFragment(preferencesFragment, "preferencesFragment");
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    public void goToHomeScreen(View view) {
         DataHandler.storeSettings(this);
         Intent intent = new Intent(OnboardingActivity.this, HomeActivity.class);
         OnboardingActivity.this.startActivity(intent);
     }
-
 
 }

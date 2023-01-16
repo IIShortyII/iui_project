@@ -35,6 +35,7 @@ import com.example.drunk_o_meter.nlp.FragmentTextMessageIntro;
 import com.example.drunk_o_meter.nlp.NlpPipeline;
 import com.example.drunk_o_meter.nlp.Sentiment;
 import com.example.drunk_o_meter.nlp.TextMessage;
+import com.example.drunk_o_meter.preferences.PreferencesFragment;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallenge;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallengeIntro;
 import com.example.drunk_o_meter.userdata.DrunkometerAnalysis;
@@ -135,6 +136,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         //create fragments
         DrunkometerFragment drunkometerFragment = new DrunkometerFragment();
         ChatsFragment chatsFragment = new ChatsFragment();
+        PreferencesFragment preferencesFragment = new PreferencesFragment();
 
         switch (item.getItemId()) {
             case R.id.drunkometer:
@@ -143,6 +145,10 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.chats:
                 loadFragment(chatsFragment, "chatsFragment");
+                return true;
+
+            case R.id.preferences:
+                loadFragment(preferencesFragment, "preferencesFragment");
                 return true;
         }
         return false;
