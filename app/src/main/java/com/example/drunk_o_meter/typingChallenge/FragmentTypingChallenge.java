@@ -57,7 +57,7 @@ public class FragmentTypingChallenge extends Fragment {
     private SpannableStringBuilder currentSpannableString;
 
     // Colors for text cursor
-    BackgroundColorSpan cursorColor = new BackgroundColorSpan(Color.YELLOW);
+    BackgroundColorSpan cursorColor = new BackgroundColorSpan(Color.parseColor("#EADAFE"));
 
     private View layout;
 
