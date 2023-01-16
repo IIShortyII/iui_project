@@ -8,6 +8,8 @@ import androidx.core.content.FileProvider;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -28,6 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.drunk_o_meter.chat_list.ChatDetailViewFragment;
 import com.example.drunk_o_meter.nlp.FragmentTextMessageInput;
@@ -41,7 +44,6 @@ import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallengeIntro;
 import com.example.drunk_o_meter.userdata.DrunkometerAnalysis;
 import com.example.drunk_o_meter.userdata.UserData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.sun.xml.bind.v2.runtime.reflect.opt.Const;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -49,7 +51,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -67,10 +68,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      * Main UI component for the navigation bar
      */
     BottomNavigationView bottomNavigationView;
-
-    //TODO @Dennis: werden diese Variablen benötigt? -> sonst löschen
-    private SensorManager sensorManager;
-    TextView sensorname, xValue, yValue, zValue, penalty;
 
     Sensor gyroscope;
     int penaltypoint = 0;
@@ -92,13 +89,13 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setSelectedItemId(R.id.drunkometer);
 
 
-        Log.d("Gyroscope", "onCreate: Initializing Sensor Services");
+
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        //sensorname.setText(""+ gyroscope.getName());
+
         sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
-        Log.d("Gyroscope", "onCreate: Registered accelerometer listener");
+
 
 
 
@@ -185,15 +182,15 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     @RequiresApi(api = Build.VERSION_CODES.R)
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-
-    }
+    public void onAccuracyChanged(Sensor sensor, int i) {}
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         penaltypoint = penaltypoint + getPenaltyPoints(sensorEvent.values[0],sensorEvent.values[1],sensorEvent.values[2]);
-        Log.d("Gyroscope", "onSensorChanged: X: "+ sensorEvent.values[0] + " Y: "+ sensorEvent.values[1] + " Z: "+ sensorEvent.values[2]);
     }
 
+    /**
+     * Weaving Analysis for calculate weaving while typing
+     */
     public int getPenaltyPoints(float xValue, float yValue, float zValue) {
         // get Absolute Values
         xValue = Math.abs(xValue);
@@ -227,10 +224,13 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         Log.d("D-O-M camera storage path: ", String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)));
             String imagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) +
                     File.separator + "drunkometer_selfie.jpeg";
+            //TODO: was machen wir wenn kein Gesicht auf dem Foto ist oder mehrere?
             Intent cameraIntent =new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             imageFile = new File(imagePath);
             Uri photoURI = FileProvider.getUriForFile(this, this.getApplicationContext().getPackageName() + ".provider", imageFile);
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            //Open front camera
+            cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
             cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivityForResult(cameraIntent, 1000);
     }
@@ -373,11 +373,19 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     /**
-     * Copy message content
+     * Copy message content to clipboard if message is "safe to text"
      */
     public void copyMessageContent(View view) {
-        Log.d("Message Copy", "message content copied to clipboard");
-        //TODO add functionality
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        TextMessage currentMessage = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE;
+        if (currentMessage == null) {
+            Log.d("Message Copy", "Error: Tried to copy non-existing message to clipboard.");
+            return;
+        }
+        String content = currentMessage.getMessage();
+        ClipData clip = ClipData.newPlainText("Drunk-O-Meter Text Message", content);
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(getApplicationContext(),"Your message text was copied - go ahead and text it now!",Toast.LENGTH_SHORT).show();
     }
 
 

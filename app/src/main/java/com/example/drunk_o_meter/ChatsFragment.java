@@ -85,7 +85,6 @@ public class ChatsFragment extends Fragment implements OnItemClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         TextView chatsEmpty = layout.findViewById(R.id.chats_empty);
-        TextView chatsExist = layout.findViewById(R.id.chats_title);
 
         ArrayList<DrunkometerAnalysis> drunkometerAnalysisList = UserData.DRUNKOMETER_ANALYSIS_LIST;
         allChats = new ArrayList<>();
