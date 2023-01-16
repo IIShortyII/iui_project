@@ -68,10 +68,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      */
     BottomNavigationView bottomNavigationView;
 
-    //TODO @Dennis: werden diese Variablen benötigt? -> sonst löschen
-    private SensorManager sensorManager;
-    TextView sensorname, xValue, yValue, zValue, penalty;
-
     Sensor gyroscope;
     int penaltypoint = 0;
 
@@ -92,13 +88,13 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setSelectedItemId(R.id.drunkometer);
 
 
-        Log.d("Gyroscope", "onCreate: Initializing Sensor Services");
+
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        //sensorname.setText(""+ gyroscope.getName());
+
         sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
-        Log.d("Gyroscope", "onCreate: Registered accelerometer listener");
+
 
 
 
@@ -180,15 +176,15 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     @RequiresApi(api = Build.VERSION_CODES.R)
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-
-    }
+    public void onAccuracyChanged(Sensor sensor, int i) {}
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         penaltypoint = penaltypoint + getPenaltyPoints(sensorEvent.values[0],sensorEvent.values[1],sensorEvent.values[2]);
-        Log.d("Gyroscope", "onSensorChanged: X: "+ sensorEvent.values[0] + " Y: "+ sensorEvent.values[1] + " Z: "+ sensorEvent.values[2]);
     }
 
+    /**
+     * Weaving Analysis for calculate weaving while typing
+     */
     public int getPenaltyPoints(float xValue, float yValue, float zValue) {
         // get Absolute Values
         xValue = Math.abs(xValue);
