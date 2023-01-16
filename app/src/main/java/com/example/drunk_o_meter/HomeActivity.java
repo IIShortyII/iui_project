@@ -222,11 +222,13 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         Log.d("D-O-M camera storage path: ", String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)));
             String imagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) +
                     File.separator + "drunkometer_selfie.jpeg";
-            //TODO: können wir direkt die Selfie Kamera öffnen, bzw was machen wir wenn kein Gesicht auf dem Foto ist oder mehrere?
+            //TODO: was machen wir wenn kein Gesicht auf dem Foto ist oder mehrere?
             Intent cameraIntent =new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             imageFile = new File(imagePath);
             Uri photoURI = FileProvider.getUriForFile(this, this.getApplicationContext().getPackageName() + ".provider", imageFile);
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            //Open front camera
+            cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
             cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivityForResult(cameraIntent, 1000);
     }
