@@ -29,7 +29,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.drunk_o_meter.chat_list.ChatDetailViewFragment;
@@ -38,7 +37,7 @@ import com.example.drunk_o_meter.nlp.FragmentTextMessageIntro;
 import com.example.drunk_o_meter.nlp.NlpPipeline;
 import com.example.drunk_o_meter.nlp.Sentiment;
 import com.example.drunk_o_meter.nlp.TextMessage;
-import com.example.drunk_o_meter.preferences.PreferencesFragment;
+import com.example.drunk_o_meter.recommender.PreferencesFragment;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallenge;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallengeIntro;
 import com.example.drunk_o_meter.userdata.DrunkometerAnalysis;

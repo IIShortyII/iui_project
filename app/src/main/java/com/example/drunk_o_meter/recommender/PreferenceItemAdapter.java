@@ -1,4 +1,4 @@
-package com.example.drunk_o_meter.preferences;
+package com.example.drunk_o_meter.recommender;
 
 import android.os.Build;
 import android.view.LayoutInflater;

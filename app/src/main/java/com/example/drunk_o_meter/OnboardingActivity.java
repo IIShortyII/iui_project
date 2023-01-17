@@ -12,24 +12,33 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.drunk_o_meter.preferences.PreferencesFragment;
+import com.example.drunk_o_meter.recommender.CSVFile;
+import com.example.drunk_o_meter.recommender.PreferencesFragment;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallenge;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallengeIntro;
 import com.example.drunk_o_meter.userdata.DataHandler;
 
 import static com.example.drunk_o_meter.userdata.UserData.USERNAME;
 
+import java.io.InputStream;
+import java.util.List;
+
 public class OnboardingActivity extends AppCompatActivity {
 
     //TODO: Add user preferences on drinks & age question?
 
     private String stage;
-
+    
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
+
+        InputStream inputStream = getResources().openRawResource(R.raw.alcohol_data);
+        CSVFile csvFile = new CSVFile(inputStream);
+        List alcoholList = csvFile.read();
+        //TODO verschiedene Alkohollisten in User Data speichern -> in Preferences gesamte Datei wieder auslesen und dann aus User Data "checked" auslesen
 
         stage = getIntent().getStringExtra("stage");
         setStage(stage);
