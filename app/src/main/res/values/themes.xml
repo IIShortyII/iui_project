@@ -19,6 +19,10 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="Checkbox" parent="Theme.Drunkometer">
+        <item name="colorAccent">@color/primaryVariant</item>
+    </style>
+
     <style name="HorizontalProgressBar">
         <item name="colorAccent">@color/secondary</item>
         <item name="android:progressBarStyle">@style/Widget.AppCompat.ProgressBar.Horizontal</item>

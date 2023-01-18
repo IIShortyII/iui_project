@@ -10,4 +10,9 @@
         android:enabled="true"
         android:title="Chats"
         android:icon="@drawable/ic_chats"/>
+    <item
+        android:id="@+id/preferences"
+        android:enabled="true"
+        android:title="Preferences"
+        android:icon="@drawable/ic_preferences"/>
 </menu>
