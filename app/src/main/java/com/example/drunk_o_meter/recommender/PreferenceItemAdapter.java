@@ -12,6 +12,8 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.drunk_o_meter.R;
+import com.example.drunk_o_meter.userdata.DataHandler;
+import com.example.drunk_o_meter.userdata.UserData;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,7 @@ public class PreferenceItemAdapter extends RecyclerView.Adapter<PreferenceItemAd
      * The list of drinks that are getting represented
      */
     private ArrayList<String> items;
+    private View layout;
 
 
     public PreferenceItemAdapter(DrinkType drinkType, ArrayList<String> items) {
@@ -56,6 +59,7 @@ public class PreferenceItemAdapter extends RecyclerView.Adapter<PreferenceItemAd
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
         View v = inflater.inflate(R.layout.fragment_preference_item, parent, false);
+        this.layout = v;
         // set the view's size, margins, paddings and layout parameters
         return new ViewHolder(v);
     }
@@ -65,29 +69,23 @@ public class PreferenceItemAdapter extends RecyclerView.Adapter<PreferenceItemAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String text = items.get(position);
 
-        //TODO @Kathrin: hier hole und sichere ich die Einstellungen je Drink Type (dann können wir später die ganze Liste rausholen und random etwas vorschlagen)
-        //TODO: ganz am Anfang alle Drinks aus csv lesen --> alle aktivieren (in PreferencesFragment)
+        //TODO: ganz am Anfang alle Drinks aus csv lesen --> alle aktivieren (in PreferencesFragment)d
         boolean checked = false;
         switch (drinkType) {
             case WINE:
-                //TODO get from user data
-                //checked = Settings.DRINKS.WINE.contains(items.get(position));
+                checked = UserData.DRINKS.get(DrinkType.WINE).contains(items.get(position));
                 break;
             case BEER:
-                //TODO get from user data
-                //checked = Settings.DRINKS.BEER.contains(items.get(position));
+                checked = UserData.DRINKS.get(DrinkType.BEER).contains(items.get(position));
                 break;
             case COCKTAIL:
-                //TODO get from user data
-                //checked = Settings.DRINKS.COCKTAIL.contains(items.get(position));
+                checked = UserData.DRINKS.get(DrinkType.COCKTAIL).contains(items.get(position));
                 break;
             case SHOT:
-                //TODO get from user data
-                //checked = Settings.DRINKS.SHOT.contains(items.get(position));
+                checked = UserData.DRINKS.get(DrinkType.SHOT).contains(items.get(position));
                 break;
             case HOT:
-                //TODO get from user data
-                //checked = Settings.DRINKS.HOT.contains(items.get(position));
+                checked = UserData.DRINKS.get(DrinkType.HOT).contains(items.get(position));
                 break;
         }
 
@@ -98,50 +96,43 @@ public class PreferenceItemAdapter extends RecyclerView.Adapter<PreferenceItemAd
             if (holder.checkBox.isChecked()) {
                 switch (drinkType) {
                     case WINE:
-                        //TODO save to user data
-                        //Settings.DRINKS.WINE.add(items.get(holder.getAdapterPosition()));;
+                        UserData.DRINKS.get(DrinkType.WINE).add(items.get(holder.getAdapterPosition()));
                         break;
                     case BEER:
-                        //TODO save to user data
-                        //Settings.DRINKS.BEER.add(items.get(holder.getAdapterPosition()));
+                        UserData.DRINKS.get(DrinkType.BEER).add(items.get(holder.getAdapterPosition()));
                         break;
                     case COCKTAIL:
-                        //TODO save to user data
-                        //Settings.DRINKS.COCKTAIL.add(items.get(holder.getAdapterPosition()));
+                        UserData.DRINKS.get(DrinkType.COCKTAIL).add(items.get(holder.getAdapterPosition()));
                         break;
                     case SHOT:
-                        //TODO save to user data
-                        //Settings.DRINKS.SHOT.add(items.get(holder.getAdapterPosition()));
+                        UserData.DRINKS.get(DrinkType.SHOT).add(items.get(holder.getAdapterPosition()));
                         break;
                     case HOT:
-                        //TODO save to user data
-                        //Settings.DRINKS.HOT.add(items.get(holder.getAdapterPosition()));
+                        UserData.DRINKS.get(DrinkType.HOT).add(items.get(holder.getAdapterPosition()));
                         break;
                 }
             } else {
                 switch (drinkType) {
                     case WINE:
-                        //TODO save to user data
-                        //Settings.DRINKS.WINE.remove(items.get(holder.getAdapterPosition()));;
+                        UserData.DRINKS.get(DrinkType.WINE).remove(items.get(holder.getAdapterPosition()));
                         break;
                     case BEER:
-                        //TODO save to user data
-                        //Settings.DRINKS.BEER.remove(items.get(holder.getAdapterPosition()));
+                        UserData.DRINKS.get(DrinkType.BEER).remove(items.get(holder.getAdapterPosition()));
                         break;
                     case COCKTAIL:
-                        //TODO save to user data
-                        //Settings.DRINKS.COCKTAIL.remove(items.get(holder.getAdapterPosition()));
+                        UserData.DRINKS.get(DrinkType.COCKTAIL).remove(items.get(holder.getAdapterPosition()));
                         break;
                     case SHOT:
-                        //TODO save to user data
-                        //Settings.DRINKS.SHOT.remove(items.get(holder.getAdapterPosition()));
+                        UserData.DRINKS.get(DrinkType.SHOT).remove(items.get(holder.getAdapterPosition()));
                         break;
                     case HOT:
-                        //TODO save to user data
-                        //Settings.DRINKS.HOT.remove(items.get(holder.getAdapterPosition()));
+                        UserData.DRINKS.get(DrinkType.HOT).remove(items.get(holder.getAdapterPosition()));
                         break;
                 }
             }
+
+            // update storage
+            DataHandler.storeSettings(layout.getContext());
         });
     }
 

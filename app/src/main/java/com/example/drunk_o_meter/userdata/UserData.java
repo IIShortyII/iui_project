@@ -1,9 +1,11 @@
 package com.example.drunk_o_meter.userdata;
 
 import com.example.drunk_o_meter.nlp.TextMessage;
+import com.example.drunk_o_meter.recommender.DrinkType;
 import com.example.drunk_o_meter.typingChallenge.TypingSample;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -50,6 +52,19 @@ public class UserData {
         return mean / sampleSize;
     }
 
+    /**
+     * Drink Preferences
+     * DRINKS.get(DrinkType.WINE)
+     */
+
+    public static HashMap<DrinkType, ArrayList<String>> DRINKS = new HashMap<DrinkType, ArrayList<String>>()
+    {{
+        put(DrinkType.BEER, new ArrayList<>());
+        put(DrinkType.WINE, new ArrayList<>());
+        put(DrinkType.COCKTAIL, new ArrayList<>());
+        put(DrinkType.SHOT, new ArrayList<>());
+        put(DrinkType.HOT, new ArrayList<>());
+    }};
 
 
 }

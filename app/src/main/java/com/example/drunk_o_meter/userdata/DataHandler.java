@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import com.example.drunk_o_meter.nlp.TextMessage;
+import com.example.drunk_o_meter.recommender.DrinkType;
 import com.example.drunk_o_meter.typingChallenge.TypingSample;
 
 import org.json.JSONArray;
@@ -23,6 +24,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class DataHandler {
 
@@ -92,17 +94,32 @@ public class DataHandler {
 
             userData.put("drunkometer_analysis_list", drunkometerAnalysisList);
 
+            // store Drink preferences
+            userData = storeDrinkPreferences(userData);
 
-            Log.d("D-O-M UserData", "Store data");
+
+
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
         try {
             LocalStorageUtils.saveFile(context, DATA_PATH, userData.toString());
+            Log.d("D-O-M store", "Store data");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // Retrieve drink preferences and store in JSON object;
+    private static JSONObject storeDrinkPreferences(JSONObject userData) throws JSONException {
+        ArrayList<DrinkType> drinkKeys = new ArrayList<>(UserData.DRINKS.keySet());
+        for(DrinkType key : drinkKeys){
+            String reference = "drink_preferences_" + key.toString();
+            userData.put(reference, new JSONArray(UserData.DRINKS.get(key)));
+            Log.d("D-O-M DRINK store", String.valueOf(key) + " " + String.valueOf(UserData.DRINKS.get(key).size()));
+        }
+        return userData;
     }
 
 
@@ -191,17 +208,45 @@ public class DataHandler {
 
                 }
 
-                Log.d("DRUNK-O-METER UserData", "Loaded User Data");
+                // load drink preferences
+
+                loadDrinkPreferences(obj);
+
+                Log.d("D-O-M load", "Loaded User Data");
             }
 
         } catch (FileNotFoundException e) {
-            Log.d("DRUNK-O-METER UserData", "File not found");
+            Log.d("D-O-M UserData", "File not found");
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("DRUNK-O-METER UserData", "Loading User Data Failed");
-            Log.d("DRUNK-O-METER UserData", e.getMessage());
+            Log.d("D-O-M UserData", "Loading User Data Failed");
+            Log.d("D-O-M UserData", e.getMessage());
         }
     }
+
+    // Retrieve drink preferences and store in JSON object;
+    private static void loadDrinkPreferences(JSONObject userData) throws JSONException {
+        UserData.DRINKS = new HashMap<>();
+        DrinkType[] drinkKeys = DrinkType.values();
+
+        for(DrinkType key : drinkKeys) {
+            String reference = "drink_preferences_" + key.toString();
+            ArrayList<String> drinkArrayList = new ArrayList<>();
+            if (userData.has(reference)) {
+                JSONArray drinkJSONArray = userData.getJSONArray(reference);
+                if (drinkJSONArray.length() > 0) {
+                    for (int i = 0; i < drinkJSONArray.length(); i++) {
+                        drinkArrayList.add((String) drinkJSONArray.get(i));
+                    }
+                }
+                   }
+            UserData.DRINKS.put(DrinkType.valueOf(key.toString()), drinkArrayList);
+            Log.d("D-O-M DRINKS load", String.valueOf(UserData.DRINKS.get(key)));
+
+        }
+
+    }
+
 
     // https://stackoverflow.com/questions/30818538/converting-json-object-with-bitmaps
 
