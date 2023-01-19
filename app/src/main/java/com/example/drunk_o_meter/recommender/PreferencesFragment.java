@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.drunk_o_meter.R;
 
@@ -88,11 +89,11 @@ public class PreferencesFragment extends Fragment {
         recyclerViewHot.setAdapter(adapterHot);
 
         //Only show continue when in onboarding
-        Button continueButton = getView().findViewById(R.id.continueToHome);
+        Button continueButton = getView().findViewById(R.id.preferences_onboarding_continue);
+        TextView spaceholder = getView().findViewById(R.id.preferences_onboarding_spaceholder);
         if (CONTEXT.equals(getResources().getString(R.string.ONBOARDING))) {
             continueButton.setVisibility(View.VISIBLE);
-            //TODO: set marginBottom of scrollview programatically when button appears
-            //value like: android:layout_marginBottom="90dp"
+            spaceholder.setVisibility(View.VISIBLE);
         }
     }
 

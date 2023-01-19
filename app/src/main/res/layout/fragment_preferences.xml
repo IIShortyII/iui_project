@@ -8,6 +8,7 @@
     android:id="@+id/fragment_preferences">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/preferences_constraint"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="40dp">
@@ -55,9 +56,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="8dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constrainedHeight="false"
-                    app:layout_constraintTop_toBottomOf="@id/preferences_wine"
-                    tools:layout_editor_absoluteX="16dp" />
+                    app:layout_constraintTop_toBottomOf="@id/preferences_wine" />
 
                 <TextView
                     android:id="@+id/preferences_beer"
@@ -75,9 +74,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="8dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constrainedHeight="false"
-                    app:layout_constraintTop_toBottomOf="@id/preferences_beer"
-                    tools:layout_editor_absoluteX="16dp" />
+                    app:layout_constraintTop_toBottomOf="@id/preferences_beer" />
 
                 <TextView
                     android:id="@+id/preferences_cocktails"
@@ -95,9 +92,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="8dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constrainedHeight="false"
-                    app:layout_constraintTop_toBottomOf="@id/preferences_cocktails"
-                    tools:layout_editor_absoluteX="16dp" />
+                    app:layout_constraintTop_toBottomOf="@id/preferences_cocktails" />
 
                 <TextView
                     android:id="@+id/preferences_shots"
@@ -115,9 +110,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="8dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constrainedHeight="false"
-                    app:layout_constraintTop_toBottomOf="@id/preferences_shots"
-                    tools:layout_editor_absoluteX="16dp" />
+                    app:layout_constraintTop_toBottomOf="@id/preferences_shots" />
 
                 <TextView
                     android:id="@+id/preferences_hot"
@@ -135,14 +128,19 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="8dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constrainedHeight="false"
                     app:layout_constraintTop_toBottomOf="@id/preferences_hot" />
 
+                <TextView
+                    android:id="@+id/preferences_onboarding_spaceholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    app:layout_constraintTop_toBottomOf="@id/preferences_hot_list"
+                    android:visibility="gone"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
         <Button
-            android:id="@+id/continueToHome"
+            android:id="@+id/preferences_onboarding_continue"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginHorizontal="40dp"
