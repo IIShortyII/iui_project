@@ -1,6 +1,7 @@
 package com.example.drunk_o_meter.recommender;
 
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,10 +33,9 @@ public class PreferenceItemAdapter extends RecyclerView.Adapter<PreferenceItemAd
         this.drinkType = drinkType;
         this.items = items;
 
-        //TODO Remove after testing
         if (items == null) {
             this.items = new ArrayList<String>();
-            this.items.add("Example Drink");
+            Log.d("Error", "No items in drinks list of type "+ drinkType.name());
         }
     }
 
@@ -69,7 +69,6 @@ public class PreferenceItemAdapter extends RecyclerView.Adapter<PreferenceItemAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String text = items.get(position);
 
-        //TODO: ganz am Anfang alle Drinks aus csv lesen --> alle aktivieren (in PreferencesFragment)d
         boolean checked = false;
         switch (drinkType) {
             case WINE:

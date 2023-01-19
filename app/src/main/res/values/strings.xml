@@ -21,7 +21,7 @@
 
     <string name="next_name">Continue</string>
     <string name="next_typingIntro">Start typing challenge</string>
-    <string name="next_completeOnboarding">Continue to Drunk-O-Meter</string>
+    <string name="next_completeOnboarding">Continue</string>
     <string name="next_takeSelfie">Take a Selfie</string>
 
     <string name="usernameTitle">Welcome to Drunk-O-Meter!</string>

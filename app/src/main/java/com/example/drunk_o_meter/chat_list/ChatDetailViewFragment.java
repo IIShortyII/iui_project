@@ -47,6 +47,8 @@ public class ChatDetailViewFragment extends Fragment {
 
     private View layout;
 
+    //TODO: add copy to clipboard for safe to text messages
+
     public ChatDetailViewFragment() {
         // Required empty public constructor
     }

@@ -17,9 +17,15 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.drunk_o_meter.recommender.CSVFile;
+import com.example.drunk_o_meter.recommender.DrinkType;
 import com.example.drunk_o_meter.userdata.DataHandler;
 import com.example.drunk_o_meter.userdata.DrunkometerAnalysis;
 import com.example.drunk_o_meter.userdata.UserData;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +39,12 @@ public class RecommendationFragment extends Fragment {
 
     //TODO: get from analysis
     private boolean safeToText = true;
+
+    private ArrayList<String[]> preferredWines;
+    private ArrayList<String[]> preferredBeers;
+    private ArrayList<String[]> preferredCocktails;
+    private ArrayList<String[]> preferredShots;
+    private ArrayList<String[]> preferredHots;
 
     /**
      * Indicator that text analysis was conducted
@@ -89,6 +101,8 @@ public class RecommendationFragment extends Fragment {
         TextView safeToTextValue = layout.findViewById(R.id.recommendation_safeToText_value);
         ImageButton copyMessageContent = layout.findViewById(R.id.recommendation_copyMessageContent);
 
+        loadAlcoholData();
+
         drunkennessScore.setText(calculateDrunkennessScore());
 
         //Only show result of text analysis if a message was entered
@@ -117,16 +131,28 @@ public class RecommendationFragment extends Fragment {
             textAnalysisResult.setVisibility(View.GONE);
         }
 
-        //TODO: exchange with correct value for "drunk AF"
-        if (drunkennessScoreInt == 4) {
-            drink1Name.setText("TaZwiWa");
-            drink1Amount.setText("As much as possible");
-            drink1Image.setImageDrawable(getResources().getDrawable(R.drawable.tazwiwa));
+        switch (drunkennessScoreInt) {
+            //get random drink from the preferred lists
+            case 1:
+                //TODO -> all drinks possible
+                break;
+            case 2:
+                //TODO -> only Cocktails, Hot Drinks, Beer, Wine
+                break;
+            case 3:
+                //TODO -> only Beer, Wine
+                break;
+            case 4:
+                drink1Name.setText("TaZwiWa");
+                drink1Amount.setText("As much as possible");
+                drink1Image.setImageDrawable(getResources().getDrawable(R.drawable.tazwiwa));
 
-            drink2Title.setText("Go home");
-            drink2Amount.setText("ASAP!");
-            drink2Image.setImageDrawable(getResources().getDrawable(R.drawable.gohome));
+                drink2Title.setText("Go home");
+                drink2Amount.setText("ASAP!");
+                drink2Image.setImageDrawable(getResources().getDrawable(R.drawable.gohome));
+                break;
         }
+
         // Inflate the layout for this fragment
         return layout;
     }
@@ -152,7 +178,7 @@ public class RecommendationFragment extends Fragment {
             switch (drunkennessScoreInt) {
                 case 0: drunkennessScoreTxt = "Sober and ready to party"; break;
                 case 1: drunkennessScoreTxt = "Heating up"; break;
-                case 2: drunkennessScoreTxt = "Ready to tear up the dancefloor"; break;
+                case 2: drunkennessScoreTxt = "Ready to tear up the dance floor"; break;
                 case 3: drunkennessScoreTxt = "Drunk AF"; break;
             }
 
@@ -182,5 +208,60 @@ public class RecommendationFragment extends Fragment {
             DRUNKOMETER_ANALYSIS_LIST.remove(0);
         }
             UserData.DRUNKOMETER_ANALYSIS_LIST.add(newAnalysis);
+    }
+
+    /**
+     * Reads the alcohol data from the user preferences
+     */
+    public void loadAlcoholData() {
+        //TODO: Kategorien überprüfen --> Aperol eher wie Beer und Wein (extra Kategorie Aperitiv?)
+        ArrayList wineList = UserData.DRINKS.get(DrinkType.WINE);
+        ArrayList beerList = UserData.DRINKS.get(DrinkType.BEER);
+        ArrayList cocktailsList = UserData.DRINKS.get(DrinkType.COCKTAIL);
+        ArrayList shotsList = UserData.DRINKS.get(DrinkType.SHOT);
+        ArrayList hotList = UserData.DRINKS.get(DrinkType.WINE);
+
+        preferredWines = new ArrayList<>();
+        preferredBeers = new ArrayList<>();
+        preferredCocktails = new ArrayList<>();
+        preferredShots = new ArrayList<>();
+        preferredHots = new ArrayList<>();
+
+        InputStream inputStream = getResources().openRawResource(R.raw.alcohol_data);
+        CSVFile csvFile = new CSVFile(inputStream);
+        //list of string arrays with format: [Drink_Name, Drink_Type, Drink_Subtype, Drink_Liter, Drink_Alcohol_Percent, Drink_Alcohol_Pure_Gramm]
+        List alcoholList = csvFile.read();
+
+        //create arrayList of the user's preferred alcoholica containing all information
+        for (Object item: alcoholList) {
+            String[] alcohol = (String []) item;
+            switch (alcohol[1]) {
+                case "Wine":
+                    if (wineList.contains(alcohol[0])) {
+                    preferredWines.add(alcohol);
+                    };
+                    break;
+                case "Beer":
+                    if (beerList.contains(alcohol[0])) {
+                        preferredBeers.add(alcohol);
+                    };
+                    break;
+                case "Cocktail":
+                    if (cocktailsList.contains(alcohol[0])) {
+                        preferredCocktails.add(alcohol);
+                    };
+                    break;
+                case "Shot":
+                    if (shotsList.contains(alcohol[0])) {
+                        preferredShots.add(alcohol);
+                    };
+                    break;
+                case "Hot Drink":
+                    if (hotList.contains(alcohol[0])) {
+                        preferredHots.add(alcohol);
+                    };
+                    break;
+            }
+        }
     }
 }

@@ -13,19 +13,23 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.drunk_o_meter.recommender.CSVFile;
+import com.example.drunk_o_meter.recommender.DrinkType;
 import com.example.drunk_o_meter.recommender.PreferencesFragment;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallenge;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallengeIntro;
 import com.example.drunk_o_meter.userdata.DataHandler;
+import com.example.drunk_o_meter.userdata.UserData;
 
 import static com.example.drunk_o_meter.userdata.UserData.USERNAME;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class OnboardingActivity extends AppCompatActivity {
 
-    //TODO: Add user preferences on drinks & age question?
+    //TODO: Add user age question?
 
     private String stage;
     
@@ -35,10 +39,7 @@ public class OnboardingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
 
-        InputStream inputStream = getResources().openRawResource(R.raw.alcohol_data);
-        CSVFile csvFile = new CSVFile(inputStream);
-        List alcoholList = csvFile.read();
-        //TODO verschiedene Alkohollisten in User Data speichern -> in Preferences gesamte Datei wieder auslesen und dann aus User Data "checked" auslesen
+        loadAlcoholData();
 
         stage = getIntent().getStringExtra("stage");
         setStage(stage);
@@ -91,6 +92,40 @@ public class OnboardingActivity extends AppCompatActivity {
         ft.addToBackStack(null);
 
         ft.commit();
+    }
+
+    /**
+     * Reads the alcohol data from the csv and saves it to the local storage
+     */
+    public void loadAlcoholData() {
+        //TODO: Kategorien überprüfen --> Aperol eher wie Beer und Wein
+        InputStream inputStream = getResources().openRawResource(R.raw.alcohol_data);
+        CSVFile csvFile = new CSVFile(inputStream);
+        //list of string arrays with format: [Drink_Name, Drink_Type, Drink_Subtype, Drink_Liter, Drink_Alcohol_Percent, Drink_Alcohol_Pure_Gramm]
+        List alcoholList = csvFile.read();
+
+        ArrayList<String> wine = new ArrayList<>();
+        ArrayList<String> beer = new ArrayList<>();
+        ArrayList<String> cocktails = new ArrayList<>();
+        ArrayList<String> shots = new ArrayList<>();
+        ArrayList<String> hot = new ArrayList<>();
+
+        for (Object item: alcoholList) {
+            String[] alcohol = (String []) item;
+            switch (alcohol[1]) {
+                case "Wine": wine.add(alcohol[0]); break;
+                case "Beer": beer.add(alcohol[0]); break;
+                case "Cocktail": cocktails.add(alcohol[0]); break;
+                case "Shot": shots.add(alcohol[0]); break;
+                case "Hot Drink": hot.add(alcohol[0]); break;
+            }
+        }
+
+        UserData.DRINKS.put(DrinkType.WINE, wine);
+        UserData.DRINKS.put(DrinkType.BEER, beer);
+        UserData.DRINKS.put(DrinkType.COCKTAIL, cocktails);
+        UserData.DRINKS.put(DrinkType.SHOT, shots);
+        UserData.DRINKS.put(DrinkType.HOT, hot);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
