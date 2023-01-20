@@ -6,59 +6,65 @@
     android:layout_height="match_parent"
     android:layout_margin="40dp">
 
-    <TextView
-        android:id="@+id/textMessageIntroTitle"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/textMessageIntroTitle"
-        android:textColor="#000000"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="24sp" />
+        android:layout_height="match_parent"
+        android:id="@+id/layout_textIntro">
 
-    <TextView
-        android:id="@+id/textMessageIntroDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        app:layout_constraintTop_toBottomOf="@id/textMessageIntroTitle"
-        android:text="@string/textMessageIntroDescription"
-        android:textColor="#000000" />
+        <TextView
+            android:id="@+id/textMessageIntroTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/textMessageIntroTitle"
+            android:textColor="#000000"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="24sp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center|center_horizontal"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent">
+        <TextView
+            android:id="@+id/textMessageIntroDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            app:layout_constraintTop_toBottomOf="@id/textMessageIntroTitle"
+            android:text="@string/textMessageIntroDescription"
+            android:textColor="#000000" />
 
-        <FrameLayout
-            android:layout_width="1dp"
-            android:layout_height="70dp"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_shape"
-            android:layout_marginRight="8dp"
-            android:gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-            <Button
-                android:id="@+id/skipTextMessage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/white"
-                android:gravity="center"
-                android:onClick="skipTextMessage"
-                android:text="@string/next_skipTextMessage"
-                android:textColor="@color/primary" />
-        </FrameLayout>
-
-            <Button
-                android:id="@+id/goToTextMessage"
+            <FrameLayout
                 android:layout_width="1dp"
+                android:layout_height="70dp"
                 android:layout_weight="1"
-                android:layout_height="80dp"
-                android:onClick="goToTextMessageInput"
-                android:text="@string/next_textMessageInput" />
+                android:background="@drawable/rounded_shape"
+                android:layout_marginRight="8dp"
+                android:gravity="center">
 
-    </LinearLayout>
+                <Button
+                    android:id="@+id/skipTextMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/white"
+                    android:gravity="center"
+                    android:onClick="skipTextMessage"
+                    android:text="@string/next_skipTextMessage"
+                    android:textColor="@color/primary" />
+            </FrameLayout>
+
+                <Button
+                    android:id="@+id/goToTextMessage"
+                    android:layout_width="1dp"
+                    android:layout_weight="1"
+                    android:layout_height="80dp"
+                    android:onClick="goToTextMessageInput"
+                    android:text="@string/next_textMessageInput" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

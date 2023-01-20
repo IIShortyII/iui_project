@@ -46,34 +46,16 @@ public class RecommendationFragment extends Fragment {
     /**
      * Indicator that text analysis was conducted
      */
-    private static final String TEXT_ANALYSIS_CONDUCTED = "textAnalysisConducted";
     private boolean textAnalysisConducted;
 
     public RecommendationFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param textAnalysisConducted Whether text analysis was done (=true) or skipped (=false).
-     * @return A new instance of fragment SettingsFragment.
-     */
-    public static RecommendationFragment newInstance(boolean textAnalysisConducted) {
-        RecommendationFragment fragment = new RecommendationFragment();
-        Bundle args = new Bundle();
-        args.putBoolean(TEXT_ANALYSIS_CONDUCTED, textAnalysisConducted);
-        fragment.setArguments(args);
-        return fragment;
+        textAnalysisConducted = (UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE != null);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            textAnalysisConducted = getArguments().getBoolean(TEXT_ANALYSIS_CONDUCTED);
-        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -207,7 +189,7 @@ public class RecommendationFragment extends Fragment {
     public boolean calculateSafeToText(int drunkennessScoreInt) {
         String sentiment = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE.getSentimentAnalysis();
         // @Kathi TODO hier noch das Sentiment aus der Text Message Analyse. Die möglichen Sentiments findest du in nlp/Sentiment
-        boolean safeToText = false;
+        boolean safeToText = true;
 
         return safeToText;
     }

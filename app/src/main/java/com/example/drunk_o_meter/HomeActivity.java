@@ -281,9 +281,20 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void skipTextMessage(View view) {
-        //TODO: selfie analysis here -> waiting screen
-        RecommendationFragment recommendationFragment = RecommendationFragment.newInstance(false);
-        loadFragment(recommendationFragment, "recommendationFragment");
+        ConstraintLayout layout_textIntro = this.findViewById(R.id.layout_textIntro);
+        ConstraintLayout layout_waiting = this.findViewById(R.id.skip_waiting_layout);
+
+        layout_textIntro.setVisibility(View.INVISIBLE);
+        layout_waiting.setVisibility(View.VISIBLE);
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Wait a short time so that progress bar can load
+                calculateSelfieDrunkenness();
+            }
+        }, 100);
     }
 
     /**
@@ -310,12 +321,14 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 public void run() {
                     // Wait a short time so that progress bar can load
                     analyzeTextMessage(recipientInput, textMessageInput);
-                    //TODO: selfie analysis here
                 }
             }, 100);
         }
     }
 
+    /**
+     * Calculate sentiments analysis
+     */
     public void analyzeTextMessage(EditText recipientInput, EditText textMessageInput) {
         Date date = Calendar.getInstance().getTime(); // Format: Fri Dec 23 10:28:05 GMT+01:00 2022
 
@@ -327,8 +340,16 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         // Add text message to current DRUNKOMETER_ANALYSIS object
         UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE = textMessage;
 
+        calculateSelfieDrunkenness();
+    }
 
-        RecommendationFragment recommendationFragment = RecommendationFragment.newInstance(true);
+    /**
+     * Calculate drunkenness score of selfie
+     */
+    public void calculateSelfieDrunkenness() {
+        //TODO @Kathrin: selfie analysis here
+
+        RecommendationFragment recommendationFragment = new RecommendationFragment();
         loadFragment(recommendationFragment, "recommendationFragment");
     }
 
