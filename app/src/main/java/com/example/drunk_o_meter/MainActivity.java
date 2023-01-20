@@ -28,14 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     private void checkForPermissions() {
         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             Log.d("D-O-M permission", "no camera permission");
             requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
         }
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -64,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, OnboardingActivity.class);
             intent.putExtra("stage", "ageCheck");
             MainActivity.this.startActivity(intent);
-        } else if (UserData.USERNAME.length() == 0){
-            // go to onboarding to provide username
+        } else if (UserData.USERNAME.length() == 0 || UserData.WEIGHT == 0){
+            // go to onboarding to provide personal data
             Intent intent = new Intent(MainActivity.this, OnboardingActivity.class);
             intent.putExtra("stage", "username");
             MainActivity.this.startActivity(intent);

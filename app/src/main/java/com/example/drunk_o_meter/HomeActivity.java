@@ -279,7 +279,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             @Override
             public void run() {
                 // Wait a short time so that progress bar can load
-                calculateSelfieDrunkenness();
+                sendSelfieToServer(byteArraySelfie);
             }
         }, 100);
     }
@@ -327,20 +327,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         // Add text message to current DRUNKOMETER_ANALYSIS object
         UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE = textMessage;
 
-        calculateSelfieDrunkenness();
-    }
-
-    /**
-     * Calculate drunkenness score of selfie
-     */
-    public void calculateSelfieDrunkenness() {
         sendSelfieToServer(byteArraySelfie);
-
-        // TODO: @Kathi: würde vorschlagen das Recommendation Fragment erst im onFailure und onResponse
-        //  aufzurufen - damit es erst kommt wenn alles geladen ist
-        //  und bis dahin der waiting screen angezeigt wird :)
-        RecommendationFragment recommendationFragment = new RecommendationFragment();
-        loadFragment(recommendationFragment, "recommendationFragment");
     }
 
     /**
@@ -399,7 +386,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         Toast.makeText(getApplicationContext(),"Your message text was copied - go ahead and text it now!",Toast.LENGTH_SHORT).show();
     }
 
-
     // Server communication - SEND
     void sendSelfieToServer(byte[] byteArray){
         String postUrl= "http://"+IPV4ADDRESS+":"+PORTNUMBER+"/";
@@ -420,8 +406,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 .post(postBody)
                 .build();
 
-        // TODO: show waiting screen (until onFailure / onResponse are called)
-
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -429,19 +413,22 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 call.cancel();
                 Log.d("D-O-M", "Failed to Connect to Server");
                 Log.d("D-O-M", call.request().toString());
-                // TODO: hide waiting screen
 
                 UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION = 1.00;
+
+                RecommendationFragment recommendationFragment = new RecommendationFragment();
+                loadFragment(recommendationFragment, "recommendationFragment");
             }
 
             @RequiresApi(api = Build.VERSION_CODES.R)
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
                 try {
-                    //TODO: @Dennis
-                    UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION = // TODO get score from response
+                    //TODO: @Dennis get score from server response
+                    UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION = 1.00;
 
-                    // TODO: hide waiting screen
+                    RecommendationFragment recommendationFragment = new RecommendationFragment();
+                    loadFragment(recommendationFragment, "recommendationFragment");
                     
                     Log.d("D-O-M Server Response", response.body().string());
                 } catch (IOException e) {
