@@ -221,17 +221,18 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         Log.d("D-O-M challenge error", String.valueOf(UserData.DRUNKOMETER_ANALYSIS.MEAN_ERROR_CHALLENGE));
         Log.d("D-O-M challenge time", String.valueOf(UserData.DRUNKOMETER_ANALYSIS.MEAN_COMPLETIONTIME_CHALLENGE));
         Log.d("D-O-M camera storage path: ", String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)));
-            String imagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) +
-                    File.separator + "drunkometer_selfie.jpeg";
-            //TODO: was machen wir wenn kein Gesicht auf dem Foto ist oder mehrere?
-            Intent cameraIntent =new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            imageFile = new File(imagePath);
-            Uri photoURI = FileProvider.getUriForFile(this, this.getApplicationContext().getPackageName() + ".provider", imageFile);
-            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-            //Open front camera
-            cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
-            cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            startActivityForResult(cameraIntent, 1000);
+
+        String imagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) +
+                File.separator + "drunkometer_selfie.jpeg";
+
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        imageFile = new File(imagePath);
+        Uri photoURI = FileProvider.getUriForFile(this, this.getApplicationContext().getPackageName() + ".provider", imageFile);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+        //Open front camera
+        cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+        cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivityForResult(cameraIntent, 1000);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -253,10 +254,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         connectServer(byteArray);
 
         // TODO: remove this function once we have server response working
+        //TODO: if server not functioning just return 100% for selfie result  -> other results are correct
         finishSelfie();
-
-        // TODO: show waiting screen
-
     }
 
     /**
@@ -282,6 +281,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void skipTextMessage(View view) {
+        //TODO: selfie analysis here -> waiting screen
         RecommendationFragment recommendationFragment = RecommendationFragment.newInstance(false);
         loadFragment(recommendationFragment, "recommendationFragment");
     }
@@ -310,6 +310,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 public void run() {
                     // Wait a short time so that progress bar can load
                     analyzeTextMessage(recipientInput, textMessageInput);
+                    //TODO: selfie analysis here
                 }
             }, 100);
         }
@@ -401,7 +402,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     void postRequest(String postUrl, RequestBody postBody) {
-
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
@@ -417,13 +417,16 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 call.cancel();
                 Log.d("D-O-M", "Failed to Connect to Server");
                 Log.d("D-O-M", call.request().toString());
-
+                //TODO return 100% as result
+                //TODO @Kathrin ist das korrekt?
+                UserData.DRUNKOMETER_ANALYSIS.DRUNKENNESS_SCORE = 1;
             }
 
             @RequiresApi(api = Build.VERSION_CODES.R)
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
                 try {
+                    //TODO: @Dennis
                     // TODO: once the server response is the drunkenness score, save it here
 
                     // TODO: hide waiting screen

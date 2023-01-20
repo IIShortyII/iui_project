@@ -35,20 +35,16 @@ public class RecommendationFragment extends Fragment {
     //TODO: Adapt text style to fit to Kathrin's
     private View layout;
 
-    private int drunkennessScoreInt = 4; // TODO get from analysis (integrate python) @Kathi this is the score from the drunk face detection analysis, right?
-
-    //TODO: get from analysis
-    private boolean safeToText = true;
-
     private ArrayList<String[]> preferredWines;
     private ArrayList<String[]> preferredBeers;
     private ArrayList<String[]> preferredCocktails;
     private ArrayList<String[]> preferredShots;
     private ArrayList<String[]> preferredHots;
 
+    //TODO: user chooses one option -> save to User Data & ask about that the next time the drunkometer was started
+
     /**
      * Indicator that text analysis was conducted
-     * @Kathi: das brauchst du gar nicht: if (this.text_message != null), dann ist textAnalysisConducted true
      */
     private static final String TEXT_ANALYSIS_CONDUCTED = "textAnalysisConducted";
     private boolean textAnalysisConducted;
@@ -87,7 +83,7 @@ public class RecommendationFragment extends Fragment {
 
         this.layout = inflater.inflate(R.layout.fragment_recommendation, container, false);
 
-        TextView drunkennessScore = layout.findViewById(R.id.recommendation_drunkennessScore_value);
+        TextView drunkennessScoreTxt = layout.findViewById(R.id.recommendation_drunkennessScore_value);
 
         TextView drink1Name = layout.findViewById(R.id.recommendation_drink1_name);
         TextView drink1Amount = layout.findViewById(R.id.recommendation_drink1_amount);
@@ -103,36 +99,12 @@ public class RecommendationFragment extends Fragment {
 
         loadAlcoholData();
 
-        drunkennessScore.setText(calculateDrunkennessScore());
-
-        //Only show result of text analysis if a message was entered
-        // @Kathi du kannst stattdessen if (UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE != null) schreiben
-        if (textAnalysisConducted) {
-            String receiver = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE.getRecipient();
-            messageReceiver.setText(receiver);
-
-            // @Kathi TODO hier noch das Seniment aus der Text Message Analyse. Die möglichen Sentiments findest du in nlp/Sentiment
-            String sentiment = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE.getSentimentAnalysis();
-
-            // @Kathi TODO hier ist der Wert aus der Weaving Analysis
-            // Wert <= 35 == normal (not drunk)
-            // Wert >= 35 && <=  70 == drunk
-            // Wert > 70 = WASTED
-            int weavingPenaltyPoints = UserData.DRUNKOMETER_ANALYSIS.PenaltyPoint;
-
-            if (safeToText) {
-                safeToTextValue.setText("Safe To Text");
-                copyMessageContent.setVisibility(View.VISIBLE);
-            } else {
-                safeToTextValue.setText("Not Safe To Text");
-                copyMessageContent.setVisibility(View.GONE);
-            }
-        } else {
-            textAnalysisResult.setVisibility(View.GONE);
-        }
+        int drunkennessScoreInt = calculateDrunkennessScore();
 
         switch (drunkennessScoreInt) {
             //get random drink from the preferred lists
+            case 0:
+                break;
             case 1:
                 //TODO -> all drinks possible
                 break;
@@ -153,46 +125,97 @@ public class RecommendationFragment extends Fragment {
                 break;
         }
 
+        drunkennessScoreTxt.setText(getDrunkennessScoreText(drunkennessScoreInt));
+
+        //Only show result of text analysis if a message was entered
+        if (textAnalysisConducted) {
+            String receiver = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE.getRecipient();
+            messageReceiver.setText(receiver);
+
+            boolean safeToText = calculateSafeToText(drunkennessScoreInt);
+
+            if (safeToText) {
+                safeToTextValue.setText("Safe To Text");
+                copyMessageContent.setVisibility(View.VISIBLE);
+            } else {
+                safeToTextValue.setText("Not Safe To Text");
+                copyMessageContent.setVisibility(View.GONE);
+            }
+        } else {
+            textAnalysisResult.setVisibility(View.GONE);
+        }
+
         // Inflate the layout for this fragment
         return layout;
     }
 
-        @RequiresApi(api = Build.VERSION_CODES.R)
-        public String calculateDrunkennessScore() {
-            //TODO: calculate drunkenness score text based on level
+    /**
+     * Main function of the recommender that combines all factors collected in the analysis and calculates the drunkenness
+     * @return int for drunkenness between 0 and 4
+     */
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    public int calculateDrunkennessScore(){
+        //TODO: calculate drunkenness score text based on level
+        //@Dennis hier die Drunkenness berechnen
 
-            // @Kathi hier alle relevanten Infos aus der Analysis:
+        // Typing Challenge
+        double mean_error_challenge = UserData.DRUNKOMETER_ANALYSIS.MEAN_ERROR_CHALLENGE;
+        double mean_completiontime_challenge = UserData.DRUNKOMETER_ANALYSIS.MEAN_COMPLETIONTIME_CHALLENGE;
 
-            // Typing Challenge
-            double mean_error_challenge = UserData.DRUNKOMETER_ANALYSIS.MEAN_ERROR_CHALLENGE;
-            double mean_completiontime_challenge = UserData.DRUNKOMETER_ANALYSIS.MEAN_COMPLETIONTIME_CHALLENGE;
+        // Baseline Typing error and completiontime (um einen signifikanten Unterschied zwischen den Werten aus challenge und baseline zu ermitteln)
+        double mean_error_baseline = UserData.MEAN_ERROR_BASELINE;
+        double mean_completiontime_baseline = UserData.MEAN_COMPLETIONTIME_BASELINE;
 
-            // Baseline Typing error and completiontime (um einen signifikanten Unterschied zwischen den Werten aus challenge und baseline zu ermitteln)
-            double mean_error_baseline = UserData.MEAN_ERROR_BASELINE;
-            double mean_completiontime_baseline = UserData.MEAN_COMPLETIONTIME_BASELINE;
+        // Drunkenness Prediction aus der drunk face analysis // TODO: fehlt noch
+        double selfieDrunkPrediction = UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION;
 
-            // Drunkenness Prediction aus der drunk face analysis // TODO: fehlt noch
-            double selfieDrunkPrediction = UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION;
+        // Weaving analysis results
+        // Wert <= 35 == normal (not drunk)
+        // Wert >= 35 && <=  70 == drunk
+        // Wert > 70 = WASTED
+        int weavingPenaltyPoints = UserData.DRUNKOMETER_ANALYSIS.PenaltyPoint;
 
-            String drunkennessScoreTxt = "No value arrived from analysis";
-            switch (drunkennessScoreInt) {
-                case 0: drunkennessScoreTxt = "Sober and ready to party"; break;
-                case 1: drunkennessScoreTxt = "Heating up"; break;
-                case 2: drunkennessScoreTxt = "Ready to tear up the dance floor"; break;
-                case 3: drunkennessScoreTxt = "Drunk AF"; break;
-            }
+        //@dennis hier den drunkennessScoreInt berechnen [0;4]
+        int drunkennessScoreInt = 4;
 
-            // Save finished drunkometerAnalysis to local storage
-            addDrunkoMeterAnalysisToList();
-            DataHandler.storeSettings(this.getActivity());
+        // Save finished drunkometerAnalysis to local storage
+        addDrunkoMeterAnalysisToList(drunkennessScoreInt);
+        DataHandler.storeSettings(this.getActivity());
 
-            return drunkennessScoreTxt;
+        return drunkennessScoreInt;
+    }
+
+    /**
+     *
+     * @param drunkennessScoreInt
+     * @return human readable form of drunkenness calculation result
+     */
+    public String getDrunkennessScoreText(int drunkennessScoreInt) {
+        String drunkennessScoreTxt = "No value arrived from analysis";
+        switch (drunkennessScoreInt) {
+            case 0: drunkennessScoreTxt = "Sober and ready to party"; break;
+            case 1: drunkennessScoreTxt = "Heating up"; break;
+            case 2: drunkennessScoreTxt = "On fire"; break;
+            case 3: drunkennessScoreTxt = "Ready to tear up the dance floor"; break;
+            case 4: drunkennessScoreTxt = "Drunk AF"; break;
+        }
+
+        return drunkennessScoreTxt;
+    }
+
+    //TODO: is this redundant if we already calculate it in Home Activity?
+    public boolean calculateSafeToText(int drunkennessScoreInt) {
+        String sentiment = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE.getSentimentAnalysis();
+        // @Kathi TODO hier noch das Sentiment aus der Text Message Analyse. Die möglichen Sentiments findest du in nlp/Sentiment
+        boolean safeToText = false;
+
+        return safeToText;
     }
 
     /**
      * Add all information of the drunkometer Analysis object to the list ob drunkometer analysis
      */
-    private void addDrunkoMeterAnalysisToList() {
+    private void addDrunkoMeterAnalysisToList(int drunkennessScoreInt) {
         DrunkometerAnalysis newAnalysis = new DrunkometerAnalysis();
         newAnalysis.DRUNKENNESS_SCORE = drunkennessScoreInt;
         newAnalysis.MEAN_COMPLETIONTIME_CHALLENGE = UserData.DRUNKOMETER_ANALYSIS.MEAN_COMPLETIONTIME_CHALLENGE;
@@ -214,7 +237,7 @@ public class RecommendationFragment extends Fragment {
      * Reads the alcohol data from the user preferences
      */
     public void loadAlcoholData() {
-        //TODO: Kategorien überprüfen --> Aperol eher wie Beer und Wein (extra Kategorie Aperitiv?)
+        //TODO: Kategorien überprüfen --> Aperol eher wie Beer und Wein (extra Kategorie Aperitiv?), Kategorie harter Alkohol
         ArrayList wineList = UserData.DRINKS.get(DrinkType.WINE);
         ArrayList beerList = UserData.DRINKS.get(DrinkType.BEER);
         ArrayList cocktailsList = UserData.DRINKS.get(DrinkType.COCKTAIL);

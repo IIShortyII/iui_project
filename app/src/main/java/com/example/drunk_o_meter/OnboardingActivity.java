@@ -29,7 +29,7 @@ import java.util.List;
 
 public class OnboardingActivity extends AppCompatActivity {
 
-    //TODO: Add user age question?
+    //TODO: Add 1) user age question & 2) weight & sex
 
     private String stage;
     

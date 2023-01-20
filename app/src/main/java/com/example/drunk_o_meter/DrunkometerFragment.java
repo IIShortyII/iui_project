@@ -25,6 +25,7 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class DrunkometerFragment extends Fragment {
+    //TODO: ask user if they followed recommendation: yes, no I drank - drink type / water / nothing ---> mittleren Alkoholwert von Kategorie
 
     private View layout;
     private ImageView selfieView;
@@ -75,10 +76,21 @@ public class DrunkometerFragment extends Fragment {
         return layout;
     }
 
+    //TODO: add button to start a new day -> drunkenness based on drinks already taken = 0
+    /**
+     * Clear previous drinks and start as "sober"
+     */
+    public void startNewDay(View view) {
+        //UserData.PREVIOUS_RECOMMENDATION = "";
+        //UserData.PREVIOUS_RECOMMENDATION_LIST = new ArrayList<>();
+        //DataHandler.storeSettings(getActivity());
+    }
+
     /**
      * Clear local storage for debugging purposes and go back to start
      * @param view the current activity context
      */
+    //TODO: remove button in final version
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void clearLocalStorage(View view) {
         UserData.USERNAME = "";
