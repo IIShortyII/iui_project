@@ -137,8 +137,7 @@ public class RecommendationFragment extends Fragment {
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
     public int calculateDrunkennessScore(){
-        //TODO: calculate drunkenness score text based on level
-        //@Dennis hier die Drunkenness berechnen
+        //TODO: calculate drunkenness score
 
         // Typing Challenge
         double mean_error_challenge = UserData.DRUNKOMETER_ANALYSIS.MEAN_ERROR_CHALLENGE;
@@ -157,7 +156,12 @@ public class RecommendationFragment extends Fragment {
         // Wert > 70 = WASTED
         int weavingPenaltyPoints = UserData.DRUNKOMETER_ANALYSIS.PenaltyPoint;
 
-        //@dennis hier den drunkennessScoreInt berechnen [0;4]
+        //Personal info
+        int userWeight = UserData.WEIGHT;
+
+        //TODO @Dennis hier den drunkennessScoreInt berechnen [0;4] -> user weight wird schon abgefragt,
+        // bei der letzten recommendation bzw bei den letzten getränken kannst du mal ausprobieren welches format
+        // du für die berechnung brauchst, dann bau ich das entsprechend.
         int drunkennessScoreInt = 4;
 
         // Save finished drunkometerAnalysis to local storage

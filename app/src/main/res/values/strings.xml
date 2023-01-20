@@ -24,11 +24,17 @@
     <string name="next_completeOnboarding">Continue</string>
     <string name="next_takeSelfie">Take a Selfie</string>
 
+    <string name="ageInfo">To use this app you have to be at least 18! \n Please enter the year you were born in.</string>
+
     <string name="usernameTitle">Welcome to Drunk-O-Meter!</string>
     <string name="usernameDescription">What\'s your name, mate?</string>
 
+    <string name="personalInfoIntro">Perfect, now I need to get to know you better in order to give you the best recommendations. But don\'t worry - I\'m good at keeping secrets!</string>
+    <string name="personalInfoWeight">What\'s your weight?</string>
+    <string name="personalInfoGender">What\'s your biological gender?</string>
+
     <string name="typingChallengeIntroTitle">Typing Challenge</string>
-    <string name="typingChallengeIntroDescription">Let\'s start with a quick typing challenge. Go!</string>
+    <string name="typingChallengeIntroDescription">Let\'s continue with a quick typing challenge. Go!</string>
     <string name="baselineIntroDescription">In order to evaluate your Drunkenness Score, we need to learn about your typing performance when being sober. We created a quick typing challenge for you. Let\'s go!</string>
 
     <string name="recommendation_drunkennessScore">Your Drunkenness Score is:</string>

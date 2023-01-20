@@ -59,7 +59,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // determine mode
-        if (UserData.USERNAME.length() == 0){
+        if (UserData.AGE_CHECK == false) {
+            // go to onboarding to check age
+            Intent intent = new Intent(MainActivity.this, OnboardingActivity.class);
+            intent.putExtra("stage", "ageCheck");
+            MainActivity.this.startActivity(intent);
+        } else if (UserData.USERNAME.length() == 0){
             // go to onboarding to provide username
             Intent intent = new Intent(MainActivity.this, OnboardingActivity.class);
             intent.putExtra("stage", "username");

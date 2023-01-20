@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 
 import com.example.drunk_o_meter.userdata.DataHandler;
+import com.example.drunk_o_meter.userdata.Gender;
 import com.example.drunk_o_meter.userdata.UserData;
 
 import java.util.ArrayList;
@@ -93,7 +94,10 @@ public class DrunkometerFragment extends Fragment {
     //TODO: remove button in final version
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void clearLocalStorage(View view) {
+        UserData.AGE_CHECK = false;
         UserData.USERNAME = "";
+        UserData.WEIGHT = 0;
+        UserData.GENDER = Gender.FEMALE;
         UserData.BASELINE_TYPING_CHALLENGE = new ArrayList<>();
         UserData.DRUNKOMETER_ANALYSIS_LIST = new ArrayList<>();
         DataHandler.storeSettings(getActivity());

@@ -27,9 +27,37 @@ public class UserData {
     public static double MEAN_COMPLETIONTIME_BASELINE;
 
     /**
+     * Check minimal age of 18
+     */
+    public static boolean AGE_CHECK = false;
+
+    /**
      * Username
      */
     public static String USERNAME ="";
+
+    /**
+     * Weight
+     */
+    public static int WEIGHT = 0;
+
+    /**
+     * Biological gender
+     */
+    public static Gender GENDER = Gender.FEMALE;
+
+    /**
+     * Drink Preferences
+     * DRINKS.get(DrinkType.WINE)
+     */
+    public static HashMap<DrinkType, ArrayList<String>> DRINKS = new HashMap<DrinkType, ArrayList<String>>()
+    {{
+        put(DrinkType.BEER, new ArrayList<>());
+        put(DrinkType.WINE, new ArrayList<>());
+        put(DrinkType.COCKTAIL, new ArrayList<>());
+        put(DrinkType.SHOT, new ArrayList<>());
+        put(DrinkType.HOT, new ArrayList<>());
+    }};
 
     /**
      * Calculate the mean value of the provided variable
@@ -51,20 +79,5 @@ public class UserData {
 
         return mean / sampleSize;
     }
-
-    /**
-     * Drink Preferences
-     * DRINKS.get(DrinkType.WINE)
-     */
-
-    public static HashMap<DrinkType, ArrayList<String>> DRINKS = new HashMap<DrinkType, ArrayList<String>>()
-    {{
-        put(DrinkType.BEER, new ArrayList<>());
-        put(DrinkType.WINE, new ArrayList<>());
-        put(DrinkType.COCKTAIL, new ArrayList<>());
-        put(DrinkType.SHOT, new ArrayList<>());
-        put(DrinkType.HOT, new ArrayList<>());
-    }};
-
 
 }

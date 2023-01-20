@@ -83,21 +83,12 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.activity_home);
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-
         bottomNavigationView.setOnItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.drunkometer);
 
-
-
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
         gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-
         sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
-
-
-
-
     }
 
     /**

@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.drunk_o_meter.recommender.AgeFragment;
 import com.example.drunk_o_meter.recommender.CSVFile;
 import com.example.drunk_o_meter.recommender.DrinkType;
 import com.example.drunk_o_meter.recommender.PreferencesFragment;
@@ -20,16 +22,16 @@ import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallengeIntro;
 import com.example.drunk_o_meter.userdata.DataHandler;
 import com.example.drunk_o_meter.userdata.UserData;
 
+import static com.example.drunk_o_meter.userdata.UserData.AGE_CHECK;
 import static com.example.drunk_o_meter.userdata.UserData.USERNAME;
+import static com.example.drunk_o_meter.userdata.UserData.WEIGHT;
 
 import java.io.InputStream;
+import java.time.Year;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class OnboardingActivity extends AppCompatActivity {
-
-    //TODO: Add 1) user age question & 2) weight & sex
 
     private String stage;
     
@@ -47,15 +49,20 @@ public class OnboardingActivity extends AppCompatActivity {
 
     /**
      * Depending on the stage the user is in, provide the corresponding content of the onboarding flow.
-     * @param stage the stage the user is in ("username" or "typingChallenge" or "preferences")
+     * @param stage the stage the user is in ("ageCheck" "username" or "typingChallenge" or "preferences")
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setStage(String stage) {
 
         switch (stage) {
+            case "ageCheck":
+                AgeFragment ageFragment = new AgeFragment();
+                loadFragment(ageFragment, "ageFragment");
+                break;
+
             case "username":
-                UsernameFragment usernameFragment = new UsernameFragment();
-                loadFragment(usernameFragment, "fragmentUsername");
+                PersonalDataFragment personalDataFragment = new PersonalDataFragment();
+                loadFragment(personalDataFragment, "fragmentUsername");
                 break;
 
             case "typingChallenge":
@@ -66,7 +73,7 @@ public class OnboardingActivity extends AppCompatActivity {
             case "preferences":
                 PreferencesFragment preferencesFragment = new PreferencesFragment();
                 loadFragment(preferencesFragment, "preferencesFragment");
-
+                break;
         }
     }
 
@@ -129,18 +136,47 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
-    public void saveUsername(View view) {
+    public void checkAge(View view) {
+        EditText ageInput = findViewById(R.id.ageInput);
+        String ageString = String.valueOf(ageInput.getText());
+        int age = Integer.parseInt(ageString);
+
+        if (ageString.length()== 4 && (Year.now().getValue() - age >= 18) && (age < Year.now().getValue())) {
+            AGE_CHECK = true;
+            PersonalDataFragment personalDataFragment = new PersonalDataFragment();
+            loadFragment(personalDataFragment, "personalDataFragment");
+            this.stage = "username";
+
+            Log.d("D-O-M AGE_CHECK", Boolean.toString(AGE_CHECK));
+            DataHandler.storeSettings(this);
+        } else {
+            Toast.makeText(getApplicationContext(),"Sorry, you're to young! Come back when you're older.",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    public void savePersonalData(View view) {
+        //TODO: do we need a possibility to change the weight afterwards?
         EditText usernameInput = findViewById(R.id.usernameInput);
         String username = String.valueOf(usernameInput.getText());
-        if (username.length() != 0) {
+
+        EditText weightInput = findViewById(R.id.weightInput);
+        String weightString = String.valueOf(weightInput.getText());
+
+        if (username.length() != 0 && weightString.length() != 0) {
+            Integer weight = Integer.valueOf(weightString);
+
             USERNAME = username;
+            WEIGHT = weight;
+
             FragmentTypingChallengeIntro fragmentTypingChallengeIntro = new FragmentTypingChallengeIntro();
             loadFragment(fragmentTypingChallengeIntro, "fragmentTypingChallengeIntro");
             this.stage = "typingChallenge";
 
             Log.d("D-O-M USERNAME", USERNAME);
+            Log.d("D-O-M WEIGHT", Integer.toString(WEIGHT));
+            Log.d("D-O-M GENDER", UserData.GENDER.toString());
             DataHandler.storeSettings(this);
-
         }
     }
 
