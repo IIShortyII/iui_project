@@ -104,7 +104,7 @@ public class PreferencesFragment extends Fragment {
         //TODO: Kategorien überprüfen --> Aperol eher wie Beer und Wein
         InputStream inputStream = getResources().openRawResource(R.raw.alcohol_data);
         CSVFile csvFile = new CSVFile(inputStream);
-        //list of string arrays with format: [Drink_Name, Drink_Type, Drink_Subtype, Drink_Liter, Drink_Alcohol_Percent, Drink_Alcohol_Pure_Gramm]
+        //list of string arrays with format: [Drink_Name, Drink_Type, Drink_Subtype, Drink_Liter, Drink_Alcohol_Pure_Gramm]
         List alcoholList = csvFile.read();
 
         wineList = new ArrayList<>();

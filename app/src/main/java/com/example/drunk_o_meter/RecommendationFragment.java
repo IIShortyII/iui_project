@@ -252,7 +252,7 @@ public class RecommendationFragment extends Fragment {
 
         InputStream inputStream = getResources().openRawResource(R.raw.alcohol_data);
         CSVFile csvFile = new CSVFile(inputStream);
-        //list of string arrays with format: [Drink_Name, Drink_Type, Drink_Subtype, Drink_Liter, Drink_Alcohol_Percent, Drink_Alcohol_Pure_Gramm]
+        //list of string arrays with format: [Drink_Name, Drink_Type, Drink_Subtype, Drink_Liter, Drink_Alcohol_Pure_Gramm]
         List alcoholList = csvFile.read();
 
         //create arrayList of the user's preferred alcoholica containing all information
