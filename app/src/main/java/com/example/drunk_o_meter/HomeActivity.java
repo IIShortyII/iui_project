@@ -440,7 +440,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 Log.d("D-O-M", call.request().toString());
                 // TODO: hide waiting screen
 
-                // TODO check if INT or DOUBLE is returned from selfie analysis
                 UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION = 1.00;
             }
 
@@ -449,7 +448,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             public void onResponse(Call call, final Response response) throws IOException {
                 try {
                     //TODO: @Dennis
-                    // TODO: once the server response is the drunkenness score, save it here
                     UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION = // TODO get score from response
 
                     // TODO: hide waiting screen
