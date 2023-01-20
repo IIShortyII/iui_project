@@ -147,7 +147,7 @@ public class RecommendationFragment extends Fragment {
         double mean_error_baseline = UserData.MEAN_ERROR_BASELINE;
         double mean_completiontime_baseline = UserData.MEAN_COMPLETIONTIME_BASELINE;
 
-        // Drunkenness Prediction aus der drunk face analysis // TODO: fehlt noch
+        // Drunkenness Prediction aus der drunk face analysis
         double selfieDrunkPrediction = UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION;
 
         // Weaving analysis results

@@ -76,6 +76,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     // Server variables
     private String IPV4ADDRESS = "192.168.178.156"; // TODO might have to change depending on what network the server is running
     private String PORTNUMBER = "5000";
+    private byte[] byteArraySelfie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -237,23 +238,18 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 25, out);
-        byte[] byteArray = out.toByteArray();
+        byteArraySelfie = out.toByteArray();
         Bitmap compressed = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
         UserData.DRUNKOMETER_ANALYSIS.SELFIE = compressed;
 
-        //  send image to server
-        connectServer(byteArray);
-
-        // TODO: remove this function once we have server response working
-        //TODO: if server not functioning just return 100% for selfie result  -> other results are correct
-        finishSelfie();
+        goToTextMessageIntro();
     }
 
     /**
      * Continue to text message fragment
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
-    public void finishSelfie() {
+    public void goToTextMessageIntro() {
         FragmentTextMessageIntro fragmentTextMessageIntro = new FragmentTextMessageIntro();
         loadFragment(fragmentTextMessageIntro, "fragmentTextMessageIntro");
     }
@@ -338,8 +334,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      * Calculate drunkenness score of selfie
      */
     public void calculateSelfieDrunkenness() {
-        //TODO @Kathrin: selfie analysis here
+        sendSelfieToServer(byteArraySelfie);
 
+        // TODO: @Kathi: würde vorschlagen das Recommendation Fragment erst im onFailure und onResponse
+        //  aufzurufen - damit es erst kommt wenn alles geladen ist
+        //  und bis dahin der waiting screen angezeigt wird :)
         RecommendationFragment recommendationFragment = new RecommendationFragment();
         loadFragment(recommendationFragment, "recommendationFragment");
     }
@@ -402,7 +401,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
 
     // Server communication - SEND
-    void connectServer(byte[] byteArray){
+    void sendSelfieToServer(byte[] byteArray){
         String postUrl= "http://"+IPV4ADDRESS+":"+PORTNUMBER+"/";
 
         RequestBody postBody = new MultipartBody.Builder()
@@ -421,6 +420,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 .post(postBody)
                 .build();
 
+        // TODO: show waiting screen (until onFailure / onResponse are called)
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -429,9 +429,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 call.cancel();
                 Log.d("D-O-M", "Failed to Connect to Server");
                 Log.d("D-O-M", call.request().toString());
-                //TODO return 100% as result
-                //TODO @Kathrin ist das korrekt?
-                UserData.DRUNKOMETER_ANALYSIS.DRUNKENNESS_SCORE = 1;
+                // TODO: hide waiting screen
+
+                UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION = 1.00;
             }
 
             @RequiresApi(api = Build.VERSION_CODES.R)
@@ -439,12 +439,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             public void onResponse(Call call, final Response response) throws IOException {
                 try {
                     //TODO: @Dennis
-                    // TODO: once the server response is the drunkenness score, save it here
+                    UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION = // TODO get score from response
 
                     // TODO: hide waiting screen
-
-                    // TODO: ADD this function once we have server response working
-                    // finishSelfie();
                     
                     Log.d("D-O-M Server Response", response.body().string());
                 } catch (IOException e) {
