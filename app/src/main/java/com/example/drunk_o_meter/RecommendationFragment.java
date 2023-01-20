@@ -21,6 +21,7 @@ import com.example.drunk_o_meter.recommender.CSVFile;
 import com.example.drunk_o_meter.recommender.DrinkType;
 import com.example.drunk_o_meter.userdata.DataHandler;
 import com.example.drunk_o_meter.userdata.DrunkometerAnalysis;
+import com.example.drunk_o_meter.userdata.Gender;
 import com.example.drunk_o_meter.userdata.UserData;
 
 import java.io.InputStream;
@@ -158,8 +159,9 @@ public class RecommendationFragment extends Fragment {
 
         //Personal info
         int userWeight = UserData.WEIGHT;
+        Gender gender = UserData.GENDER;
 
-        //TODO @Dennis hier den drunkennessScoreInt berechnen [0;4] -> user weight wird schon abgefragt,
+        //TODO @Dennis hier den drunkennessScoreInt berechnen [0;4] -> user weight & gender wird schon abgefragt,
         // bei der letzten recommendation bzw bei den letzten getränken kannst du mal ausprobieren welches format
         // du für die berechnung brauchst, dann bau ich das entsprechend.
         int drunkennessScoreInt = 4;
