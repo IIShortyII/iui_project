@@ -28,4 +28,8 @@ public class DrunkometerAnalysis {
 
     //PenaltyPoints
     public int PenaltyPoint;
+
+    //Taken Alcohol
+    public double GramOfTakenAlcohol;
+
 }

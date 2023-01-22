@@ -1,5 +1,6 @@
 package com.example.drunk_o_meter;
 
+import static com.example.drunk_o_meter.userdata.UserData.DRUNKOMETER_ANALYSIS;
 import static com.example.drunk_o_meter.userdata.UserData.DRUNKOMETER_ANALYSIS_LIST;
 
 import android.os.Build;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 
 import android.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,14 +134,85 @@ public class RecommendationFragment extends Fragment {
         return layout;
     }
 
+
+    /**
+     * Calculates PerMille Alcohol of User depending on taken Alcohol, Sex and user weight.
+     * @return Users PerMille Alcohol Level in Double
+     * @param TotalGramAlcohol
+     * @param UserGender
+     * @param UserWeight
+     */
+    public double calculatePerMillAlcohol(double TotalGramAlcohol, Gender UserGender, int UserWeight){
+        double maleReductionFactor = 0.69;
+        double femaleReductionFactor = 0.58;
+        double Reductionfactor;
+
+        if(UserGender == Gender.FEMALE){
+            Reductionfactor = femaleReductionFactor;
+        }else {
+            Reductionfactor = maleReductionFactor;
+        };
+
+        double PerMillAlcohol = TotalGramAlcohol / (UserWeight*Reductionfactor);
+        return PerMillAlcohol;
+    }
+    /**
+     * Converts PerMille Alcohol to DrunkScore
+     * @return DrunkScore Double
+     * @param PerMill
+     */
+    public double PerMillAlcoholToDrunkScore(double PerMill){
+        double DrunkScore;
+        if (PerMill > 2.00){
+            DrunkScore = 4;
+        }else if(PerMill >1.00){
+            DrunkScore = 3;
+        }else if(PerMill >0.80){
+            DrunkScore = 2;
+        }else if(PerMill >0.30){
+            DrunkScore = 1;
+        }else{
+            DrunkScore = 0;
+        }
+        return DrunkScore;
+    }
+    /**
+     * Calculates DrunkScore depending Text Challenge Results
+     * @return DrunkScore Double
+     * @param Error_Base
+     * @param Error_Chall
+     * @param Time_Base
+     * @param Time_Chall
+     */
+    public double CalculateTextScore(double Error_Base, double Error_Chall, double Time_Base, double Time_Chall){
+        double diffErrorRate = Math.abs(Error_Base-Error_Chall);
+        double diffTime = Math.abs(Time_Base-Time_Chall);
+        double DrunkScore =0.0;
+        // ToDo: @Kathrin Bitte die Border Werte prüfen und ggf. anpassen.
+        if (diffErrorRate>30) {
+            DrunkScore =DrunkScore+1;
+        }else if (diffErrorRate>20){
+            DrunkScore =DrunkScore+0.5;
+        }
+
+        if(diffTime>7000){
+            DrunkScore =DrunkScore+1;
+        }else if (diffTime>5000){
+            DrunkScore =DrunkScore+0.5;
+        }
+        return DrunkScore;
+    }
+
+
     /**
      * Main function of the recommender that combines all factors collected in the analysis and calculates the drunkenness
      * @return int for drunkenness between 0 and 4
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
-    public int calculateDrunkennessScore(){
-        //TODO: calculate drunkenness score
 
+
+
+    public int calculateDrunkennessScore(){
         // Typing Challenge
         double mean_error_challenge = UserData.DRUNKOMETER_ANALYSIS.MEAN_ERROR_CHALLENGE;
         double mean_completiontime_challenge = UserData.DRUNKOMETER_ANALYSIS.MEAN_COMPLETIONTIME_CHALLENGE;
@@ -152,25 +225,44 @@ public class RecommendationFragment extends Fragment {
         double selfieDrunkPrediction = UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION;
 
         // Weaving analysis results
-        // Wert <= 35 == normal (not drunk)
-        // Wert >= 35 && <=  70 == drunk
-        // Wert > 70 = WASTED
         int weavingPenaltyPoints = UserData.DRUNKOMETER_ANALYSIS.PenaltyPoint;
 
         //Personal info
         int userWeight = UserData.WEIGHT;
         Gender gender = UserData.GENDER;
 
-        //TODO @Dennis hier den drunkennessScoreInt berechnen [0;4] -> user weight & gender wird schon abgefragt,
-        // bei der letzten recommendation bzw bei den letzten getränken kannst du mal ausprobieren welches format
-        // du für die berechnung brauchst, dann bau ich das entsprechend.
-        int drunkennessScoreInt = 4;
+        //Grams of Taken Alcohol
+        //TODO: @Kathi  Hier wird das Gramm Alkohol gespeichert. Ich würde in Double rechnen, auch wenn
+        //TODO in der CSV immer nur ganze Werte drin sind. 
+        double TakenAlcohol = DRUNKOMETER_ANALYSIS.GramOfTakenAlcohol;
 
-        // Save finished drunkometerAnalysis to local storage
-        addDrunkoMeterAnalysisToList(drunkennessScoreInt);
+        //Calculating user PerMill alcohol intake
+        double PerMillAlcohol = calculatePerMillAlcohol(TakenAlcohol,gender, userWeight);
+        //Converting PerMill alcohol to DrunkScore
+        double drunkScore = PerMillAlcoholToDrunkScore(PerMillAlcohol);
+
+        //Adding WeavingAnalysis Factor
+        if(weavingPenaltyPoints >70){
+            drunkScore = drunkScore + 1;
+        } else if (weavingPenaltyPoints > 34){
+            drunkScore = drunkScore + 0.5;
+        }
+
+        //Adding TypingChallenge Factor
+        drunkScore= drunkScore+CalculateTextScore(mean_error_baseline,mean_error_challenge,mean_completiontime_baseline,mean_completiontime_challenge);
+        drunkScore = drunkScore*selfieDrunkPrediction+0;
+
+        //Set drunkScore to max Value, if drunkScore is over max Value
+        if (drunkScore > 4){
+            drunkScore = 4;
+        }
+        //Convert drunkScore to Integer
+        int drunkScoreInt = Integer.valueOf((int) Math.round(drunkScore));
+        // Save finished drunkometer Analysis to local storage
+        addDrunkoMeterAnalysisToList(drunkScoreInt);
         DataHandler.storeSettings(this.getActivity());
 
-        return drunkennessScoreInt;
+        return drunkScoreInt;
     }
 
     /**
