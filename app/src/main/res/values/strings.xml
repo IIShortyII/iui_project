@@ -41,13 +41,14 @@
     <string name="feedbackDescription">Before we start: Did you like the last recommendation? What did you drink?</string>
     <string name="feedbackOtherDrink">Which type of drink was it?</string>
 
-    <string name="recommendation_drunkennessScore">Your Drunkenness Score is:</string>
-    <string name="recommendation_intro">I would recommend the following:</string>
+    <string name="recommendation_drunkennessScore">Drunkenness Score</string>
+    <string name="recommendation_intro">My recommendation to you:</string>
     <string name="recommendation_drinks_image">Drink Image</string>
     <string name="recommendation_drinks_name">Drink Name</string>
     <string name="recommendation_drinks_amount">Drink Amount</string>
+    <string name="recommendation_safeToText_title">Message Analysis</string>
     <string name="recommendation_safeToText_partOne">Your message for </string>
-    <string name="recommendation_safeToText_partTwo"> was found to be </string>
+    <string name="recommendation_safeToText_partTwo">You can copy it now!</string>
 
     <string name="no_value">No value</string>
     <string name="calculating_drunkenness_score">Calculating Drunkenness</string>

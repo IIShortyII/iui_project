@@ -4,6 +4,7 @@ import static com.example.drunk_o_meter.userdata.UserData.DRUNKOMETER_ANALYSIS_L
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -91,7 +92,7 @@ public class RecommendationFragment extends Fragment {
         LinearLayout textAnalysisResult = layout.findViewById(R.id.recommendation_safeToText);
         TextView messageReceiver = layout.findViewById(R.id.recommendation_safeToText_receiver);
         TextView safeToTextValue = layout.findViewById(R.id.recommendation_safeToText_value);
-        ImageButton copyMessageContent = layout.findViewById(R.id.recommendation_copyMessageContent);
+        LinearLayout copyMessageContent = layout.findViewById(R.id.recommendation_copyMessageContent);
 
         loadAlcoholData();
 
@@ -151,10 +152,10 @@ public class RecommendationFragment extends Fragment {
             boolean safeToText = ((HomeActivity) contextActivity).calculateSafeToText(drunkennessScoreInt);
 
             if (safeToText) {
-                safeToTextValue.setText("Safe To Text");
+                safeToTextValue.setText("safe to text");
                 copyMessageContent.setVisibility(View.VISIBLE);
             } else {
-                safeToTextValue.setText("Not Safe To Text");
+                safeToTextValue.setText("NOT safe to text");
                 copyMessageContent.setVisibility(View.GONE);
             }
         } else {
