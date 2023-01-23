@@ -148,7 +148,7 @@ public class RecommendationFragment extends Fragment {
             String receiver = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE.getRecipient();
             messageReceiver.setText(receiver);
 
-            boolean safeToText = calculateSafeToText(drunkennessScoreInt);
+            boolean safeToText = ((HomeActivity) contextActivity).calculateSafeToText(drunkennessScoreInt);
 
             if (safeToText) {
                 safeToTextValue.setText("Safe To Text");
@@ -312,15 +312,6 @@ public class RecommendationFragment extends Fragment {
         }
 
         return drunkennessScoreTxt;
-    }
-
-    //TODO: is this redundant if we already calculate it in Home Activity?
-    public boolean calculateSafeToText(int drunkennessScoreInt) {
-        String sentiment = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE.getSentimentAnalysis();
-        // @Kathi TODO hier noch das Sentiment aus der Text Message Analyse. Die möglichen Sentiments findest du in nlp/Sentiment
-        boolean safeToText = true;
-
-        return safeToText;
     }
 
     /**

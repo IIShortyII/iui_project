@@ -387,10 +387,30 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     /**
      * "Safe to text" is calculated based on the drunkenness score and the sentiments analysis
      */
-    public boolean calculateSafeToText(String sentimentAnalysis, int drunkennessScore) {
-        //TODO add functionality --> sentiments not safeToText (in combo with high drunkenness score): VERY_NEGATIVE,NEGATIVE,POSITIVE,VERY_POSITIVE
-        boolean safeToText = true;
-        Log.d("Safe to text", "Sentiment: " + sentimentAnalysis + " and drunkennessScore: " + drunkennessScore + " lead to safe to text: " + safeToText);
+    public boolean calculateSafeToText(int drunkennessScore) {
+        boolean safeToText = false;
+        String sentimentAnalysis = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE.getSentimentAnalysis();
+        switch (drunkennessScore) {
+            case 0:
+                //all sentiments safe
+                safeToText = true;
+                break;
+            case 1: case 2:
+                //"very" sentiments not safe
+                if (sentimentAnalysis == Sentiment.VERY_NEGATIVE.toString() || sentimentAnalysis == Sentiment.VERY_POSITIVE.toString()) {
+                    safeToText = false;
+                } else {
+                    safeToText = true;
+                }
+                break;
+            case 3: case 4:
+                //only neutral safe
+                if (sentimentAnalysis == Sentiment.NEUTRAL.toString()) {
+                    safeToText = true;
+                } else {
+                    safeToText = false;
+                }
+        }
         return safeToText;
     }
 
