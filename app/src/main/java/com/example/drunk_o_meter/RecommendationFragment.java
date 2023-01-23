@@ -4,6 +4,7 @@ import static com.example.drunk_o_meter.userdata.UserData.DRUNKOMETER_ANALYSIS_L
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -95,11 +96,17 @@ public class RecommendationFragment extends Fragment {
         loadAlcoholData();
 
         int drunkennessScoreInt = calculateDrunkennessScore();
+        //TODO @Dennis replace drink1 and drink2 with the recommended drinks --> siehe case 4
+        String[] drink1 = {"Drink 1","N.a.","N.a.","0","0"};
+        String[] drink2 = {"Drink 2","N.a.","N.a.","0","0"};
+        Drawable drink1Img = getResources().getDrawable(R.drawable.defaultdrink, contextActivity.getTheme());
+        Drawable drink2Img = getResources().getDrawable(R.drawable.defaultdrink, contextActivity.getTheme());
 
         switch (drunkennessScoreInt) {
             //get random drink from the preferred lists
             //DRINKS.get(DrinkType.WINE)
             //TODO @Dennis
+
             case 0:
                 //TODO -> all drinks possible
                 break;
@@ -113,19 +120,20 @@ public class RecommendationFragment extends Fragment {
                 //TODO -> only Beer, Wine
                 break;
             case 4:
-                drink1Name.setText("TaZwiWa");
-                drink1Amount.setText("As much as possible");
-                drink1Image.setImageDrawable(getResources().getDrawable(R.drawable.tazwiwa));
-
-                drink2Title.setText("Go home");
-                drink2Amount.setText("ASAP!");
-                drink2Image.setImageDrawable(getResources().getDrawable(R.drawable.gohome));
+                drink1 = new String[]{"TaZwiWa", "Sober", "N.a", "As much as possible", "0"};
+                drink1Img = getResources().getDrawable(R.drawable.tazwiwa, contextActivity.getTheme());
+                drink2 = new String[]{"Go home", "Sober", "N.a", "ASAP!", "0"};
+                drink2Img = getResources().getDrawable(R.drawable.gohome, contextActivity.getTheme());
                 break;
         }
 
-        //TODO @Dennis replace this to save drink1 and drink2 in UserData
-        String[] drink1 = {"Hugo","Cocktail","Aperitif","0,2","11,04"};
-        String[] drink2 = {"Sauvignon Blanc","Wine","White","0,2","19,6"};
+        drink1Name.setText(drink1[0]);
+        drink1Amount.setText(drink1[3]);
+        drink1Image.setImageDrawable(drink1Img);
+
+        drink2Title.setText(drink2[0]);
+        drink2Amount.setText(drink2[3]);
+        drink2Image.setImageDrawable(drink2Img);
 
         UserData.RECOMMENDATION = new ArrayList<>();
         UserData.RECOMMENDATION.add(drink1);
