@@ -64,8 +64,7 @@ public class DrunkometerFragment extends Fragment {
 
         TextView title = layout.findViewById(R.id.DrunkometerStartTitle);
         title.setText("Welcome back, " + USERNAME + "!");
-
-        // TODO: remove - this is only for testing
+        
         selfieView = layout.findViewById(R.id.selfieView);
         if(UserData.DRUNKOMETER_ANALYSIS_LIST.size() > 0){
             selfieView.setImageBitmap(UserData.DRUNKOMETER_ANALYSIS_LIST.get(UserData.DRUNKOMETER_ANALYSIS_LIST.size()-1).SELFIE);

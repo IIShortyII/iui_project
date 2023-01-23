@@ -135,6 +135,7 @@ public class RecommendationFragment extends Fragment {
     }
 
 
+    // Inspiration for typing speed and error rate: https://www.vice.com/en/article/78kp7a/how-does-drug-use-affect-typing-speed-a-highly-scientific-investigation
     /**
      * Calculates PerMille Alcohol of User depending on taken Alcohol, Sex and user weight.
      * @return Users PerMille Alcohol Level in Double
@@ -186,18 +187,20 @@ public class RecommendationFragment extends Fragment {
      */
     public double CalculateTextScore(double Error_Base, double Error_Chall, double Time_Base, double Time_Chall){
         double diffErrorRate = Math.abs(Error_Base-Error_Chall);
-        double diffTime = Math.abs(Time_Base-Time_Chall);
+        double diffTime = Time_Chall/Time_Base;
         double DrunkScore =0.0;
-        // ToDo: @Kathrin Bitte die Border Werte prüfen und ggf. anpassen.
-        if (diffErrorRate>30) {
+
+        // Inspiration Error: 25 (DRUNK AF) vs. 4 (TIPSY) vs. 1 (SOBER)
+        if (diffErrorRate>20.00) {
             DrunkScore =DrunkScore+1;
-        }else if (diffErrorRate>20){
+        }else if (diffErrorRate>10.00){
             DrunkScore =DrunkScore+0.5;
         }
 
-        if(diffTime>7000){
+        // Inspiration CT: 42 WPM  (DRUNK AF) vs. 93 WPM (TIPSY) vs. 97 WPM (SOBER)
+        if(diffTime>50){
             DrunkScore =DrunkScore+1;
-        }else if (diffTime>5000){
+        }else if (diffTime>10.00){
             DrunkScore =DrunkScore+0.5;
         }
         return DrunkScore;
