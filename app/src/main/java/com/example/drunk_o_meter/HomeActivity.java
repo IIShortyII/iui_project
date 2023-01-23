@@ -28,6 +28,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -75,6 +76,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     private File imageFile;
 
     // Server variables
+    // private String IPV4ADDRESS = "192.168.178.156";
     private String IPV4ADDRESS = "192.168.178.156"; // TODO might have to change depending on what network the server is running
     private String PORTNUMBER = "5000";
     private byte[] byteArraySelfie;
@@ -91,6 +93,13 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
+
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
     }
 
     /**
@@ -403,8 +412,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     // Server communication - SEND
     void sendSelfieToServer(byte[] byteArray){
-        String postUrl= "http://"+IPV4ADDRESS+":"+PORTNUMBER+"/";
-
+        String postUrl= "http://8324-34-145-159-223.ngrok.io";
+        //String postUrl=  "https://d05kgolj407-496ff2e9c6d22116-5000-colab.googleusercontent.com/";
         RequestBody postBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("image", "drunkometer_selfie.jpeg", RequestBody.create(MediaType.parse("image/*jpeg"), byteArray))

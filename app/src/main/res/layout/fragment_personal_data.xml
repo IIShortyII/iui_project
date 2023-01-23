@@ -63,7 +63,8 @@
         android:maxLength="4"
         android:maxLines="1"
         android:digits="0123456789"
-        android:inputType="numberDecimal"/>
+        android:inputType="numberDecimal"
+        android:imeOptions="actionDone"/>
 
     <TextView
         android:id="@+id/genderDescription"

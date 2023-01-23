@@ -2,15 +2,20 @@ package com.example.drunk_o_meter;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.drunk_o_meter.recommender.AgeFragment;
@@ -45,6 +50,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
         stage = getIntent().getStringExtra("stage");
         setStage(stage);
+
     }
 
     /**
@@ -142,7 +148,7 @@ public class OnboardingActivity extends AppCompatActivity {
         int age = Integer.parseInt(ageString);
 
         if (ageString.length()== 4 && (Year.now().getValue() - age >= 18) && (age < Year.now().getValue())) {
-            AGE_CHECK = true;
+            UserData.AGE_CHECK = true;
             PersonalDataFragment personalDataFragment = new PersonalDataFragment();
             loadFragment(personalDataFragment, "personalDataFragment");
             this.stage = "username";
@@ -168,6 +174,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
             USERNAME = username;
             WEIGHT = weight;
+
 
             FragmentTypingChallengeIntro fragmentTypingChallengeIntro = new FragmentTypingChallengeIntro();
             loadFragment(fragmentTypingChallengeIntro, "fragmentTypingChallengeIntro");

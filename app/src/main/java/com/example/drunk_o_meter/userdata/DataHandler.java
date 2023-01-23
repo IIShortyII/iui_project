@@ -40,7 +40,10 @@ public class DataHandler {
         try {
 
             // store username
+            userData.put("ageCheck", UserData.AGE_CHECK);
             userData.put("username", UserData.USERNAME);
+            userData.put("weight", UserData.WEIGHT);
+            userData.put("gender", UserData.GENDER);
 
             // store typing challenge baseline
             JSONArray sampleArray = new JSONArray();
@@ -137,7 +140,10 @@ public class DataHandler {
 
                 // fetch stored username
                 if (obj.has("username")) {
+                    UserData.AGE_CHECK = obj.getBoolean("ageCheck");
                     UserData.USERNAME = obj.getString("username");
+                    UserData.WEIGHT = obj.getInt("weight");
+                    UserData.GENDER = Gender.valueOf(obj.getString("gender"));
                 }
 
                 // fetch stored baseline typing samples
