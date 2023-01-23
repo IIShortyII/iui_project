@@ -37,6 +37,10 @@
     <string name="typingChallengeIntroDescription">Let\'s continue with a quick typing challenge. Go!</string>
     <string name="baselineIntroDescription">In order to evaluate your Drunkenness Score, we need to learn about your typing performance when being sober. We created a quick typing challenge for you. Let\'s go!</string>
 
+    <string name="feedbackTitle">Feedback-Round</string>
+    <string name="feedbackDescription">Before we start: Did you like the last recommendation? What did you drink?</string>
+    <string name="feedbackOtherDrink">Which type of drink was it?</string>
+
     <string name="recommendation_drunkennessScore">Your Drunkenness Score is:</string>
     <string name="recommendation_intro">I would recommend the following:</string>
     <string name="recommendation_drinks_image">Drink Image</string>

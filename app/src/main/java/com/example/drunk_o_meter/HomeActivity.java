@@ -37,6 +37,7 @@ import com.example.drunk_o_meter.nlp.FragmentTextMessageIntro;
 import com.example.drunk_o_meter.nlp.NlpPipeline;
 import com.example.drunk_o_meter.nlp.Sentiment;
 import com.example.drunk_o_meter.nlp.TextMessage;
+import com.example.drunk_o_meter.recommender.FeedbackFragment;
 import com.example.drunk_o_meter.recommender.PreferencesFragment;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallenge;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallengeIntro;
@@ -143,16 +144,30 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     /**
-     * Start drunkometer analysis
+     * Start drunkometer analysis by asking about the last recommendation if needed
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void startDrunkometerAnalysis(View view) {
         // Create new DrunkometerAnalysis Object for this analysis
         UserData.DRUNKOMETER_ANALYSIS = new DrunkometerAnalysis();
 
+        //Already at least one recommendation offered today
+        if (UserData.RECOMMENDATION.size() != 0) {
+            FeedbackFragment feedbackFragment = new FeedbackFragment();
+            loadFragment(feedbackFragment, "feedbackFragment");
+        } else {
+            FragmentTypingChallengeIntro fragmentTypingChallengeIntro = new FragmentTypingChallengeIntro();
+            loadFragment(fragmentTypingChallengeIntro, "fragmentTypingChallengeIntro");
+        }
+        bottomNavigationView.setVisibility(View.GONE);
+    }
+
+    /**
+     * Show typing challenge intro
+     */
+    public void loadTypingChallengeAfterFeedback() {
         FragmentTypingChallengeIntro fragmentTypingChallengeIntro = new FragmentTypingChallengeIntro();
         loadFragment(fragmentTypingChallengeIntro, "fragmentTypingChallengeIntro");
-        bottomNavigationView.setVisibility(View.GONE);
     }
 
     /**
