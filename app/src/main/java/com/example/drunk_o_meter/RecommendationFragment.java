@@ -276,11 +276,11 @@ public class RecommendationFragment extends Fragment {
     public String getDrunkennessScoreText(int drunkennessScoreInt) {
         String drunkennessScoreTxt = "No value arrived from analysis";
         switch (drunkennessScoreInt) {
-            case 0: drunkennessScoreTxt = "Sober and ready to party"; break;
-            case 1: drunkennessScoreTxt = "Heating up"; break;
-            case 2: drunkennessScoreTxt = "On fire"; break;
-            case 3: drunkennessScoreTxt = "Ready to tear up the dance floor"; break;
-            case 4: drunkennessScoreTxt = "Drunk AF"; break;
+            case 0: drunkennessScoreTxt = "\uD83E\uDD73 Sober and ready to party \uD83E\uDD73 "; break;
+            case 1: drunkennessScoreTxt = "\uD83C\uDF21 Heating up\uD83C\uDF21️"; break;
+            case 2: drunkennessScoreTxt = "\uD83D\uDD25 On fire \uD83D\uDD25"; break;
+            case 3: drunkennessScoreTxt = "\uD83D\uDC83 Ready to tear up the dance floor \uD83D\uDD7A"; break;
+            case 4: drunkennessScoreTxt = "\uD83E\uDD2A Drunk AF \uD83E\uDD2A"; break;
         }
 
         return drunkennessScoreTxt;
