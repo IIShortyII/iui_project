@@ -26,8 +26,6 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class DrunkometerFragment extends Fragment {
-    //TODO: ask user if they followed recommendation: yes, no I drank - drink type / water / nothing ---> mittleren Alkoholwert von Kategorie
-
     private View layout;
     private ImageView selfieView;
 
@@ -88,7 +86,6 @@ public class DrunkometerFragment extends Fragment {
         return layout;
     }
 
-    //TODO: add button to start a new day -> drunkenness based on drinks already taken = 0
     /**
      * Clear previous drinks and start as "sober"
      */

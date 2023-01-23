@@ -37,7 +37,6 @@ import java.util.List;
  */
 public class RecommendationFragment extends Fragment {
 
-    //TODO: Adapt text style to fit to Kathrin's
     private View layout;
     protected Activity contextActivity;
 
@@ -264,8 +263,6 @@ public class RecommendationFragment extends Fragment {
         Gender gender = UserData.GENDER;
 
         //Grams of Taken Alcohol
-        //TODO: @Kathi  Hier wird das Gramm Alkohol gespeichert. Ich würde in Double rechnen, auch wenn
-        //TODO in der CSV immer nur ganze Werte drin sind.
         double takenAlcohol = UserData.GRAM_OF_ALCOHOL;
 
         //Calculating user PerMill alcohol intake
