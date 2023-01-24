@@ -39,11 +39,14 @@ public class DataHandler {
         JSONObject userData = new JSONObject();
         try {
 
-            // store username
+            // store user information
             userData.put("ageCheck", UserData.AGE_CHECK);
             userData.put("username", UserData.USERNAME);
             userData.put("weight", UserData.WEIGHT);
             userData.put("gender", UserData.GENDER);
+
+            // store gram of alcohol
+            userData.put("gramOfAlcohol", UserData.GRAM_OF_ALCOHOL);
 
             // store typing challenge baseline
             JSONArray sampleArray = new JSONArray();
@@ -138,7 +141,7 @@ public class DataHandler {
             if (json.length() != 0){
                 JSONObject obj = new JSONObject(json);
 
-                // fetch stored username
+                // fetch stored user data
                 if (obj.has("username")) {
                     UserData.AGE_CHECK = obj.getBoolean("ageCheck");
                     UserData.USERNAME = obj.getString("username");
@@ -146,6 +149,10 @@ public class DataHandler {
                     UserData.GENDER = Gender.valueOf(obj.getString("gender"));
                 }
 
+                if (obj.has("gramofAlcohol")){
+                    UserData.GRAM_OF_ALCOHOL = obj.getDouble("gramofAlcohol");
+                }
+                
                 // fetch stored baseline typing samples
                 if (obj.has("baseline_typing_challenge")) {
                     JSONArray baseline = obj.getJSONArray("baseline_typing_challenge");

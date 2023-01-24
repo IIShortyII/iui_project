@@ -464,7 +464,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             @RequiresApi(api = Build.VERSION_CODES.R)
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
-                //TODO: @Dennis get score from server response
+                //TODO: get server response, retrieve drunkenness prediction
                 UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION = 1.00;
 
                 RecommendationFragment recommendationFragment = new RecommendationFragment();
