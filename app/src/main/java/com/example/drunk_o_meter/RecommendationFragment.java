@@ -46,8 +46,6 @@ public class RecommendationFragment extends Fragment {
     private ArrayList<String[]> preferredShots;
     private ArrayList<String[]> preferredHots;
 
-    //TODO: user chooses one option -> save to User Data & ask about that the next time the drunkometer was started
-
     /**
      * Indicator that text analysis was conducted
      */

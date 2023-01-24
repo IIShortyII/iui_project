@@ -216,7 +216,6 @@ public class FeedbackFragment extends Fragment {
         double alcoholGramTotal = UserData.GRAM_OF_ALCOHOL + alcoholGramNow;
         UserData.GRAM_OF_ALCOHOL = alcoholGramTotal;
 
-        //TODO @Kathrin Gram_of_alcohol bitte in den Data Handler einbinden
         DataHandler.storeSettings(contextActivity);
         ((HomeActivity)contextActivity).loadTypingChallengeAfterFeedback();
     }
