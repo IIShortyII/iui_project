@@ -60,6 +60,16 @@ public class UserData {
     }};
 
     /**
+     * Alcohol consumed in the course of the event
+     */
+    public static double GRAM_OF_ALCOHOL = 0;
+
+    /**
+     * The drinks recommended last
+     */
+    public static ArrayList<String[]> RECOMMENDATION = new ArrayList<>();
+
+    /**
      * Calculate the mean value of the provided variable
      * @param variable the variable used to calculate the mean - error or completiontime
      * @return the mean of the provided variable

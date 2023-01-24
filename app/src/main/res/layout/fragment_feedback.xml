@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="40dp">
+
+    <TextView
+        android:id="@+id/feedbackTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/feedbackTitle"
+        android:textColor="#000000"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/feedbackInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:layout_constraintTop_toBottomOf="@id/feedbackTitle"
+        android:text="@string/feedbackDescription"
+        android:textColor="#000000" />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/feedbackToggleGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/feedbackInfo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <Button
+            android:id="@+id/btnDrink1"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Drink 1"
+            android:theme="@style/ModeButton"
+            android:textColor="@color/primaryVariant"/>
+
+        <Button
+            android:id="@+id/btnDrink2"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Drink 2"
+            android:theme="@style/ModeButton"
+            android:textColor="@color/primaryVariant"/>
+
+        <Button
+            android:id="@+id/btnOtherDrink"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Other"
+            android:theme="@style/ModeButton"
+            android:textColor="@color/primaryVariant"/>
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <TextView
+        android:id="@+id/feedbackOtherDrink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:layout_constraintTop_toBottomOf="@id/feedbackToggleGroup"
+        android:text="@string/feedbackOtherDrink"
+        android:textColor="#000000"
+        android:visibility="invisible"/>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/feedbackToggleGroupOther"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/feedbackOtherDrink"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:selectionRequired="true"
+        app:singleSelection="true"
+        android:visibility="invisible">
+
+        <Button
+            android:id="@+id/btnWine"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:text="Wine"
+            android:theme="@style/ModeButton"
+            android:textColor="@color/primaryVariant"/>
+
+        <Button
+            android:id="@+id/btnBeer"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:text="Beer"
+            android:theme="@style/ModeButton"
+            android:textColor="@color/primaryVariant"/>
+
+        <Button
+            android:id="@+id/btnCocktail"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="6sp"
+            android:text="Cocktail"
+            android:theme="@style/ModeButton"
+            android:textColor="@color/primaryVariant"/>
+
+        <Button
+            android:id="@+id/btnShot"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:text="Shot"
+            android:theme="@style/ModeButton"
+            android:textColor="@color/primaryVariant"/>
+
+        <Button
+            android:id="@+id/btnHot"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="6sp"
+            android:text="Hot Drink"
+            android:theme="@style/ModeButton"
+            android:textColor="@color/primaryVariant"/>
+
+        <Button
+            android:id="@+id/btnNone"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:text="None"
+            android:theme="@style/ModeButton"
+            android:textColor="@color/primaryVariant"/>
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <Button
+        android:id="@+id/feedbackContinue"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="Continue"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

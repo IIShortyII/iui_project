@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--TODO: add margin horizontally, get correct values from text analysis, use different text style, make button float-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,7 +31,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/recommendation_drunkennessScore"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/recommendation_drunkennessScore_value"
@@ -41,8 +41,10 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="32dp"
                     android:gravity="center"
-                    android:text="@string/no_value"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="@string/no_value" />
             </LinearLayout>
 
             <TextView
@@ -52,7 +54,8 @@
                 android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="@string/recommendation_intro"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                android:textColor="#000000"
+                android:textSize="15sp"
                 app:layout_constraintTop_toBottomOf="@id/recommendation_drunkennessScore"/>
 
             <LinearLayout
@@ -89,7 +92,8 @@
                             android:layout_height="wrap_content"
                             android:padding="10dp"
                             android:text="@string/recommendation_drinks_name"
-                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+                            android:textColor="#000000"
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/recommendation_drink1_amount"
@@ -98,7 +102,7 @@
                             android:padding="10dp"
                             android:gravity="center"
                             android:text="@string/recommendation_drinks_amount"
-                            android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
+                            android:textColor="#808080" />
 
                         <ImageView
                             android:id="@+id/recommendation_drink1_image"
@@ -118,7 +122,8 @@
                     android:gravity="center"
                     android:text="or"
                     android:layout_weight=".40"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
 
 
                 <androidx.cardview.widget.CardView
@@ -145,7 +150,8 @@
                             android:layout_height="wrap_content"
                             android:padding="10dp"
                             android:text="@string/recommendation_drinks_name"
-                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+                            android:textColor="#000000"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/recommendation_drink2_amount"
@@ -153,7 +159,7 @@
                             android:layout_height="wrap_content"
                             android:padding="10dp"
                             android:text="@string/recommendation_drinks_amount"
-                            android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
+                            android:textColor="#808080" />
 
                         <ImageView
                             android:id="@+id/recommendation_drink2_image"
@@ -168,14 +174,25 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/recommendation_safeToText_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/recommendation_safeToText_title"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintTop_toBottomOf="@id/recommendation_drinks"/>
+
             <LinearLayout
                 android:id="@+id/recommendation_safeToText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="15dp"
                 android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/recommendation_drinks">
+                app:layout_constraintTop_toBottomOf="@id/recommendation_safeToText_title">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -195,14 +212,17 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
                             android:text="@string/recommendation_safeToText_partOne"
-                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+                            android:textColor="#000000"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/recommendation_safeToText_receiver"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/no_value"
-                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+                            android:textColor="#000000"
+                            android:textSize="15sp"
+                            android:textStyle="bold"/>
 
                     </LinearLayout>
 
@@ -217,30 +237,47 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
-                            android:text="@string/recommendation_safeToText_partTwo"
-                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+                            android:text="is"
+                            android:textColor="#000000"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/recommendation_safeToText_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/no_value"
-                            android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:textSize="15sp"/>
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/recommendation_copyMessageContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/recommendation_safeToText_partTwo"
+                            android:textColor="#000000"
+                            android:textSize="15sp"/>
+
+                        <ImageButton
+                            android:layout_width="40dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="10dp"
+                            android:backgroundTint="@color/primaryVariant"
+                            android:onClick="copyMessageContent"
+                            android:src="@drawable/ic_content_copy"
+                            />
                 </LinearLayout>
 
-                <ImageButton
-                    android:id="@+id/recommendation_copyMessageContent"
-                    android:layout_width="40dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="10dp"
-                    android:backgroundTint="@color/primaryVariant"
-                    android:onClick="copyMessageContent"
-                    android:src="@drawable/ic_content_copy"
-                    />
-
+            </LinearLayout>
             </LinearLayout>
 
             <Button

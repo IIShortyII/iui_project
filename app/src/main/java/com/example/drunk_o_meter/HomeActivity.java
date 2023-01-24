@@ -38,6 +38,7 @@ import com.example.drunk_o_meter.nlp.FragmentTextMessageIntro;
 import com.example.drunk_o_meter.nlp.NlpPipeline;
 import com.example.drunk_o_meter.nlp.Sentiment;
 import com.example.drunk_o_meter.nlp.TextMessage;
+import com.example.drunk_o_meter.recommender.FeedbackFragment;
 import com.example.drunk_o_meter.recommender.PreferencesFragment;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallenge;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallengeIntro;
@@ -151,16 +152,30 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     /**
-     * Start drunkometer analysis
+     * Start drunkometer analysis by asking about the last recommendation if needed
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void startDrunkometerAnalysis(View view) {
         // Create new DrunkometerAnalysis Object for this analysis
         UserData.DRUNKOMETER_ANALYSIS = new DrunkometerAnalysis();
 
+        //Already at least one recommendation offered today
+        if (UserData.RECOMMENDATION.size() != 0) {
+            FeedbackFragment feedbackFragment = new FeedbackFragment();
+            loadFragment(feedbackFragment, "feedbackFragment");
+        } else {
+            FragmentTypingChallengeIntro fragmentTypingChallengeIntro = new FragmentTypingChallengeIntro();
+            loadFragment(fragmentTypingChallengeIntro, "fragmentTypingChallengeIntro");
+        }
+        bottomNavigationView.setVisibility(View.GONE);
+    }
+
+    /**
+     * Show typing challenge intro
+     */
+    public void loadTypingChallengeAfterFeedback() {
         FragmentTypingChallengeIntro fragmentTypingChallengeIntro = new FragmentTypingChallengeIntro();
         loadFragment(fragmentTypingChallengeIntro, "fragmentTypingChallengeIntro");
-        bottomNavigationView.setVisibility(View.GONE);
     }
 
     /**
@@ -371,10 +386,30 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     /**
      * "Safe to text" is calculated based on the drunkenness score and the sentiments analysis
      */
-    public boolean calculateSafeToText(String sentimentAnalysis, int drunkennessScore) {
-        //TODO add functionality --> sentiments not safeToText (in combo with high drunkenness score): VERY_NEGATIVE,NEGATIVE,POSITIVE,VERY_POSITIVE
-        boolean safeToText = true;
-        Log.d("Safe to text", "Sentiment: " + sentimentAnalysis + " and drunkennessScore: " + drunkennessScore + " lead to safe to text: " + safeToText);
+    public boolean calculateSafeToText(int drunkennessScore) {
+        boolean safeToText = false;
+        String sentimentAnalysis = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE.getSentimentAnalysis();
+        switch (drunkennessScore) {
+            case 0:
+                //all sentiments safe
+                safeToText = true;
+                break;
+            case 1: case 2:
+                //"very" sentiments not safe
+                if (sentimentAnalysis == Sentiment.VERY_NEGATIVE.toString() || sentimentAnalysis == Sentiment.VERY_POSITIVE.toString()) {
+                    safeToText = false;
+                } else {
+                    safeToText = true;
+                }
+                break;
+            case 3: case 4:
+                //only neutral safe
+                if (sentimentAnalysis == Sentiment.NEUTRAL.toString()) {
+                    safeToText = true;
+                } else {
+                    safeToText = false;
+                }
+        }
         return safeToText;
     }
 

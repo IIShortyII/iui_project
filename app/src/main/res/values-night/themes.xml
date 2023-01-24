@@ -30,5 +30,6 @@
 
     <style name="ModeButton" parent="Theme.Drunkometer">
         <item name="colorPrimary">@color/primaryVariant</item>
+        <item name="android:textColor">@color/primaryVariant</item>
     </style>
 </resources>

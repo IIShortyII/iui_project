@@ -99,7 +99,7 @@ public class ChatsFragment extends Fragment implements OnItemClickListener {
             //default value
             boolean safeToText = false;
             if (contextActivity instanceof HomeActivity) {
-                safeToText = ((HomeActivity)getActivity()).calculateSafeToText(textMessage.getSentimentAnalysis(), analysisRun.DRUNKENNESS_SCORE);
+                safeToText = ((HomeActivity)getActivity()).calculateSafeToText(analysisRun.DRUNKENNESS_SCORE);
             } else {
                 Log.d("Context Activity not HomeActivity", contextActivity.toString());
             }

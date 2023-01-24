@@ -1,14 +1,16 @@
 package com.example.drunk_o_meter;
 
-import static com.example.drunk_o_meter.userdata.UserData.DRUNKOMETER_ANALYSIS;
 import static com.example.drunk_o_meter.userdata.UserData.DRUNKOMETER_ANALYSIS_LIST;
 
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
 import android.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +37,8 @@ import java.util.List;
  */
 public class RecommendationFragment extends Fragment {
 
-    //TODO: Adapt text style to fit to Kathrin's
     private View layout;
+    protected Activity contextActivity;
 
     private ArrayList<String[]> preferredWines;
     private ArrayList<String[]> preferredBeers;
@@ -61,6 +63,15 @@ public class RecommendationFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof Activity) {
+            contextActivity = (Activity) context;
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,18 +91,27 @@ public class RecommendationFragment extends Fragment {
         LinearLayout textAnalysisResult = layout.findViewById(R.id.recommendation_safeToText);
         TextView messageReceiver = layout.findViewById(R.id.recommendation_safeToText_receiver);
         TextView safeToTextValue = layout.findViewById(R.id.recommendation_safeToText_value);
-        ImageButton copyMessageContent = layout.findViewById(R.id.recommendation_copyMessageContent);
+        LinearLayout copyMessageContent = layout.findViewById(R.id.recommendation_copyMessageContent);
 
         loadAlcoholData();
 
         int drunkennessScoreInt = calculateDrunkennessScore();
+        //TODO @Dennis replace drink1 and drink2 with the recommended drinks --> siehe case 4
+        String[] drink1 = {"Drink 1","N.a.","N.a.","0","0"};
+        String[] drink2 = {"Drink 2","N.a.","N.a.","0","0"};
+        Drawable drink1Img = getResources().getDrawable(R.drawable.defaultdrink, contextActivity.getTheme());
+        Drawable drink2Img = getResources().getDrawable(R.drawable.defaultdrink, contextActivity.getTheme());
 
         switch (drunkennessScoreInt) {
             //get random drink from the preferred lists
+            //DRINKS.get(DrinkType.WINE)
+            //TODO @Dennis
+
             case 0:
+                //TODO -> all drinks possible
                 break;
             case 1:
-                //TODO -> all drinks possible
+
                 break;
             case 2:
                 //TODO -> only Cocktails, Hot Drinks, Beer, Wine
@@ -100,16 +120,27 @@ public class RecommendationFragment extends Fragment {
                 //TODO -> only Beer, Wine
                 break;
             case 4:
-                drink1Name.setText("TaZwiWa");
-                drink1Amount.setText("As much as possible");
-                drink1Image.setImageDrawable(getResources().getDrawable(R.drawable.tazwiwa));
-
-                drink2Title.setText("Go home");
-                drink2Amount.setText("ASAP!");
-                drink2Image.setImageDrawable(getResources().getDrawable(R.drawable.gohome));
+                drink1 = new String[]{"TaZwiWa", "Sober", "N.a", "As much as possible", "0"};
+                drink1Img = getResources().getDrawable(R.drawable.tazwiwa, contextActivity.getTheme());
+                drink2 = new String[]{"Go home", "Sober", "N.a", "ASAP!", "0"};
+                drink2Img = getResources().getDrawable(R.drawable.gohome, contextActivity.getTheme());
                 break;
         }
 
+        drink1Name.setText(drink1[0]);
+        drink1Amount.setText(drink1[3]);
+        drink1Image.setImageDrawable(drink1Img);
+
+        drink2Title.setText(drink2[0]);
+        drink2Amount.setText(drink2[3]);
+        drink2Image.setImageDrawable(drink2Img);
+
+        UserData.RECOMMENDATION = new ArrayList<>();
+        UserData.RECOMMENDATION.add(drink1);
+        UserData.RECOMMENDATION.add(drink2);
+
+        //TODO @Kathrin Recommendation bitte in den Data Handler einbinden
+        DataHandler.storeSettings(contextActivity);
         drunkennessScoreTxt.setText(getDrunkennessScoreText(drunkennessScoreInt));
 
         //Only show result of text analysis if a message was entered
@@ -117,13 +148,13 @@ public class RecommendationFragment extends Fragment {
             String receiver = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE.getRecipient();
             messageReceiver.setText(receiver);
 
-            boolean safeToText = calculateSafeToText(drunkennessScoreInt);
+            boolean safeToText = ((HomeActivity) contextActivity).calculateSafeToText(drunkennessScoreInt);
 
             if (safeToText) {
-                safeToTextValue.setText("Safe To Text");
+                safeToTextValue.setText("safe to text");
                 copyMessageContent.setVisibility(View.VISIBLE);
             } else {
-                safeToTextValue.setText("Not Safe To Text");
+                safeToTextValue.setText("NOT safe to text");
                 copyMessageContent.setVisibility(View.GONE);
             }
         } else {
@@ -139,71 +170,71 @@ public class RecommendationFragment extends Fragment {
     /**
      * Calculates PerMille Alcohol of User depending on taken Alcohol, Sex and user weight.
      * @return Users PerMille Alcohol Level in Double
-     * @param TotalGramAlcohol
-     * @param UserGender
-     * @param UserWeight
+     * @param totalGramAlcohol
+     * @param userGender
+     * @param userWeight
      */
-    public double calculatePerMillAlcohol(double TotalGramAlcohol, Gender UserGender, int UserWeight){
+    public double calculatePerMillAlcohol(double totalGramAlcohol, Gender userGender, int userWeight){
         double maleReductionFactor = 0.69;
         double femaleReductionFactor = 0.58;
-        double Reductionfactor;
+        double reductionFactor;
 
-        if(UserGender == Gender.FEMALE){
-            Reductionfactor = femaleReductionFactor;
+        if(userGender == Gender.FEMALE){
+            reductionFactor = femaleReductionFactor;
         }else {
-            Reductionfactor = maleReductionFactor;
+            reductionFactor = maleReductionFactor;
         };
 
-        double PerMillAlcohol = TotalGramAlcohol / (UserWeight*Reductionfactor);
-        return PerMillAlcohol;
+        double perMillAlcohol = totalGramAlcohol / (userWeight*reductionFactor);
+        return perMillAlcohol;
     }
     /**
      * Converts PerMille Alcohol to DrunkScore
      * @return DrunkScore Double
-     * @param PerMill
+     * @param perMill
      */
-    public double PerMillAlcoholToDrunkScore(double PerMill){
-        double DrunkScore;
-        if (PerMill > 2.00){
-            DrunkScore = 4;
-        }else if(PerMill >1.00){
-            DrunkScore = 3;
-        }else if(PerMill >0.80){
-            DrunkScore = 2;
-        }else if(PerMill >0.30){
-            DrunkScore = 1;
+    public double perMillAlcoholToDrunkScore(double perMill){
+        double drunkScore;
+        if (perMill > 2.00){
+            drunkScore = 4;
+        }else if(perMill >1.00){
+            drunkScore = 3;
+        }else if(perMill >0.80){
+            drunkScore = 2;
+        }else if(perMill >0.30){
+            drunkScore = 1;
         }else{
-            DrunkScore = 0;
+            drunkScore = 0;
         }
-        return DrunkScore;
+        return drunkScore;
     }
     /**
      * Calculates DrunkScore depending Text Challenge Results
      * @return DrunkScore Double
-     * @param Error_Base
-     * @param Error_Chall
-     * @param Time_Base
-     * @param Time_Chall
+     * @param errorBase
+     * @param errorChall
+     * @param timeBase
+     * @param timeChall
      */
-    public double CalculateTextScore(double Error_Base, double Error_Chall, double Time_Base, double Time_Chall){
-        double diffErrorRate = Math.abs(Error_Base-Error_Chall);
-        double diffTime = Time_Chall/Time_Base;
-        double DrunkScore =0.0;
+    public double CalculateTextScore(double errorBase, double errorChall, double timeBase, double timeChall){
+        double diffErrorRate = Math.abs(errorBase-errorChall);
+        double diffTime = timeChall/timeBase;
+        double drunkScore =0.0;
 
         // Inspiration Error: 25 (DRUNK AF) vs. 4 (TIPSY) vs. 1 (SOBER)
         if (diffErrorRate>20.00) {
-            DrunkScore =DrunkScore+1;
+            drunkScore =drunkScore+1;
         }else if (diffErrorRate>10.00){
-            DrunkScore =DrunkScore+0.5;
+            drunkScore =drunkScore+0.5;
         }
 
         // Inspiration CT: 42 WPM  (DRUNK AF) vs. 93 WPM (TIPSY) vs. 97 WPM (SOBER)
         if(diffTime>50){
-            DrunkScore =DrunkScore+1;
+            drunkScore =drunkScore+1;
         }else if (diffTime>10.00){
-            DrunkScore =DrunkScore+0.5;
+            drunkScore =drunkScore+0.5;
         }
-        return DrunkScore;
+        return drunkScore;
     }
 
 
@@ -212,9 +243,6 @@ public class RecommendationFragment extends Fragment {
      * @return int for drunkenness between 0 and 4
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
-
-
-
     public int calculateDrunkennessScore(){
         // Typing Challenge
         double mean_error_challenge = UserData.DRUNKOMETER_ANALYSIS.MEAN_ERROR_CHALLENGE;
@@ -235,14 +263,12 @@ public class RecommendationFragment extends Fragment {
         Gender gender = UserData.GENDER;
 
         //Grams of Taken Alcohol
-        //TODO: @Kathi  Hier wird das Gramm Alkohol gespeichert. Ich würde in Double rechnen, auch wenn
-        //TODO in der CSV immer nur ganze Werte drin sind. 
-        double TakenAlcohol = DRUNKOMETER_ANALYSIS.GramOfTakenAlcohol;
+        double takenAlcohol = UserData.GRAM_OF_ALCOHOL;
 
         //Calculating user PerMill alcohol intake
-        double PerMillAlcohol = calculatePerMillAlcohol(TakenAlcohol,gender, userWeight);
+        double perMillAlcohol = calculatePerMillAlcohol(takenAlcohol,gender, userWeight);
         //Converting PerMill alcohol to DrunkScore
-        double drunkScore = PerMillAlcoholToDrunkScore(PerMillAlcohol);
+        double drunkScore = perMillAlcoholToDrunkScore(perMillAlcohol);
 
         //Adding WeavingAnalysis Factor
         if(weavingPenaltyPoints >70){
@@ -284,15 +310,6 @@ public class RecommendationFragment extends Fragment {
         }
 
         return drunkennessScoreTxt;
-    }
-
-    //TODO: is this redundant if we already calculate it in Home Activity?
-    public boolean calculateSafeToText(int drunkennessScoreInt) {
-        String sentiment = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE.getSentimentAnalysis();
-        // @Kathi TODO hier noch das Sentiment aus der Text Message Analyse. Die möglichen Sentiments findest du in nlp/Sentiment
-        boolean safeToText = true;
-
-        return safeToText;
     }
 
     /**
