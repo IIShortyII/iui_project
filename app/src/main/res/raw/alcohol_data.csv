@@ -33,10 +33,9 @@ Doppelbock,Beer,N.a,"0,5",34
 Kölsch,Beer,N.a,"0,2","7,68"
 Irish Stout,Beer,N.a,"0,2",8
 Shandy,Beer,Mix,"0,5",10
-Hugo,Cocktail,Aperitif,"0,2","11,04"
-Aperol Spritz,Cocktail,Aperitif,"0,2",16
-Sangria,Cocktail,Aperitif,"0,2","20,8"
-Bellini,Cocktail,Aperitif,"0,1","4,4"
+Hugo,Aperitif,Aperitif,"0,2","11,04"
+Aperol Spritz,Aperitif,Aperitif,"0,2",16
+Bellini,Aperitif,Aperitif,"0,1","4,4"
 Cuba Libre,Cocktail,Longdrink,"0,3","27,84"
 Gin Tonic,Cocktail,Longdrink,"0,3","20,16"
 Vodka O,Cocktail,Longdrink,"0,3","19,2"

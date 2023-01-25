@@ -42,6 +42,7 @@ public class RecommendationFragment extends Fragment {
 
     private ArrayList<String[]> preferredWines;
     private ArrayList<String[]> preferredBeers;
+    private ArrayList<String[]> preferredAperitif;
     private ArrayList<String[]> preferredCocktails;
     private ArrayList<String[]> preferredShots;
     private ArrayList<String[]> preferredHots;
@@ -103,19 +104,15 @@ public class RecommendationFragment extends Fragment {
         switch (drunkennessScoreInt) {
             //get random drink from the preferred lists
             //DRINKS.get(DrinkType.WINE)
-            //TODO @Dennis
-
+            //TODO @Dennis according to recommendation matrix
             case 0:
-                //TODO -> all drinks possible
                 break;
             case 1:
 
                 break;
             case 2:
-                //TODO -> only Cocktails, Hot Drinks, Beer, Wine
                 break;
             case 3:
-                //TODO -> only Beer, Wine
                 break;
             case 4:
                 drink1 = new String[]{"TaZwiWa", "Sober", "N.a", "As much as possible", "0"};
@@ -335,15 +332,16 @@ public class RecommendationFragment extends Fragment {
      * Reads the alcohol data from the user preferences
      */
     public void loadAlcoholData() {
-        //TODO: Kategorien überprüfen --> Aperol eher wie Beer und Wein (extra Kategorie Aperitiv?), Kategorie harter Alkohol
         ArrayList wineList = UserData.DRINKS.get(DrinkType.WINE);
         ArrayList beerList = UserData.DRINKS.get(DrinkType.BEER);
+        ArrayList aperitifList = UserData.DRINKS.get(DrinkType.APERITIF);
         ArrayList cocktailsList = UserData.DRINKS.get(DrinkType.COCKTAIL);
         ArrayList shotsList = UserData.DRINKS.get(DrinkType.SHOT);
         ArrayList hotList = UserData.DRINKS.get(DrinkType.WINE);
 
         preferredWines = new ArrayList<>();
         preferredBeers = new ArrayList<>();
+        preferredAperitif = new ArrayList<>();
         preferredCocktails = new ArrayList<>();
         preferredShots = new ArrayList<>();
         preferredHots = new ArrayList<>();
@@ -365,6 +363,11 @@ public class RecommendationFragment extends Fragment {
                 case "Beer":
                     if (beerList.contains(alcohol[0])) {
                         preferredBeers.add(alcohol);
+                    };
+                    break;
+                case "Aperitif":
+                    if (aperitifList.contains(alcohol[0])) {
+                        preferredAperitif.add(alcohol);
                     };
                     break;
                 case "Cocktail":

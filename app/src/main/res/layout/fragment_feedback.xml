@@ -85,7 +85,6 @@
         app:layout_constraintTop_toBottomOf="@id/feedbackOtherDrink"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:selectionRequired="true"
         app:singleSelection="true"
         android:visibility="invisible">
 
@@ -112,12 +111,35 @@
             android:textColor="@color/primaryVariant"/>
 
         <Button
+            android:id="@+id/btnAperitif"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:text="Aperitif"
+            android:theme="@style/ModeButton"
+            android:textColor="@color/primaryVariant"/>
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/feedbackToggleGroupOther2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/feedbackToggleGroupOther"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:singleSelection="true"
+        android:visibility="invisible">
+
+        <Button
             android:id="@+id/btnCocktail"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="6sp"
+            android:textSize="10sp"
             android:text="Cocktail"
             android:theme="@style/ModeButton"
             android:textColor="@color/primaryVariant"/>
@@ -139,7 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="6sp"
+            android:textSize="10sp"
             android:text="Hot Drink"
             android:theme="@style/ModeButton"
             android:textColor="@color/primaryVariant"/>

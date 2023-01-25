@@ -111,7 +111,6 @@ public class OnboardingActivity extends AppCompatActivity {
      * Reads the alcohol data from the csv and saves it to the local storage
      */
     public void loadAlcoholData() {
-        //TODO: Kategorien überprüfen --> Aperol eher wie Beer und Wein
         InputStream inputStream = getResources().openRawResource(R.raw.alcohol_data);
         CSVFile csvFile = new CSVFile(inputStream);
         //list of string arrays with format: [Drink_Name, Drink_Type, Drink_Subtype, Drink_Liter, Drink_Alcohol_Pure_Gramm]
@@ -119,6 +118,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
         ArrayList<String> wine = new ArrayList<>();
         ArrayList<String> beer = new ArrayList<>();
+        ArrayList<String> aperitif = new ArrayList<>();
         ArrayList<String> cocktails = new ArrayList<>();
         ArrayList<String> shots = new ArrayList<>();
         ArrayList<String> hot = new ArrayList<>();
@@ -128,6 +128,7 @@ public class OnboardingActivity extends AppCompatActivity {
             switch (alcohol[1]) {
                 case "Wine": wine.add(alcohol[0]); break;
                 case "Beer": beer.add(alcohol[0]); break;
+                case "Aperitif": aperitif.add(alcohol[0]); break;
                 case "Cocktail": cocktails.add(alcohol[0]); break;
                 case "Shot": shots.add(alcohol[0]); break;
                 case "Hot Drink": hot.add(alcohol[0]); break;
@@ -136,6 +137,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
         UserData.DRINKS.put(DrinkType.WINE, wine);
         UserData.DRINKS.put(DrinkType.BEER, beer);
+        UserData.DRINKS.put(DrinkType.APERITIF, aperitif);
         UserData.DRINKS.put(DrinkType.COCKTAIL, cocktails);
         UserData.DRINKS.put(DrinkType.SHOT, shots);
         UserData.DRINKS.put(DrinkType.HOT, hot);
