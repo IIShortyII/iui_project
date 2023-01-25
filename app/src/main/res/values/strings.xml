@@ -9,7 +9,7 @@
     <string name="text_1">A party without alcohol is just a meeting</string>
     <string name="text_2">I drink because I work, I work so I can drink</string>
     <string name="text_6">Sometimes I drink water to surprise my liver</string>
-    <string name="text_7">Good people drink good beer</string>
+    <string name="text_7">I am not as think as you drunk I am</string>
     <string name="text_8">Beauty is in the eye of the beer holder</string>
     <string name="text_9">I drink to make people more interesting</string>
     <string name="text_10">Great minds drink alike</string>
@@ -70,6 +70,7 @@
 
     <string name="wine">Wine</string>
     <string name="beer">Beer</string>
+    <string name="aperitif">Aperitif</string>
     <string name="cocktails">Cocktails</string>
     <string name="shots">Shots</string>
     <string name="hotDrinks">Hot Drinks</string>
