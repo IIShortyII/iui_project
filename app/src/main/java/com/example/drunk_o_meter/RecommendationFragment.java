@@ -174,9 +174,7 @@ public class RecommendationFragment extends Fragment {
         return layout;
     }
 
-    public void getDrinkfromList(){
 
-    }
 
 
     // Inspiration for typing speed and error rate: https://www.vice.com/en/article/78kp7a/how-does-drug-use-affect-typing-speed-a-highly-scientific-investigation
@@ -292,6 +290,8 @@ public class RecommendationFragment extends Fragment {
 
         //Adding TypingChallenge Factor
         drunkScore= drunkScore+CalculateTextScore(mean_error_baseline,mean_error_challenge,mean_completiontime_baseline,mean_completiontime_challenge);
+
+        //Adding Selfie Factor
         drunkScore = drunkScore*selfieDrunkPrediction+0;
 
         //Set drunkScore to max Value, if drunkScore is over max Value
