@@ -165,6 +165,7 @@ public class OnboardingActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void savePersonalData(View view) {
         //@ Dennis TODO: do we need a possibility to change the weight afterwards?
+        // Future Works - Dennis
         EditText usernameInput = findViewById(R.id.usernameInput);
         String username = String.valueOf(usernameInput.getText());
 

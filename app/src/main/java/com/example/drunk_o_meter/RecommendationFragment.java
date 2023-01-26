@@ -106,15 +106,26 @@ public class RecommendationFragment extends Fragment {
             //DRINKS.get(DrinkType.WINE)
             //TODO @Dennis according to recommendation matrix
             case 0:
+
+                // Shots / Long Drink, Cocktail, Hot Drink / Beer, Wine, Aperitif
+
+
+
                 break;
             case 1:
+                // Shots / Long Drink, Cocktail, Hot Drink / Beer, Wine, Aperitif
 
                 break;
             case 2:
+
+                //Long Drink, Cocktail, Hot Drink / Beer, Wine, Aperitif / TaZwiWa
+
                 break;
             case 3:
+                // Beer, Wine, Aperitif / TaZwiWa / Go Home
                 break;
             case 4:
+                // Go Home
                 drink1 = new String[]{"TaZwiWa", "Sober", "N.a", "As much as possible", "0"};
                 drink1Img = getResources().getDrawable(R.drawable.tazwiwa, contextActivity.getTheme());
                 drink2 = new String[]{"Go home", "Sober", "N.a", "ASAP!", "0"};
@@ -158,6 +169,10 @@ public class RecommendationFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return layout;
+    }
+
+    public void getDrinkfromList(){
+
     }
 
 
