@@ -144,11 +144,11 @@ public class DataHandler {
         JSONArray recommendationsArray = new JSONArray();
         for(int i=0; i< UserData.RECOMMENDATION.size(); i++) {
             String[] recommendation = UserData.RECOMMENDATION.get(i);
-            JSONArray recommendationStringArray = new JSONArray();
-            for(int j =0; j < recommendation.length; j++){
-                recommendationStringArray.put(j, recommendation[j]);
-            }
-            recommendationsArray.put(i, recommendation);
+
+            JSONObject JSONrecommendation = new JSONObject();
+            JSONrecommendation.put("0", recommendation[0]).put("1", recommendation[1]).put("2", recommendation[2]).put("3", recommendation[3]).put("4", recommendation[4]);
+            recommendationsArray.put(i, JSONrecommendation);
+
         }
         userData.put("recommendations", recommendationsArray);
     }
@@ -232,13 +232,9 @@ public class DataHandler {
         JSONArray recommendationsListJSONArray = obj.getJSONArray("recommendations");
         UserData.RECOMMENDATION = new ArrayList<>();
         for (int i = 0; i < recommendationsListJSONArray.length(); i++) {
-            JSONArray recommendationJSONArray = (JSONArray) recommendationsListJSONArray.get(i);
-            String[] recommendation = new String[5]; // TODO: if drink String[] length changes, adapt this one
-            for (int j = 0; j < recommendationJSONArray.length(); j++) {
-                recommendation[j] = recommendationJSONArray.getString(j);
-
-            }
-            UserData.RECOMMENDATION.add(recommendation);
+            JSONObject JSONrecommendation = recommendationsListJSONArray.getJSONObject(i);
+            String[] drink = new String[]{JSONrecommendation.getString("0"), JSONrecommendation.getString("1"), JSONrecommendation.getString("2"), JSONrecommendation.getString("3"), JSONrecommendation.getString("4")};
+            UserData.RECOMMENDATION.add(drink);
         }
     }
 
