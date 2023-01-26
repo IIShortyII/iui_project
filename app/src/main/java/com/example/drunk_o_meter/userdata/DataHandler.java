@@ -146,7 +146,7 @@ public class DataHandler {
             String[] recommendation = UserData.RECOMMENDATION.get(i);
             JSONArray recommendationStringArray = new JSONArray();
             for(int j =0; j < recommendation.length; j++){
-                recommendationsArray.put(j, recommendation[j]);
+                recommendationStringArray.put(j, recommendation[j]);
             }
             recommendationsArray.put(i, recommendation);
         }
@@ -236,6 +236,7 @@ public class DataHandler {
             String[] recommendation = new String[5]; // TODO: if drink String[] length changes, adapt this one
             for (int j = 0; j < recommendationJSONArray.length(); j++) {
                 recommendation[j] = recommendationJSONArray.getString(j);
+
             }
             UserData.RECOMMENDATION.add(recommendation);
         }
