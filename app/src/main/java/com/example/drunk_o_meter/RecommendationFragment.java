@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.drunk_o_meter.nlp.TextMessage;
 import com.example.drunk_o_meter.recommender.CSVFile;
 import com.example.drunk_o_meter.recommender.DrinkType;
 import com.example.drunk_o_meter.userdata.DataHandler;
@@ -201,10 +202,11 @@ public class RecommendationFragment extends Fragment {
 
         //Only show result of text analysis if a message was entered
         if (textAnalysisConducted) {
-            String receiver = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE.getRecipient();
+            TextMessage textMessage = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE;
+            String receiver = textMessage.getRecipient();
             messageReceiver.setText(receiver);
 
-            boolean safeToText = ((HomeActivity) contextActivity).calculateSafeToText(drunkennessScoreInt);
+            boolean safeToText = ((HomeActivity) contextActivity).calculateSafeToText(drunkennessScoreInt, textMessage);
 
             if (safeToText) {
                 safeToTextValue.setText("safe to text");
