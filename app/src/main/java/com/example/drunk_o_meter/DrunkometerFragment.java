@@ -79,7 +79,7 @@ public class DrunkometerFragment extends Fragment {
         if(UserData.DRUNKOMETER_ANALYSIS_LIST.size() > 0){
             selfieView.setImageBitmap(UserData.DRUNKOMETER_ANALYSIS_LIST.get(UserData.DRUNKOMETER_ANALYSIS_LIST.size()-1).SELFIE);
         } else {
-            Log.d("D-O-M last selfie", "no selfie");
+            Log.d("D-O-M last selfie", "no selfie available");
         }
 
         // Inflate the layout for this fragment

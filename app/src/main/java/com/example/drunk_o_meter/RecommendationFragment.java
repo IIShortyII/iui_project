@@ -4,7 +4,6 @@ import static com.example.drunk_o_meter.userdata.UserData.DRUNKOMETER_ANALYSIS_L
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -198,7 +196,6 @@ public class RecommendationFragment extends Fragment {
         UserData.RECOMMENDATION.add(drink1);
         UserData.RECOMMENDATION.add(drink2);
 
-        //TODO @Kathrin Recommendation bitte in den Data Handler einbinden
         DataHandler.storeSettings(contextActivity);
         drunkennessScoreTxt.setText(getDrunkennessScoreText(drunkennessScoreInt));
 
@@ -217,6 +214,7 @@ public class RecommendationFragment extends Fragment {
                 copyMessageContent.setVisibility(View.GONE);
             }
         } else {
+            textAnalysisTitle.setVisibility(View.GONE);
             textAnalysisResult.setVisibility(View.GONE);
             textAnalysisTitle.setVisibility(View.GONE);
         }
@@ -322,7 +320,7 @@ public class RecommendationFragment extends Fragment {
      * @param timeBase
      * @param timeChall
      */
-    public double CalculateTextScore(double errorBase, double errorChall, double timeBase, double timeChall){
+    public double calculateTextScore(double errorBase, double errorChall, double timeBase, double timeChall){
         double diffErrorRate = Math.abs(errorBase-errorChall);
         double diffTime = timeChall/timeBase;
         double drunkScore =0.0;
@@ -384,7 +382,9 @@ public class RecommendationFragment extends Fragment {
         }
 
         //Adding TypingChallenge Factor
-        drunkScore= drunkScore+CalculateTextScore(mean_error_baseline,mean_error_challenge,mean_completiontime_baseline,mean_completiontime_challenge);
+        drunkScore= drunkScore+ calculateTextScore(mean_error_baseline,mean_error_challenge,mean_completiontime_baseline,mean_completiontime_challenge);
+
+        //Adding Selfie Factor
         drunkScore = drunkScore*selfieDrunkPrediction+0;
 
         //Set drunkScore to max Value, if drunkScore is over max Value

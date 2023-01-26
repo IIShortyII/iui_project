@@ -144,11 +144,11 @@ public class DataHandler {
         JSONArray recommendationsArray = new JSONArray();
         for(int i=0; i< UserData.RECOMMENDATION.size(); i++) {
             String[] recommendation = UserData.RECOMMENDATION.get(i);
-            JSONArray recommendationStringArray = new JSONArray();
-            for(int j =0; j < recommendation.length; j++){
-                recommendationsArray.put(j, recommendation[j]);
-            }
-            recommendationsArray.put(i, recommendation);
+
+            JSONObject JSONrecommendation = new JSONObject();
+            JSONrecommendation.put("0", recommendation[0]).put("1", recommendation[1]).put("2", recommendation[2]).put("3", recommendation[3]).put("4", recommendation[4]);
+            recommendationsArray.put(i, JSONrecommendation);
+
         }
         userData.put("recommendations", recommendationsArray);
     }
@@ -163,7 +163,6 @@ public class DataHandler {
         for(DrinkType key : drinkKeys){
             String reference = "drink_preferences_" + key.toString();
             userData.put(reference, new JSONArray(UserData.DRINKS.get(key)));
-            Log.d("D-O-M DRINK store", String.valueOf(key) + " " + String.valueOf(UserData.DRINKS.get(key).size()));
         }
     }
 
@@ -232,12 +231,9 @@ public class DataHandler {
         JSONArray recommendationsListJSONArray = obj.getJSONArray("recommendations");
         UserData.RECOMMENDATION = new ArrayList<>();
         for (int i = 0; i < recommendationsListJSONArray.length(); i++) {
-            JSONArray recommendationJSONArray = (JSONArray) recommendationsListJSONArray.get(i);
-            String[] recommendation = new String[5]; // TODO: if drink String[] length changes, adapt this one
-            for (int j = 0; j < recommendationJSONArray.length(); j++) {
-                recommendation[j] = recommendationJSONArray.getString(j);
-            }
-            UserData.RECOMMENDATION.add(recommendation);
+            JSONObject JSONrecommendation = recommendationsListJSONArray.getJSONObject(i);
+            String[] drink = new String[]{JSONrecommendation.getString("0"), JSONrecommendation.getString("1"), JSONrecommendation.getString("2"), JSONrecommendation.getString("3"), JSONrecommendation.getString("4")};
+            UserData.RECOMMENDATION.add(drink);
         }
     }
 
@@ -271,7 +267,6 @@ public class DataHandler {
     private static void loadDrunkAnalysisList(JSONObject obj) throws JSONException {
         JSONArray drunkometerAnalysisList = obj.getJSONArray("drunkometer_analysis_list");
         UserData.DRUNKOMETER_ANALYSIS_LIST = new ArrayList<>();
-        Log.d("D-O-M loader list length", String.valueOf(drunkometerAnalysisList.length()));
         for(int i=0; i<drunkometerAnalysisList.length(); i++) {
 
             DrunkometerAnalysis drunkometerAnalysis = new DrunkometerAnalysis();
@@ -283,11 +278,9 @@ public class DataHandler {
             // Typing Sample Error and Completiontime
             drunkometerAnalysis.MEAN_ERROR_CHALLENGE = JSONdrunkometerAnalysis.getDouble("mean_error_challenge");
             drunkometerAnalysis.MEAN_COMPLETIONTIME_CHALLENGE = JSONdrunkometerAnalysis.getDouble("mean_completiontime_challenge");
-            Log.d("D-O-M loader ct", String.valueOf(drunkometerAnalysis.MEAN_COMPLETIONTIME_CHALLENGE));
             // Selfie bitmap and Drunkenness Score
             drunkometerAnalysis.SELFIE = getBitmapFromString(JSONdrunkometerAnalysis.getString("selfie"));
-            drunkometerAnalysis.SELFIE_DRUNK_PREDICTION = JSONdrunkometerAnalysis.getDouble("selfie_drunkenness_score");
-            Log.d("D-O-M loader has text message", String.valueOf(JSONdrunkometerAnalysis.has("text_message")));
+
             // OPTIONAL text message object
             if (JSONdrunkometerAnalysis.has("text_message")) {
 
@@ -309,7 +302,6 @@ public class DataHandler {
             }
 
             UserData.DRUNKOMETER_ANALYSIS_LIST.add(drunkometerAnalysis);
-            Log.d("D-O-M loader success", String.valueOf(UserData.DRUNKOMETER_ANALYSIS_LIST.size()));
         }
         }
 
@@ -330,7 +322,6 @@ public class DataHandler {
                 }
                    }
             UserData.DRINKS.put(DrinkType.valueOf(key.toString()), drinkArrayList);
-            Log.d("D-O-M DRINKS load", String.valueOf(UserData.DRINKS.get(key)));
 
         }
 

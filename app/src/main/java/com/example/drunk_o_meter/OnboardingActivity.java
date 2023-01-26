@@ -155,7 +155,6 @@ public class OnboardingActivity extends AppCompatActivity {
             loadFragment(personalDataFragment, "personalDataFragment");
             this.stage = "username";
 
-            Log.d("D-O-M AGE_CHECK", Boolean.toString(AGE_CHECK));
             DataHandler.storeSettings(this);
         } else {
             Toast.makeText(getApplicationContext(),"Sorry, you're to young! Come back when you're older.",Toast.LENGTH_SHORT).show();
@@ -164,8 +163,6 @@ public class OnboardingActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void savePersonalData(View view) {
-        //@ Dennis TODO: do we need a possibility to change the weight afterwards?
-        // Future Works - Dennis
         EditText usernameInput = findViewById(R.id.usernameInput);
         String username = String.valueOf(usernameInput.getText());
 
@@ -183,9 +180,6 @@ public class OnboardingActivity extends AppCompatActivity {
             loadFragment(fragmentTypingChallengeIntro, "fragmentTypingChallengeIntro");
             this.stage = "typingChallenge";
 
-            Log.d("D-O-M USERNAME", USERNAME);
-            Log.d("D-O-M WEIGHT", Integer.toString(WEIGHT));
-            Log.d("D-O-M GENDER", UserData.GENDER.toString());
             DataHandler.storeSettings(this);
         }
     }

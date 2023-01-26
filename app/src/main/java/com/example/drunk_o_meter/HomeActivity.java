@@ -63,8 +63,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener, SensorEventListener {
-    //TODO: add tab for past recommendations?
-
     /**
      * Main UI component for the navigation bar
      */
@@ -76,8 +74,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     private File imageFile;
 
     // Server variables
-    // private String IPV4ADDRESS = "192.168.178.156";
-    private String POSTURL = "http://f4e5-34-145-159-223.ngrok.io"; // TODO change before running
+    private String POSTURL = "http://7281-34-74-30-158.ngrok.io"; // TODO change before running
     private byte[] byteArraySelfie;
 
     @Override
@@ -233,8 +230,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         UserData.DRUNKOMETER_ANALYSIS.MEAN_ERROR_CHALLENGE = UserData.calculateMean("error",UserData.DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE);
         UserData.DRUNKOMETER_ANALYSIS.MEAN_COMPLETIONTIME_CHALLENGE = UserData.calculateMean("completiontime", UserData.DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE);
-        Log.d("D-O-M challenge error", String.valueOf(UserData.DRUNKOMETER_ANALYSIS.MEAN_ERROR_CHALLENGE));
-        Log.d("D-O-M challenge time", String.valueOf(UserData.DRUNKOMETER_ANALYSIS.MEAN_COMPLETIONTIME_CHALLENGE));
         Log.d("D-O-M camera storage path: ", String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)));
 
         String imagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) +
@@ -464,14 +459,20 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             @RequiresApi(api = Build.VERSION_CODES.R)
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
-                //TODO: get server response, retrieve drunkenness prediction
-                UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION = 1.00;
+                if(response.body().string().length() > 0){
+                    Log.d("D-O-M Server Response", response.body().string());
+                    double selfie_drunk_prediction = Double.parseDouble(response.body().string());
+                    UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION = selfie_drunk_prediction;
+                    Log.d("D-O-M Drunk Prediction", String.valueOf(UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION));
 
-                RecommendationFragment recommendationFragment = new RecommendationFragment();
-                loadFragment(recommendationFragment, "recommendationFragment");
+                    RecommendationFragment recommendationFragment = new RecommendationFragment();
+                    loadFragment(recommendationFragment, "recommendationFragment");
+                } else {
+                    UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION = 1.00;
 
-                Log.d("D-O-M Server Response", response.body().string());
-
+                    RecommendationFragment recommendationFragment = new RecommendationFragment();
+                    loadFragment(recommendationFragment, "recommendationFragment");
+                }
             }
         });
     }
