@@ -21,7 +21,7 @@ public class DrunkometerAnalysis {
     public double MEAN_COMPLETIONTIME_CHALLENGE;
 
     public Bitmap SELFIE;
-    public double SELFIE_DRUNK_PREDICTION;
+    public double SELFIE_DRUNK_PREDICTION; // Between 0 and 1
 
     // Text Message
     public TextMessage TEXT_MESSAGE = null;

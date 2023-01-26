@@ -28,6 +28,8 @@ import com.example.drunk_o_meter.userdata.DrunkometerAnalysis;
 import com.example.drunk_o_meter.userdata.Gender;
 import com.example.drunk_o_meter.userdata.UserData;
 
+import org.w3c.dom.Text;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -145,7 +147,6 @@ public class RecommendationFragment extends Fragment {
         UserData.RECOMMENDATION.add(drink1);
         UserData.RECOMMENDATION.add(drink2);
 
-        //TODO @Kathrin Recommendation bitte in den Data Handler einbinden
         DataHandler.storeSettings(contextActivity);
         drunkennessScoreTxt.setText(getDrunkennessScoreText(drunkennessScoreInt));
 
@@ -164,6 +165,8 @@ public class RecommendationFragment extends Fragment {
                 copyMessageContent.setVisibility(View.GONE);
             }
         } else {
+            TextView textAnalysisTitle = layout.findViewById(R.id.recommendation_safeToText_title);
+            textAnalysisTitle.setVisibility(View.GONE);
             textAnalysisResult.setVisibility(View.GONE);
         }
 

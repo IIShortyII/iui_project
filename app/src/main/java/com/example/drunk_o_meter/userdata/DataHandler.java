@@ -163,7 +163,6 @@ public class DataHandler {
         for(DrinkType key : drinkKeys){
             String reference = "drink_preferences_" + key.toString();
             userData.put(reference, new JSONArray(UserData.DRINKS.get(key)));
-            Log.d("D-O-M DRINK store", String.valueOf(key) + " " + String.valueOf(UserData.DRINKS.get(key).size()));
         }
     }
 
@@ -268,7 +267,6 @@ public class DataHandler {
     private static void loadDrunkAnalysisList(JSONObject obj) throws JSONException {
         JSONArray drunkometerAnalysisList = obj.getJSONArray("drunkometer_analysis_list");
         UserData.DRUNKOMETER_ANALYSIS_LIST = new ArrayList<>();
-        Log.d("D-O-M loader list length", String.valueOf(drunkometerAnalysisList.length()));
         for(int i=0; i<drunkometerAnalysisList.length(); i++) {
 
             DrunkometerAnalysis drunkometerAnalysis = new DrunkometerAnalysis();
@@ -280,11 +278,9 @@ public class DataHandler {
             // Typing Sample Error and Completiontime
             drunkometerAnalysis.MEAN_ERROR_CHALLENGE = JSONdrunkometerAnalysis.getDouble("mean_error_challenge");
             drunkometerAnalysis.MEAN_COMPLETIONTIME_CHALLENGE = JSONdrunkometerAnalysis.getDouble("mean_completiontime_challenge");
-            Log.d("D-O-M loader ct", String.valueOf(drunkometerAnalysis.MEAN_COMPLETIONTIME_CHALLENGE));
             // Selfie bitmap and Drunkenness Score
             drunkometerAnalysis.SELFIE = getBitmapFromString(JSONdrunkometerAnalysis.getString("selfie"));
-            drunkometerAnalysis.SELFIE_DRUNK_PREDICTION = JSONdrunkometerAnalysis.getDouble("selfie_drunkenness_score");
-            Log.d("D-O-M loader has text message", String.valueOf(JSONdrunkometerAnalysis.has("text_message")));
+
             // OPTIONAL text message object
             if (JSONdrunkometerAnalysis.has("text_message")) {
 
@@ -306,7 +302,6 @@ public class DataHandler {
             }
 
             UserData.DRUNKOMETER_ANALYSIS_LIST.add(drunkometerAnalysis);
-            Log.d("D-O-M loader success", String.valueOf(UserData.DRUNKOMETER_ANALYSIS_LIST.size()));
         }
         }
 
@@ -327,7 +322,6 @@ public class DataHandler {
                 }
                    }
             UserData.DRINKS.put(DrinkType.valueOf(key.toString()), drinkArrayList);
-            Log.d("D-O-M DRINKS load", String.valueOf(UserData.DRINKS.get(key)));
 
         }
 
