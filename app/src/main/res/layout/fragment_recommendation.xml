@@ -91,6 +91,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
+                            android:layout_gravity="center"
                             android:text="@string/recommendation_drinks_name"
                             android:textColor="#000000"
                             android:textSize="15sp"/>
@@ -149,6 +150,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
+                            android:layout_gravity="center"
                             android:text="@string/recommendation_drinks_name"
                             android:textColor="#000000"
                             android:textSize="15sp" />
@@ -274,6 +276,8 @@
                             android:backgroundTint="@color/primaryVariant"
                             android:onClick="copyMessageContent"
                             android:src="@drawable/ic_content_copy"
+                            android:elevation="5dp"
+                            android:outlineSpotShadowColor="@color/black"
                             />
                 </LinearLayout>
 

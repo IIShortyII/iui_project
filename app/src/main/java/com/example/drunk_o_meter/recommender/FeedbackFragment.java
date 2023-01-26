@@ -207,14 +207,13 @@ public class FeedbackFragment extends Fragment {
                     alcoholGramNow = 18.384;
                     break;
                 case "Beer":
-                    //TODO remove oktoberfest & doppelbock ->
-                    alcoholGramNow = 20.61333333;
+                    alcoholGramNow = 14.78857143;
                     break;
                 case "Aperitif":
                     alcoholGramNow = 11.94666667;
                     break;
                 case "Cocktail":
-                    alcoholGramNow = 20.45433333;
+                    alcoholGramNow = 22.19352381;
                     break;
                 case "Shot":
                     alcoholGramNow = 4.915555556;
