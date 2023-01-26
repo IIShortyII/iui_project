@@ -54,6 +54,7 @@ public class UserData {
     {{
         put(DrinkType.BEER, new ArrayList<>());
         put(DrinkType.WINE, new ArrayList<>());
+        put(DrinkType.APERITIF, new ArrayList<>());
         put(DrinkType.COCKTAIL, new ArrayList<>());
         put(DrinkType.SHOT, new ArrayList<>());
         put(DrinkType.HOT, new ArrayList<>());

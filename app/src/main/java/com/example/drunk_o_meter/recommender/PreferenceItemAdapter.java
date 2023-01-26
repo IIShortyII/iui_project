@@ -77,6 +77,9 @@ public class PreferenceItemAdapter extends RecyclerView.Adapter<PreferenceItemAd
             case BEER:
                 checked = UserData.DRINKS.get(DrinkType.BEER).contains(items.get(position));
                 break;
+            case APERITIF:
+                checked = UserData.DRINKS.get(DrinkType.APERITIF).contains(items.get(position));
+                break;
             case COCKTAIL:
                 checked = UserData.DRINKS.get(DrinkType.COCKTAIL).contains(items.get(position));
                 break;
@@ -100,6 +103,9 @@ public class PreferenceItemAdapter extends RecyclerView.Adapter<PreferenceItemAd
                     case BEER:
                         UserData.DRINKS.get(DrinkType.BEER).add(items.get(holder.getAdapterPosition()));
                         break;
+                    case APERITIF:
+                        UserData.DRINKS.get(DrinkType.APERITIF).add(items.get(holder.getAdapterPosition()));
+                        break;
                     case COCKTAIL:
                         UserData.DRINKS.get(DrinkType.COCKTAIL).add(items.get(holder.getAdapterPosition()));
                         break;
@@ -117,6 +123,9 @@ public class PreferenceItemAdapter extends RecyclerView.Adapter<PreferenceItemAd
                         break;
                     case BEER:
                         UserData.DRINKS.get(DrinkType.BEER).remove(items.get(holder.getAdapterPosition()));
+                        break;
+                    case APERITIF:
+                        UserData.DRINKS.get(DrinkType.APERITIF).remove(items.get(holder.getAdapterPosition()));
                         break;
                     case COCKTAIL:
                         UserData.DRINKS.get(DrinkType.COCKTAIL).remove(items.get(holder.getAdapterPosition()));

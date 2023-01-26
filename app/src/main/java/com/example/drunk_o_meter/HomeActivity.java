@@ -77,8 +77,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     // Server variables
     // private String IPV4ADDRESS = "192.168.178.156";
-    private String IPV4ADDRESS = "192.168.178.156"; // TODO might have to change depending on what network the server is running
-    private String PORTNUMBER = "5000";
+    private String POSTURL = "http://f4e5-34-145-159-223.ngrok.io"; // TODO change before running
     private byte[] byteArraySelfie;
 
     @Override
@@ -432,14 +431,12 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     // Server communication - SEND
     void sendSelfieToServer(byte[] byteArray){
-        String postUrl= "http://8324-34-145-159-223.ngrok.io";
-        //String postUrl=  "https://d05kgolj407-496ff2e9c6d22116-5000-colab.googleusercontent.com/";
         RequestBody postBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("image", "drunkometer_selfie.jpeg", RequestBody.create(MediaType.parse("image/*jpeg"), byteArray))
                 .build();
 
-        postRequest(postUrl, postBody);
+        postRequest(POSTURL, postBody);
     }
 
     void postRequest(String postUrl, RequestBody postBody) {
@@ -467,17 +464,13 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             @RequiresApi(api = Build.VERSION_CODES.R)
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
-                try {
-                    //TODO: @Dennis get score from server response
-                    UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION = 1.00;
+                //TODO: get server response, retrieve drunkenness prediction
+                UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION = 1.00;
 
-                    RecommendationFragment recommendationFragment = new RecommendationFragment();
-                    loadFragment(recommendationFragment, "recommendationFragment");
-                    
-                    Log.d("D-O-M Server Response", response.body().string());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                RecommendationFragment recommendationFragment = new RecommendationFragment();
+                loadFragment(recommendationFragment, "recommendationFragment");
+
+                Log.d("D-O-M Server Response", response.body().string());
 
             }
         });

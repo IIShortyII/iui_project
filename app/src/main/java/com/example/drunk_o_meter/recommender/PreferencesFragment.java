@@ -30,6 +30,7 @@ public class PreferencesFragment extends Fragment {
 
     private ArrayList<String> wineList;
     private ArrayList<String> beerList;
+    private ArrayList<String> aperitifList;
     private ArrayList<String> cocktailsList;
     private ArrayList<String> shotsList;
     private ArrayList<String> hotList;
@@ -70,6 +71,12 @@ public class PreferencesFragment extends Fragment {
         PreferenceItemAdapter adapterBeer = new PreferenceItemAdapter(DrinkType.BEER, beerList);
         recyclerViewBeer.setAdapter(adapterBeer);
 
+        //Drink Type: Aperitif
+        RecyclerView recyclerViewAperitif = getView().findViewById(R.id.preferences_aperitif_list);
+        recyclerViewAperitif.setHasFixedSize(true);
+        PreferenceItemAdapter adapterAperitif = new PreferenceItemAdapter(DrinkType.APERITIF, aperitifList);
+        recyclerViewAperitif.setAdapter(adapterAperitif);
+
         //Drink Type: Cocktail
         RecyclerView recyclerViewCocktail = getView().findViewById(R.id.preferences_cocktails_list);
         recyclerViewCocktail.setHasFixedSize(true);
@@ -101,7 +108,6 @@ public class PreferencesFragment extends Fragment {
      * Reads the alcohol data from the csv and saves it to the local variables
      */
     public void loadAlcoholData() {
-        //TODO: Kategorien überprüfen --> Aperol eher wie Beer und Wein
         InputStream inputStream = getResources().openRawResource(R.raw.alcohol_data);
         CSVFile csvFile = new CSVFile(inputStream);
         //list of string arrays with format: [Drink_Name, Drink_Type, Drink_Subtype, Drink_Liter, Drink_Alcohol_Pure_Gramm]
@@ -109,6 +115,7 @@ public class PreferencesFragment extends Fragment {
 
         wineList = new ArrayList<>();
         beerList = new ArrayList<>();
+        aperitifList = new ArrayList<>();
         cocktailsList = new ArrayList<>();
         shotsList = new ArrayList<>();
         hotList = new ArrayList<>();
@@ -118,6 +125,7 @@ public class PreferencesFragment extends Fragment {
             switch (alcohol[1]) {
                 case "Wine": wineList.add(alcohol[0]); break;
                 case "Beer": beerList.add(alcohol[0]); break;
+                case "Aperitif": aperitifList.add(alcohol[0]); break;
                 case "Cocktail": cocktailsList.add(alcohol[0]); break;
                 case "Shot": shotsList.add(alcohol[0]); break;
                 case "Hot Drink": hotList.add(alcohol[0]); break;

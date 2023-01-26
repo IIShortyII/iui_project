@@ -32,6 +32,7 @@ public class FeedbackFragment extends Fragment {
 
     MaterialButtonToggleGroup toggleGroupDrinks;
     MaterialButtonToggleGroup toggleGroupOther;
+    MaterialButtonToggleGroup toggleGroupOther2;
 
     private String[] drink1;
     private String[] drink2;
@@ -45,6 +46,7 @@ public class FeedbackFragment extends Fragment {
 
     private Button wineBtn;
     private Button beerBtn;
+    private Button aperitifBtn;
     private Button cocktailBtn;
     private Button shotBtn;
     private Button hotBtn;
@@ -82,6 +84,7 @@ public class FeedbackFragment extends Fragment {
         //Set other drinks text
         wineBtn = layout.findViewById(R.id.btnWine);
         beerBtn = layout.findViewById(R.id.btnBeer);
+        aperitifBtn = layout.findViewById(R.id.btnAperitif);
         cocktailBtn = layout.findViewById(R.id.btnCocktail);
         shotBtn = layout.findViewById(R.id.btnShot);
         hotBtn = layout.findViewById(R.id.btnHot);
@@ -100,6 +103,9 @@ public class FeedbackFragment extends Fragment {
 
         toggleGroupOther = layout.findViewById(R.id.feedbackToggleGroupOther);
         toggleGroupOther.addOnButtonCheckedListener((group, checkedId, isChecked) -> updateOtherDrink());
+
+        toggleGroupOther2 = layout.findViewById(R.id.feedbackToggleGroupOther2);
+        toggleGroupOther2.addOnButtonCheckedListener((group, checkedId, isChecked) -> updateOtherDrink());
 
         continueBtn.setOnClickListener(view1 -> saveFeedback());
     }
@@ -122,12 +128,14 @@ public class FeedbackFragment extends Fragment {
         Button inactiveBtn2;
         if (toggleGroupDrinks.getCheckedButtonId() == R.id.btnDrink1) {
             toggleGroupOther.setVisibility(View.INVISIBLE);
+            toggleGroupOther2.setVisibility(View.INVISIBLE);
             layout.findViewById(R.id.feedbackOtherDrink).setVisibility(View.INVISIBLE);
             activeBtn = drink1Btn;
             inactiveBtn1 = drink2Btn;
             inactiveBtn2 = drinkOtherBtn;
         } else if (toggleGroupDrinks.getCheckedButtonId() == R.id.btnDrink2) {
             toggleGroupOther.setVisibility(View.INVISIBLE);
+            toggleGroupOther2.setVisibility(View.INVISIBLE);
             layout.findViewById(R.id.feedbackOtherDrink).setVisibility(View.INVISIBLE);
             activeBtn = drink2Btn;
             inactiveBtn1 = drink1Btn;
@@ -135,6 +143,7 @@ public class FeedbackFragment extends Fragment {
         } else {
             activeBtn = drinkOtherBtn;
             toggleGroupOther.setVisibility(View.VISIBLE);
+            toggleGroupOther2.setVisibility(View.VISIBLE);
             layout.findViewById(R.id.feedbackOtherDrink).setVisibility(View.VISIBLE);
             inactiveBtn1 = drink1Btn;
             inactiveBtn2 = drink2Btn;
@@ -162,11 +171,13 @@ public class FeedbackFragment extends Fragment {
             otherActiveBtn = wineBtn;
         } else if (toggleGroupOther.getCheckedButtonId() == R.id.btnBeer) {
             otherActiveBtn = beerBtn;
-        } else if (toggleGroupOther.getCheckedButtonId() == R.id.btnCocktail) {
+        } else if (toggleGroupOther.getCheckedButtonId() == R.id.btnAperitif) {
+            otherActiveBtn = aperitifBtn;
+        } else if (toggleGroupOther2.getCheckedButtonId() == R.id.btnCocktail) {
             otherActiveBtn = cocktailBtn;
-        } else if (toggleGroupOther.getCheckedButtonId() == R.id.btnShot) {
+        } else if (toggleGroupOther2.getCheckedButtonId() == R.id.btnShot) {
             otherActiveBtn = shotBtn;
-        } else if (toggleGroupOther.getCheckedButtonId() == R.id.btnHot) {
+        } else if (toggleGroupOther2.getCheckedButtonId() == R.id.btnHot) {
             otherActiveBtn = hotBtn;
         } else {
             otherActiveBtn = noneBtn;
@@ -192,12 +203,15 @@ public class FeedbackFragment extends Fragment {
 
             //use mediate amount of alcohol from category
             switch (otherDrinkCategory) {
-                //TODO check drink categories
                 case "Wine":
                     alcoholGramNow = 18.384;
                     break;
                 case "Beer":
+                    //TODO remove oktoberfest & doppelbock ->
                     alcoholGramNow = 20.61333333;
+                    break;
+                case "Aperitif":
+                    alcoholGramNow = 11.94666667;
                     break;
                 case "Cocktail":
                     alcoholGramNow = 20.45433333;
@@ -216,7 +230,6 @@ public class FeedbackFragment extends Fragment {
         double alcoholGramTotal = UserData.GRAM_OF_ALCOHOL + alcoholGramNow;
         UserData.GRAM_OF_ALCOHOL = alcoholGramTotal;
 
-        //TODO @Kathrin Gram_of_alcohol bitte in den Data Handler einbinden
         DataHandler.storeSettings(contextActivity);
         ((HomeActivity)contextActivity).loadTypingChallengeAfterFeedback();
     }
