@@ -50,6 +50,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -74,7 +75,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     private File imageFile;
 
     // Server variables
-    private String POSTURL = "http://7281-34-74-30-158.ngrok.io"; // TODO change before running
+    private String POSTURL = "http://911d-35-245-1-210.ngrok.io"; // TODO IUI add link from python script
     private byte[] byteArraySelfie;
 
     @Override
@@ -459,9 +460,12 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             @RequiresApi(api = Build.VERSION_CODES.R)
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
-                if(response.body().string().length() > 0){
-                    Log.d("D-O-M Server Response", response.body().string());
+                String responseString = response.body().string();
+                if(responseString.length() > 0){
+                    Log.d("D-O-M Server Response", responseString);
+                    DecimalFormat df = new DecimalFormat("#.00");
                     double selfie_drunk_prediction = Double.parseDouble(response.body().string());
+                    df.format(selfie_drunk_prediction);
                     UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION = selfie_drunk_prediction;
                     Log.d("D-O-M Drunk Prediction", String.valueOf(UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION));
 
