@@ -229,8 +229,8 @@ public class FragmentTypingChallenge extends Fragment {
             // Determine count according to userData
             if (count <= maxCount) {
                 setBaselineText(count);
-                this.progressBar.setProgress(count, true);
-                this.progressLabel.setText(count + "/" + maxCount);
+                this.progressBar.setProgress((count-1), true);
+                this.progressLabel.setText((count-1) + "/" + maxCount);
                 textPosition = 0;
                 updateCursor();
 
@@ -242,6 +242,8 @@ public class FragmentTypingChallenge extends Fragment {
                 imm.hideSoftInputFromWindow(hiddenInput.getWindowToken(), 0);
 
                 // Display success message screen and continue with next step
+                this.progressBar.setProgress((maxCount), true);
+                this.progressLabel.setText((maxCount) + "/" + maxCount);
                 baselineTextView.setText(successText);
                 baselineTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 baselineTextView.setTypeface(null, Typeface.BOLD);
