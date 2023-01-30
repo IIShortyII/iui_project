@@ -31,7 +31,7 @@
         android:layout_marginBottom="24dp"
         android:onClick="startDrunkometerAnalysis"
         android:text="How drunk am I?"
-        app:layout_constraintBottom_toTopOf="@+id/clearLocalStorageBtn"
+        app:layout_constraintBottom_toTopOf="@+id/startNewDayBtn"
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
@@ -41,12 +41,12 @@
         android:text="New Day - New Me"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-    <!--TODO remove in final version-->
     <Button
         android:id="@+id/clearLocalStorageBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="clearLocalStorage"
+        android:visibility="gone"
         android:text="Clear local storage (debugging)"
         app:layout_constraintBottom_toTopOf="@id/startNewDayBtn"
         tools:layout_editor_absoluteX="0dp" />

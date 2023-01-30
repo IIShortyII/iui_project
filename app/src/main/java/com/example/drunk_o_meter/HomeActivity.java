@@ -75,7 +75,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     private File imageFile;
 
     // Server variables
-    private String POSTURL = "http://911d-35-245-1-210.ngrok.io"; // TODO IUI add link from python script
+    private String POSTURL = "http://81f0-34-148-102-46.ngrok.io"; // TODO IUI add link from python script
     private byte[] byteArraySelfie;
 
     @Override
@@ -463,9 +463,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 String responseString = response.body().string();
                 if(responseString.length() > 0){
                     Log.d("D-O-M Server Response", responseString);
-                    DecimalFormat df = new DecimalFormat("#.00");
-                    double selfie_drunk_prediction = Double.parseDouble(response.body().string());
-                    df.format(selfie_drunk_prediction);
+                    double selfie_drunk_prediction = Double.parseDouble(responseString);
                     UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION = selfie_drunk_prediction;
                     Log.d("D-O-M Drunk Prediction", String.valueOf(UserData.DRUNKOMETER_ANALYSIS.SELFIE_DRUNK_PREDICTION));
 

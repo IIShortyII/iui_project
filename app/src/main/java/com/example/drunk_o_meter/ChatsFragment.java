@@ -93,19 +93,19 @@ public class ChatsFragment extends Fragment implements OnItemClickListener {
         for (DrunkometerAnalysis analysisRun: drunkometerAnalysisList) {
             Bitmap selfie = analysisRun.SELFIE;
             TextMessage textMessage = analysisRun.TEXT_MESSAGE;
-
-            //TODO: handle if something is wrong with storage
-            if (textMessage == null || selfie == null) {break;}
-
-            //default value
-            boolean safeToText = false;
-            if (contextActivity instanceof HomeActivity) {
-                safeToText = ((HomeActivity)getActivity()).calculateSafeToText(analysisRun.DRUNKENNESS_SCORE, textMessage);
-            } else {
-                Log.d("Context Activity not HomeActivity", contextActivity.toString());
+            
+            if (textMessage != null && selfie != null) {
+                Log.d("D-O-M message ", String.valueOf(textMessage.getMessage()));
+                //default value
+                boolean safeToText = false;
+                if (contextActivity instanceof HomeActivity) {
+                    safeToText = ((HomeActivity) getActivity()).calculateSafeToText(analysisRun.DRUNKENNESS_SCORE, textMessage);
+                } else {
+                    Log.d("Context Activity not HomeActivity", contextActivity.toString());
+                }
+                ChatInfo chatInfo = new ChatInfo(textMessage.getMessage(), textMessage.getDate(), textMessage.getRecipient(), selfie, safeToText);
+                allChats.add(chatInfo);
             }
-            ChatInfo chatInfo = new ChatInfo(textMessage.getMessage(), textMessage.getDate(), textMessage.getRecipient(), selfie, safeToText);
-            allChats.add(chatInfo);
         }
 
         if (allChats.size() > 0) {
