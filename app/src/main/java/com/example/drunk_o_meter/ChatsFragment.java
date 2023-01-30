@@ -27,6 +27,7 @@ import com.example.drunk_o_meter.userdata.DrunkometerAnalysis;
 import com.example.drunk_o_meter.userdata.UserData;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ChatsFragment extends Fragment implements OnItemClickListener {
 
@@ -99,7 +100,7 @@ public class ChatsFragment extends Fragment implements OnItemClickListener {
             //default value
             boolean safeToText = false;
             if (contextActivity instanceof HomeActivity) {
-                safeToText = ((HomeActivity)getActivity()).calculateSafeToText(analysisRun.DRUNKENNESS_SCORE);
+                safeToText = ((HomeActivity)getActivity()).calculateSafeToText(analysisRun.DRUNKENNESS_SCORE, textMessage);
             } else {
                 Log.d("Context Activity not HomeActivity", contextActivity.toString());
             }
@@ -110,6 +111,7 @@ public class ChatsFragment extends Fragment implements OnItemClickListener {
         if (allChats.size() > 0) {
             chatsEmpty.setVisibility(View.GONE);
 
+            Collections.reverse(allChats);
             RecyclerView recyclerView = getView().findViewById(R.id.chats_item_list);
             recyclerView.setHasFixedSize(true);
             FragmentManager fragmentManager = getFragmentManager();

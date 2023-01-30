@@ -4,23 +4,23 @@ import static com.example.drunk_o_meter.userdata.UserData.DRUNKOMETER_ANALYSIS_L
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
 import android.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.drunk_o_meter.nlp.TextMessage;
 import com.example.drunk_o_meter.recommender.CSVFile;
 import com.example.drunk_o_meter.recommender.DrinkType;
 import com.example.drunk_o_meter.userdata.DataHandler;
@@ -28,10 +28,9 @@ import com.example.drunk_o_meter.userdata.DrunkometerAnalysis;
 import com.example.drunk_o_meter.userdata.Gender;
 import com.example.drunk_o_meter.userdata.UserData;
 
-import org.w3c.dom.Text;
-
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -48,6 +47,9 @@ public class RecommendationFragment extends Fragment {
     private ArrayList<String[]> preferredCocktails;
     private ArrayList<String[]> preferredShots;
     private ArrayList<String[]> preferredHots;
+
+    private String[] taZwiWa = new String[]{"TaZwiWa", "Sober", "TaZwiWa", "As much as possible", "0"};
+    private String[] goHome = new String[]{"Go home", "Sober", "GoHome", "ASAP!", "0"};
 
     /**
      * Indicator that text analysis was conducted
@@ -90,6 +92,7 @@ public class RecommendationFragment extends Fragment {
         ImageView drink2Image = layout.findViewById(R.id.recommendation_drink2_image);
 
         LinearLayout textAnalysisResult = layout.findViewById(R.id.recommendation_safeToText);
+        TextView textAnalysisTitle = layout.findViewById(R.id.recommendation_safeToText_title);
         TextView messageReceiver = layout.findViewById(R.id.recommendation_safeToText_receiver);
         TextView safeToTextValue = layout.findViewById(R.id.recommendation_safeToText_value);
         LinearLayout copyMessageContent = layout.findViewById(R.id.recommendation_copyMessageContent);
@@ -97,50 +100,97 @@ public class RecommendationFragment extends Fragment {
         loadAlcoholData();
 
         int drunkennessScoreInt = calculateDrunkennessScore();
-        //TODO @Dennis replace drink1 and drink2 with the recommended drinks --> siehe case 4
-        String[] drink1 = {"Drink 1","N.a.","N.a.","0","0"};
-        String[] drink2 = {"Drink 2","N.a.","N.a.","0","0"};
+        String[] drink1 = {};
+        String[] drink2 = {};
         Drawable drink1Img = getResources().getDrawable(R.drawable.defaultdrink, contextActivity.getTheme());
         Drawable drink2Img = getResources().getDrawable(R.drawable.defaultdrink, contextActivity.getTheme());
 
+        ArrayList<String[]> selectionForDrink1 = new ArrayList<>();
+        ArrayList<String[]> selectionForDrink2 = new ArrayList<>();
         switch (drunkennessScoreInt) {
-            //get random drink from the preferred lists
-            //DRINKS.get(DrinkType.WINE)
-            //TODO @Dennis according to recommendation matrix
             case 0:
+                // Shots, Cocktail, Hot Drink, Beer, Wine, Aperitif
+                Collections.shuffle(preferredShots);
+                drink1 = preferredShots.get(0);
+                drink1Img = getResources().getDrawable(R.drawable.shot, contextActivity.getTheme());
 
-                // Shots / Long Drink, Cocktail, Hot Drink / Beer, Wine, Aperitif
-
-
-
+                selectionForDrink2.addAll(preferredWines);
+                selectionForDrink2.addAll(preferredBeers);
+                selectionForDrink2.addAll(preferredAperitif);
+                selectionForDrink2.addAll(preferredCocktails);
+                selectionForDrink2.addAll(preferredHots);
                 break;
             case 1:
-                // Shots / Long Drink, Cocktail, Hot Drink / Beer, Wine, Aperitif
+                // Cocktail/Hot Drink, Shots, Beer, Wine, Aperitif
+                selectionForDrink1.addAll(preferredHots);
+                selectionForDrink1.addAll(preferredCocktails);
 
+                selectionForDrink2.addAll(preferredWines);
+                selectionForDrink2.addAll(preferredBeers);
+                selectionForDrink2.addAll(preferredAperitif);
+                selectionForDrink2.addAll(preferredShots);
                 break;
             case 2:
+                //Beer/Wine/Aperitif, Cocktail, Hot Drink, TaZwiWa
+                selectionForDrink1.addAll(preferredBeers);
+                selectionForDrink1.addAll(preferredWines);
+                selectionForDrink1.addAll(preferredAperitif);
 
-                //Long Drink, Cocktail, Hot Drink / Beer, Wine, Aperitif / TaZwiWa
-
+                selectionForDrink2.addAll(preferredCocktails);
+                selectionForDrink2.addAll(preferredHots);
+                selectionForDrink2.add(taZwiWa);
                 break;
             case 3:
-                // Beer, Wine, Aperitif / TaZwiWa / Go Home
+                // TaZwiWa, Beer/Wine/Aperitif, Go Home
+                drink1 = taZwiWa;
+                drink1Img = getResources().getDrawable(R.drawable.tazwiwa, contextActivity.getTheme());
+
+                selectionForDrink2.addAll(preferredBeers);
+                selectionForDrink2.addAll(preferredWines);
+                selectionForDrink2.addAll(preferredAperitif);
+                selectionForDrink2.add(goHome);
                 break;
             case 4:
-                // Go Home
-                drink1 = new String[]{"TaZwiWa", "Sober", "N.a", "As much as possible", "0"};
-                drink1Img = getResources().getDrawable(R.drawable.tazwiwa, contextActivity.getTheme());
-                drink2 = new String[]{"Go home", "Sober", "N.a", "ASAP!", "0"};
+                // Go Home, GoHome
+                drink1 = goHome;
+                drink1Img = getResources().getDrawable(R.drawable.gohome, contextActivity.getTheme());
+
+                drink2 = goHome;
                 drink2Img = getResources().getDrawable(R.drawable.gohome, contextActivity.getTheme());
                 break;
         }
 
+        if (selectionForDrink1.size() > 0) {
+            Collections.shuffle(selectionForDrink1);
+            drink1 = selectionForDrink1.get(0);
+            drink1Img = getImageforDrink(drink1[2]);
+        }
+
+        if (selectionForDrink2.size() > 0) {
+            Collections.shuffle(selectionForDrink2);
+            drink2 = selectionForDrink2.get(0);
+            drink2Img = getImageforDrink(drink2[2]);
+        }
+
+        if (drink1.length == 0) {
+            //something did not work -> why?
+            Log.d("Drink Recommendation Failed", "Drunk Score: "+ drunkennessScoreInt + ", Values of preferred lists: " + "Wine " + preferredWines + ", Beer " + preferredBeers + ", Aperitif " + preferredAperitif + ", Cocktail " + preferredCocktails + ", Shots " + preferredShots + ", Hot Drink " + preferredHots);
+            drink1 = new String[]{"Drink 1","N.a.","N.a.","0","0"};
+        }
+
+        if (drink2.length == 0) {
+            //something did not work -> why?
+            Log.d("Drink Recommendation Failed", "Drunk Score: "+ drunkennessScoreInt + ", Values of preferred lists: " + "Wine " + preferredWines + ", Beer " + preferredBeers + ", Aperitif " + preferredAperitif + ", Cocktail " + preferredCocktails + ", Shots " + preferredShots + ", Hot Drink " + preferredHots);
+            drink2 = new String[]{"Drink 2","N.a.","N.a.","0","0"};
+        }
+
         drink1Name.setText(drink1[0]);
-        drink1Amount.setText(drink1[3]);
+        drink1Amount.setText(drink1[3]+ "l");
         drink1Image.setImageDrawable(drink1Img);
 
         drink2Title.setText(drink2[0]);
-        drink2Amount.setText(drink2[3]);
+        drink2Title.setText(drink2[0]);
+        drink2Amount.setText(drink2[3]+ "l");
         drink2Image.setImageDrawable(drink2Img);
 
         UserData.RECOMMENDATION = new ArrayList<>();
@@ -152,10 +202,11 @@ public class RecommendationFragment extends Fragment {
 
         //Only show result of text analysis if a message was entered
         if (textAnalysisConducted) {
-            String receiver = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE.getRecipient();
+            TextMessage textMessage = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE;
+            String receiver = textMessage.getRecipient();
             messageReceiver.setText(receiver);
 
-            boolean safeToText = ((HomeActivity) contextActivity).calculateSafeToText(drunkennessScoreInt);
+            boolean safeToText = ((HomeActivity) contextActivity).calculateSafeToText(drunkennessScoreInt, textMessage);
 
             if (safeToText) {
                 safeToTextValue.setText("safe to text");
@@ -165,17 +216,59 @@ public class RecommendationFragment extends Fragment {
                 copyMessageContent.setVisibility(View.GONE);
             }
         } else {
-            TextView textAnalysisTitle = layout.findViewById(R.id.recommendation_safeToText_title);
             textAnalysisTitle.setVisibility(View.GONE);
             textAnalysisResult.setVisibility(View.GONE);
+            textAnalysisTitle.setVisibility(View.GONE);
         }
 
         // Inflate the layout for this fragment
         return layout;
     }
 
-    public void getDrinkfromList(){
-
+    public Drawable getImageforDrink(String type){
+        Drawable img = getResources().getDrawable(R.drawable.defaultdrink, contextActivity.getTheme());
+        switch (type) {
+            case "Red":
+                img = getResources().getDrawable(R.drawable.redwine, contextActivity.getTheme());
+                break;
+            case "White":
+                img = getResources().getDrawable(R.drawable.whitewine, contextActivity.getTheme());
+                break;
+            case "Sparkling":
+                img = getResources().getDrawable(R.drawable.sparklingwine, contextActivity.getTheme());
+                break;
+            case "WineMix":
+                img = getResources().getDrawable(R.drawable.mixwine, contextActivity.getTheme());
+                break;
+            case "Beer":
+                img = getResources().getDrawable(R.drawable.beer, contextActivity.getTheme());
+                break;
+            case "BeerMix":
+                img = getResources().getDrawable(R.drawable.mixbeer, contextActivity.getTheme());
+                break;
+            case "Aperitif":
+                img = getResources().getDrawable(R.drawable.aperitif, contextActivity.getTheme());
+                break;
+            case "Longdrink":
+                img = getResources().getDrawable(R.drawable.longdrink, contextActivity.getTheme());
+                break;
+            case "Cocktail":
+                img = getResources().getDrawable(R.drawable.cocktail, contextActivity.getTheme());
+                break;
+            case "Shot":
+                img = getResources().getDrawable(R.drawable.shot, contextActivity.getTheme());
+                break;
+            case "Hot":
+                img = getResources().getDrawable(R.drawable.hotdrink, contextActivity.getTheme());
+                break;
+            case "TaZwiWa":
+                img = getResources().getDrawable(R.drawable.tazwiwa, contextActivity.getTheme());
+                break;
+            case "GoHome":
+                img = getResources().getDrawable(R.drawable.gohome, contextActivity.getTheme());
+                break;
+        }
+        return img;
     }
 
 
@@ -229,7 +322,7 @@ public class RecommendationFragment extends Fragment {
      * @param timeBase
      * @param timeChall
      */
-    public double CalculateTextScore(double errorBase, double errorChall, double timeBase, double timeChall){
+    public double calculateTextScore(double errorBase, double errorChall, double timeBase, double timeChall){
         double diffErrorRate = Math.abs(errorBase-errorChall);
         double diffTime = timeChall/timeBase;
         double drunkScore =0.0;
@@ -291,7 +384,9 @@ public class RecommendationFragment extends Fragment {
         }
 
         //Adding TypingChallenge Factor
-        drunkScore= drunkScore+CalculateTextScore(mean_error_baseline,mean_error_challenge,mean_completiontime_baseline,mean_completiontime_challenge);
+        drunkScore= drunkScore+ calculateTextScore(mean_error_baseline,mean_error_challenge,mean_completiontime_baseline,mean_completiontime_challenge);
+
+        //Adding Selfie Factor
         drunkScore = drunkScore*selfieDrunkPrediction+0;
 
         //Set drunkScore to max Value, if drunkScore is over max Value

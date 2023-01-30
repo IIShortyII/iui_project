@@ -381,9 +381,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     /**
      * "Safe to text" is calculated based on the drunkenness score and the sentiments analysis
      */
-    public boolean calculateSafeToText(int drunkennessScore) {
+    public boolean calculateSafeToText(int drunkennessScore, TextMessage textMessage) {
         boolean safeToText = false;
-        String sentimentAnalysis = UserData.DRUNKOMETER_ANALYSIS.TEXT_MESSAGE.getSentimentAnalysis();
+        String sentimentAnalysis = textMessage.getSentimentAnalysis();
         switch (drunkennessScore) {
             case 0:
                 //all sentiments safe
