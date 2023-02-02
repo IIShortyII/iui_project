@@ -17,4 +17,5 @@ Connect your Android device via USB to the laptop where you opened the Android p
 ## Drunk face detection model 
 
 If you want to re-train the model you can use the final_drunk_model.py file to do that!
+Dataset we used is from: https://github.com/wuling31715/Drunk-Detect/tree/bfcfeed790a350c13f397595c4d02fda93182850
 
