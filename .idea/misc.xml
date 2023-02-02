@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Kathi/Documents/LMU/3 Semester/IUI/Projekt/Drunkometer/app/src/main/res/drawable-anydpi/ic_drunkometer.xml" value="0.1405" />
+        <entry key="..\:/Users/Kathi/Documents/LMU/3 Semester/IUI/Projekt/Drunkometer/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1405" />
         <entry key="..\:/Users/Kathi/Documents/LMU/3 Semester/IUI/Projekt/Drunkometer/app/src/main/res/layout/fragment_drunkometer_start.xml" value="0.1" />
         <entry key="..\:/Users/Kathi/Documents/LMU/3 Semester/IUI/Projekt/Drunkometer/app/src/main/res/layout/fragment_feedback.xml" value="0.264" />
         <entry key="..\:/Users/Kathi/Documents/LMU/3 Semester/IUI/Projekt/Drunkometer/app/src/main/res/layout/fragment_recommendation.xml" value="0.1" />

@@ -184,6 +184,7 @@ public class RecommendationFragment extends Fragment {
             drink2 = new String[]{"Drink 2","N.a.","N.a.","0","0"};
         }
 
+        //TODO Video: hier gewünschte Getränke einfügen
         drink1Name.setText(drink1[0]);
         drink1Amount.setText(drink1[3]+ "l");
         drink1Image.setImageDrawable(drink1Img);
@@ -208,6 +209,7 @@ public class RecommendationFragment extends Fragment {
 
             boolean safeToText = ((HomeActivity) contextActivity).calculateSafeToText(drunkennessScoreInt, textMessage);
 
+            //TODO Video hier safe to text anpassen --> Testen weil dann chat historie eventuell nicht passt
             if (safeToText) {
                 safeToTextValue.setText("safe to text");
                 copyMessageContent.setVisibility(View.VISIBLE);
@@ -409,6 +411,7 @@ public class RecommendationFragment extends Fragment {
      */
     public String getDrunkennessScoreText(int drunkennessScoreInt) {
         String drunkennessScoreTxt = "No value arrived from analysis";
+        //TODO video: hier drunkennessScore eingeben den wir wollen
         switch (drunkennessScoreInt) {
             case 0: drunkennessScoreTxt = "\uD83E\uDD73 Sober and ready to party \uD83E\uDD73 "; break;
             case 1: drunkennessScoreTxt = "\uD83C\uDF21 Heating up\uD83C\uDF21️"; break;
