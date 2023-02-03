@@ -406,7 +406,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                     safeToText = false;
                 }
         }
-        return safeToText;
+        //TODO video: hier safetotext anpassen
+        //return safeToText;
+        return false;
     }
 
     /**

@@ -18,6 +18,7 @@ import android.text.style.BackgroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -104,7 +105,11 @@ public class FragmentTypingChallenge extends Fragment {
             this.progressBar.setMax(count);
             // Reset typing challenge samples
             UserData.DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE = new ArrayList<>();
-            textList = getRandomTexts(count);
+            //TODO video: hier die Texte anpassen
+            //textList = getRandomTexts(count);
+            textList.add("text_8");
+            textList.add("text_8");
+            textList.add("text_8");
         }
 
         updateBaselineContent();
@@ -112,6 +117,7 @@ public class FragmentTypingChallenge extends Fragment {
         hiddenInput.requestFocus();
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         // Set up change listener for the hidden input field
         hiddenInput.addTextChangedListener(new TextWatcher() {

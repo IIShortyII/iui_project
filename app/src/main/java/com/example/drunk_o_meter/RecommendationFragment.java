@@ -185,14 +185,21 @@ public class RecommendationFragment extends Fragment {
         }
 
         //TODO Video: hier gewünschte Getränke einfügen
-        drink1Name.setText(drink1[0]);
+        /*drink1Name.setText(drink1[0]);
         drink1Amount.setText(drink1[3]+ "l");
         drink1Image.setImageDrawable(drink1Img);
 
         drink2Title.setText(drink2[0]);
-        drink2Title.setText(drink2[0]);
         drink2Amount.setText(drink2[3]+ "l");
-        drink2Image.setImageDrawable(drink2Img);
+        drink2Image.setImageDrawable(drink2Img);*/
+
+        drink2Title.setText("Cuba Libre");
+        drink2Amount.setText(0.3 + "l");
+        drink2Image.setImageDrawable(getImageforDrink("Longdrink"));
+
+        drink1Name.setText("Lager");
+        drink1Amount.setText(0.5+ "l");
+        drink1Image.setImageDrawable(getImageforDrink("Beer"));
 
         UserData.RECOMMENDATION = new ArrayList<>();
         UserData.RECOMMENDATION.add(drink1);
@@ -209,7 +216,6 @@ public class RecommendationFragment extends Fragment {
 
             boolean safeToText = ((HomeActivity) contextActivity).calculateSafeToText(drunkennessScoreInt, textMessage);
 
-            //TODO Video hier safe to text anpassen --> Testen weil dann chat historie eventuell nicht passt
             if (safeToText) {
                 safeToTextValue.setText("safe to text");
                 copyMessageContent.setVisibility(View.VISIBLE);
@@ -411,7 +417,7 @@ public class RecommendationFragment extends Fragment {
      */
     public String getDrunkennessScoreText(int drunkennessScoreInt) {
         String drunkennessScoreTxt = "No value arrived from analysis";
-        //TODO video: hier drunkennessScore eingeben den wir wollen
+
         switch (drunkennessScoreInt) {
             case 0: drunkennessScoreTxt = "\uD83E\uDD73 Sober and ready to party \uD83E\uDD73 "; break;
             case 1: drunkennessScoreTxt = "\uD83C\uDF21 Heating up\uD83C\uDF21️"; break;
@@ -419,8 +425,8 @@ public class RecommendationFragment extends Fragment {
             case 3: drunkennessScoreTxt = "\uD83D\uDC83 Ready to tear up the dance floor \uD83D\uDD7A"; break;
             case 4: drunkennessScoreTxt = "\uD83E\uDD2A Drunk AF \uD83E\uDD2A"; break;
         }
-
-        return drunkennessScoreTxt;
+        //TODO video: hier drunkennessScore eingeben den wir wollen
+        return "\uD83D\uDD25 On fire \uD83D\uDD25";
     }
 
     /**
