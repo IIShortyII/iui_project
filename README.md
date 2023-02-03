@@ -5,7 +5,7 @@ This respository holds the Drunk-o-meter Android application. Together with the 
 
 ## Camera and internet access
 
-The Drunk-o-meter app requires camera permissions. In order to allow camera access, you have to allow them in the app settings first (long click on app icon, "App Info").
+The Drunk-o-meter app requires camera permissions. In order to allow camera access, you have to allow them in the app settings first (long click on app icon on home screen, "App Info").
 The app requires the device to have internet access to work.
 
 ## How to run the Drunk-o-meter application:
@@ -18,4 +18,9 @@ Connect your Android device via USB to the laptop where you opened the Android p
 
 If you want to re-train the model you can use the final_drunk_model.py file to do that!
 Dataset we used is from: https://github.com/wuling31715/Drunk-Detect/tree/bfcfeed790a350c13f397595c4d02fda93182850
+
+## Known bugs
+In the onboarding texting challenge, the virtual keyboard does not show automatically. You can trigger it by clicking on the text several times until the keyboard shows.
+Our testing device was the "Froyo - Pixel 3" we borrowed from the department (Jesse).
+
 
