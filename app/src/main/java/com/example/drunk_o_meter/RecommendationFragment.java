@@ -87,7 +87,7 @@ public class RecommendationFragment extends Fragment {
         TextView drink1Name = layout.findViewById(R.id.recommendation_drink1_name);
         TextView drink1Amount = layout.findViewById(R.id.recommendation_drink1_amount);
         ImageView drink1Image = layout.findViewById(R.id.recommendation_drink1_image);
-        TextView drink2Title = layout.findViewById(R.id.recommendation_drink2_name);
+        TextView drink2Name = layout.findViewById(R.id.recommendation_drink2_name);
         TextView drink2Amount = layout.findViewById(R.id.recommendation_drink2_amount);
         ImageView drink2Image = layout.findViewById(R.id.recommendation_drink2_image);
 
@@ -184,22 +184,14 @@ public class RecommendationFragment extends Fragment {
             drink2 = new String[]{"Drink 2","N.a.","N.a.","0","0"};
         }
 
-        //TODO Video: hier gewünschte Getränke einfügen
-        /*drink1Name.setText(drink1[0]);
+        drink1Name.setText(drink1[0]);
         drink1Amount.setText(drink1[3]+ "l");
         drink1Image.setImageDrawable(drink1Img);
 
-        drink2Title.setText(drink2[0]);
+        drink2Name.setText(drink2[0]);
         drink2Amount.setText(drink2[3]+ "l");
-        drink2Image.setImageDrawable(drink2Img);*/
+        drink2Image.setImageDrawable(drink2Img);
 
-        drink2Title.setText("Cuba Libre");
-        drink2Amount.setText(0.3 + "l");
-        drink2Image.setImageDrawable(getImageforDrink("Longdrink"));
-
-        drink1Name.setText("Lager");
-        drink1Amount.setText(0.5+ "l");
-        drink1Image.setImageDrawable(getImageforDrink("Beer"));
 
         UserData.RECOMMENDATION = new ArrayList<>();
         UserData.RECOMMENDATION.add(drink1);
@@ -425,8 +417,8 @@ public class RecommendationFragment extends Fragment {
             case 3: drunkennessScoreTxt = "\uD83D\uDC83 Ready to tear up the dance floor \uD83D\uDD7A"; break;
             case 4: drunkennessScoreTxt = "\uD83E\uDD2A Drunk AF \uD83E\uDD2A"; break;
         }
-        //TODO video: hier drunkennessScore eingeben den wir wollen
-        return "\uD83D\uDD25 On fire \uD83D\uDD25";
+
+        return drunkennessScoreTxt;
     }
 
     /**

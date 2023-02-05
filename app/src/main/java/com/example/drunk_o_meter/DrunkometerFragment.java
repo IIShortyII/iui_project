@@ -49,7 +49,6 @@ public class DrunkometerFragment extends Fragment {
         this.layout = inflater.inflate(R.layout.fragment_drunkometer_start, container, false);
         // set context depending on invoking activity
 
-        //TODO remove in final version
         Button button = layout.findViewById(R.id.clearLocalStorageBtn);
         button.setOnClickListener(new View.OnClickListener()
         {
@@ -100,7 +99,6 @@ public class DrunkometerFragment extends Fragment {
      * Clear local storage for debugging purposes and go back to start
      * @param view the current activity context
      */
-    //TODO: remove button in final version
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void clearLocalStorage(View view) {
         UserData.AGE_CHECK = false;

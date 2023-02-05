@@ -103,7 +103,6 @@ public class ChatsFragment extends Fragment implements OnItemClickListener {
                 } else {
                     Log.d("Context Activity not HomeActivity", contextActivity.toString());
                 }
-                //TODO: hier kann man eine Message faken
                 ChatInfo chatInfo = new ChatInfo(textMessage.getMessage(), textMessage.getDate(), textMessage.getRecipient(), selfie, safeToText);
                 allChats.add(chatInfo);
             }

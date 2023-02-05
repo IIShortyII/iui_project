@@ -105,11 +105,7 @@ public class FragmentTypingChallenge extends Fragment {
             this.progressBar.setMax(count);
             // Reset typing challenge samples
             UserData.DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE = new ArrayList<>();
-            //TODO video: hier die Texte anpassen
-            //textList = getRandomTexts(count);
-            textList.add("text_8");
-            textList.add("text_8");
-            textList.add("text_8");
+            textList = getRandomTexts(count);
         }
 
         updateBaselineContent();
