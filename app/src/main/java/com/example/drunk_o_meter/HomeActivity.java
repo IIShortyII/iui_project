@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 import android.app.FragmentManager;
@@ -11,6 +12,7 @@ import android.app.FragmentTransaction;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -43,12 +45,14 @@ import com.example.drunk_o_meter.recommender.PreferencesFragment;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallenge;
 import com.example.drunk_o_meter.typingChallenge.FragmentTypingChallengeIntro;
 import com.example.drunk_o_meter.userdata.DrunkometerAnalysis;
+import com.example.drunk_o_meter.userdata.LocalStorageUtils;
 import com.example.drunk_o_meter.userdata.UserData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Calendar;
@@ -225,23 +229,15 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
 
 
-    public void finishTypingChallenge(View view) {
+    public void finishTypingChallenge(View view) throws IOException {
 
         UserData.DRUNKOMETER_ANALYSIS.PenaltyPoint = penaltypoint;
 
         UserData.DRUNKOMETER_ANALYSIS.MEAN_ERROR_CHALLENGE = UserData.calculateMean("error",UserData.DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE);
         UserData.DRUNKOMETER_ANALYSIS.MEAN_COMPLETIONTIME_CHALLENGE = UserData.calculateMean("completiontime", UserData.DRUNKOMETER_ANALYSIS.TYPING_CHALLENGE);
-        Log.d("D-O-M camera storage path: ", String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)));
-
-        String imagePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) +
-                File.separator + "drunkometer_selfie.jpeg";
 
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        imageFile = new File(imagePath);
-        Uri photoURI = FileProvider.getUriForFile(this, this.getApplicationContext().getPackageName() + ".provider", imageFile);
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-        //Open front camera
-        cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+
         cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivityForResult(cameraIntent, 1000);
     }
@@ -250,13 +246,13 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+        Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
         Matrix matrix = new Matrix();
         matrix.postRotate(-90);
         imageBitmap = Bitmap.createBitmap(imageBitmap, 0, 0, imageBitmap.getWidth(), imageBitmap.getHeight(), matrix, true);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 25, out);
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
         byteArraySelfie = out.toByteArray();
         Bitmap compressed = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
         UserData.DRUNKOMETER_ANALYSIS.SELFIE = compressed;
